@@ -1,0 +1,370 @@
+syntax = "proto3";
+
+package proto_def;
+
+/* api = /core/skill_list */
+message SkillListReq {
+    string skill_id = 1;  // empty for all
+}
+
+message SkillListResp {
+    enum Category {
+        VOICE = 0;
+        GAME = 1;
+    }
+
+    message SkillGrade {
+        string skill_id = 1;
+        string grade_id = 2;
+        string grade_title = 3;
+    }
+
+    message Skill {
+        string id = 1;
+        string title = 2;
+        string icon_url = 3;
+        Category category = 4;
+        repeated SkillGrade grades = 5;
+    }
+
+    repeated Skill skills = 1;
+}
+
+
+/* api = /umbrella/hobby_list */
+message HobbyListResp {
+    message Item {
+        int32 hobby_id = 1;
+        string title = 2;
+        string category = 3;
+    }
+
+    repeated Item items = 1;
+}
+
+
+/* api = /umbrella/career_list */
+message CareerListResp {
+    message Career {
+        string id = 1;
+        string title = 2;
+        string category = 3;
+    }
+
+    repeated Career careers = 1;
+}
+
+/* api = /umbrella/music_search */
+message MusicSearchReq {
+    string title = 1;
+}
+
+message MusicSearchResp {
+    message Music {
+        string title = 1;
+        string author = 2;
+        string url = 3;
+        string song_id = 4;
+        string album_id = 5;
+    }
+
+    enum STATUS {
+        OK = 0;
+        SEARCH_UNAVAIABLE = 1;
+    }
+    repeated Music musics = 1;
+    STATUS status = 2;
+}
+
+/* api = /umbrella/music_url */
+message MusicPlayUrlReq {
+    string song_id = 1;
+    string album_id = 2;
+}
+
+message MusicPlayUrlResp {
+    string play_url = 1;
+}
+
+
+/* api = /hive/room_category_list */
+message RoomCategoryListReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message RoomCategoryListResp {
+    message TopicPortal {
+        string icon = 1;
+        string title = 2;
+        string portal = 3;
+        bool   controlled = 4;  //true if only OP can use plugin, false for ALL
+    }
+
+    message Category {
+        int32 cate_id = 1;
+        string title = 2;
+        int32 seat_count = 3;
+        repeated TopicPortal topics = 4;
+    }
+
+    repeated Category categories = 1;
+}
+
+/* api = /umbrella/complain */
+message ComplainReq {
+    enum CTYPE  {
+        USER = 0;
+        ROOM = 1;
+        TWEET = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    CTYPE  ctype = 3;
+    string target_id = 4;
+    string violation_id = 5;
+    string comment = 6;
+    repeated string urls = 7;  //投诉相关图片
+}
+
+message ComplainResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_EXPIRES = 1;
+    }
+    STATUS status = 1;
+}
+
+/* api = /umbrella/noble_list */
+message NobleListReq {
+
+}
+
+message NobleListResp {
+    message Noble {
+        int32 nid = 1;
+        string title = 2;
+
+    }
+    repeated Noble nobles = 1;
+}
+
+
+/* api = /umbrella/server_addr */
+message ServerAddrReq {
+    string version = 1;
+    string platform = 2;
+    string channel = 3;
+    string uid = 4;
+}
+
+message ServerAddrResp {
+    enum Server {
+        UNK = 0;
+        API = 1;
+        HB =  2;
+        RED = 3;
+        GAME = 4;
+    }
+
+    enum Status {
+        OK = 0;
+        AB_TEST_STAGE = 1;
+        VERSION_NEED_UPDATE = 2;
+    }
+
+    Status status = 1;
+    map<int32, string> servers = 2;
+}
+
+//user commited apply infomation
+message ApplyInfo {
+    string img = 1;
+    string audio = 2;
+    int32  duration = 8;
+    string description = 3;
+    int32  lowest_price = 4;
+    int32  skill_id = 5;
+    int32  skill_grade = 6;
+    string game_uid = 7;
+}
+
+// system tip
+message ApplyTip {
+    string description = 1;
+    string requirement = 2;
+    string example_img = 3;
+}
+
+//summit an application or cancel last application
+/* api = /umbrella/apply_update */
+message SkillApplyUpdateReq {
+    enum Cmd {
+        UNK  = 0;
+        UPDATE = 1;
+        CANCEL = 2;
+    }
+
+    Cmd cmd = 1;
+    string uid = 2;
+    string token = 3;
+    int32  skill_id = 4;
+    ApplyInfo info = 5;
+}
+
+message SkillApplyUpdateResp {
+    enum Status {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    Status status = 1;
+}
+
+// query current application state
+/* api = /umbrella/apply_query */
+message SkillApplyQueryReq {
+    string uid = 1;
+    string token = 2;
+    int32  skill_id = 3;
+}
+
+message SkillApplyQueryResp {
+    enum Status {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    enum ApplyState {
+        NOTAPPLY = 0;
+        APPLYING = 1;
+        APPLIED = 2;
+        FAILED = 3;
+        CANCELED = 4;
+    }
+
+    Status status = 1;
+    ApplyState state = 2;
+    ApplyTip tip = 3;     //for display tip info, such as requirement or example image
+    ApplyInfo info = 4;  //for display user applied info only if state is APPLIED
+}
+
+message UserSkillCtrlReq {
+    int32 user_skill_id = 1;
+    bool enable = 2;
+}
+
+message UserSkillCtrlResp {
+    enum Status {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    Status status = 1;
+}
+
+
+/* api = umbrella/avatar_list  */
+message SysAvatarResp {
+    message Avatar {
+        string url = 1;
+        string gender = 2;
+    }
+
+    repeated Avatar avatars = 1;
+}
+
+/* api = /umbrella/check_token */
+message CheckTokenReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message CheckTokenResp {
+    bool valid = 1;
+    int32 ttl = 2;
+}
+
+
+/* api = /umbrella/violations */
+message ViolationResp {
+    message Item {
+        int32 vid = 1;
+        string title = 2;
+    }
+
+    repeated Item items = 1;
+}
+
+
+/* api = /umbrella/vip_list */
+message VIPListResp {
+    message Item {
+        int32 vip = 1;
+        int32 threshold = 2;
+    }
+
+    repeated Item items = 1;
+}
+
+/* api = /umbrella/noble_privilege */
+message NoblePrivilegeResp {
+    message Item {
+        int32 noble_id = 1;
+        int32 product_id = 2;
+        int32 protect_days = 3;
+        bool anti_kicked = 4;
+        bool family_permission = 5;
+        bool shown_in_room_rank = 6;
+        bool hidden_enter_room = 12;
+        bool broadcast_gift = 7;
+        bool broadcast_noble = 8;
+        double discount = 9;
+        double experience_ratio = 10;
+        int32 room_max_num = 11;
+        bool vip_prop = 13;  // 王者道具
+    }
+
+    repeated Item items = 1;
+}
+
+/* api = /umbrella/country_list */
+message SupportCountryResp {
+    message Item {
+        string name = 1;
+        int32  code = 2;
+    }
+    repeated Item items  = 1;
+}
+
+
+/* api = /umbrella/api_policy */
+message PolicyReq {
+    string uid = 1;       // 0 if user unregistered
+    string location = 2;  // user's city e.g. 北京市
+}
+
+message PolicyResp {
+    enum Category {
+        ALL = 0;
+        ShowRoom = 1;
+        ShowTweet = 2;
+        PubTweet = 3;
+        ShowBox = 4;   //是显示箱子及盲目盒
+    }
+
+                                       // map's key_type can not be enum
+    map<int32, bool> policy_list = 1;  // so only the range of key defined by Category
+}
+
+
+/* api = /umbrella/app_conf */
+message AppConfigResp {
+    enum Key {
+        UND = 0 ;
+        RoomDisplayNum = 1;
+    }
+
+    map<int32, string> configs = 1;
+}

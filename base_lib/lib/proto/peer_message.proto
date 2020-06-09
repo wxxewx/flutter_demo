@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package proto_def;
+
+/*
+ * 客户端间直接交换的信息
+ */
+
+/*
+ * 发送消息时需要保证level和title两个字段至少一个有值。
+ * 收到消息时不能假定两个字段的值均存在，在不存在时需要去本地字典表中查询
+ */
+message Level {
+    int32 level = 1;
+    string title = 2;
+}
+
+/*
+ * 聊天室中消息/通知中用到的用户扩展信息
+ * UI根据扩展信息中的用户等级和头衔决定欢迎通知和用户消息如何显示
+ */
+message PeerUserInfo {
+    enum BanBanGrade {
+        NONE = 0; //占位
+        NOT_BANBAN = 1; //普通用户
+        BANBAN = 2; //陪陪
+        STAR = 3; //红人
+        SUPERVISOR = 8; //超级管理员
+    }
+
+    string userId = 1;
+    string nickName = 2;
+    string avatar = 3;
+    Level vip = 4;
+    Level noble = 5;
+    string gender = 6; //'F' for female, 'M' for male, 'U' for Unknown
+    bool hideWelcomeNotification = 7; //隐身模式是否打开
+    BanBanGrade banbanGrade = 8;
+}
+
+message Ranks {
+    message User {
+        string uid = 1;
+        string name = 2;
+        string avatar = 3;
+        string gender = 4;
+        int32 age = 5;
+        int32 noble = 6;
+        int32 vip = 7;
+    }
+
+    enum Scope {
+        ROOM = 0; //房间榜
+        GLOBAL = 1; //总榜
+    }
+
+    message Item {
+        User user = 1;
+        int32 rank = 2; //在榜单上的排名
+        int32 value = 3; //消费额
+        string period_type = 4; //对应'月|周|日'榜
+        string rank_category = 5; //贡献、魅力等榜单类别
+        Scope scope = 6;
+    }
+
+    repeated Item items = 2;
+}
+

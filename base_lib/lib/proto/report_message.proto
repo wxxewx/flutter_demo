@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package proto_def;
+
+
+/* api = /share/report_data */
+message PromotionReportReq {
+    enum SEX {
+        MAN = 0;
+        WOMAN = 1;
+    }
+
+    string identifier = 1;
+    string phone = 2;
+    string uid = 3;
+    string client = 4;
+    string version = 5;
+    SEX sex = 6;
+    string idfa = 7;
+    string imei = 8;
+    string mac = 9;
+    string channel = 10;
+}
+
+/* api = /advert/client_report */
+message AdvertReportReq {
+    enum SEX {
+        MAN = 0;
+        WOMAN = 1;
+    }
+
+    string idfa = 1;
+    string imei = 2;
+    string uid = 3;
+    string phone = 4;
+    string client = 5;
+    string version = 6;
+    string mac = 7;
+    SEX sex = 8;
+    string channel = 9;
+}

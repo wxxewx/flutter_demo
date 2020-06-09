@@ -1,0 +1,642 @@
+syntax = "proto3";
+
+package proto_def;
+
+/* api = /umbrella/stick_list */
+message StickersReq {
+
+}
+
+message Sticker {
+    string id = 1;
+    string title = 2;
+    string icon = 3;
+}
+
+message StickersResp {
+    repeated Sticker stickers = 1;
+}
+
+enum CATEGORY {
+    ALL = 0;      // 包含下架商品
+    GIFT = 1;     // 只返回上架商品
+    AVATAR_BOX = 2;
+    SEAT_GUARDIAN = 3;
+    BOX = 4;
+    KEY = 5;
+    NOBLE = 6;
+    AVATAR_DECORATOR_1 = 7;
+    AVATAR_DECORATOR_2 = 8;
+    AVATAR_DECORATOR_3 = 9;
+    PROP = 10;
+    BLIND_BOX = 11;
+}
+
+enum PRODUCT_GRADE {
+    NONE = 0;
+    BROZEN = 1;
+    SILVER = 2;
+    GOLDEN = 3;
+}
+
+message Product {
+    int32 pid = 1;
+    string title = 2;
+    string icon = 3;
+    int32  price = 4;
+    int32  period = 5;
+    bool   permanent = 6;
+    CATEGORY category = 7;
+    PRODUCT_GRADE grade = 8;
+    int32 priority = 9;
+    string svga_url = 10;
+    int32 svga_duration = 11;
+    int32 diamonds = 12;
+    string description = 13;
+    bool  for_sale = 14;   //是否在售
+}
+
+/* api = /umbrella/product_list */
+message ShopProductsReq {
+    CATEGORY category = 1;
+}
+
+message ShopProductsResp {
+    repeated Product products = 1;
+}
+
+/* api = /umbrella/shows_list */
+message ShowListReq {
+    enum Category {
+        ALL = 0;
+        AVATAR_BOX = 1;
+        CHAT_BUBBLE = 2;
+        MIC_RIPPLE = 3;
+        CARD_SHOW = 4;
+        VEHICLE = 5;
+    }
+    Category category = 1;
+}
+
+message ShowListResp {
+    repeated Product products = 1;
+}
+
+/* api = /bees/my_shows */
+message MyShowReq {
+    string uid = 1;
+    string token = 2;
+    ShowListReq.Category category = 3;  // no support ALL
+}
+
+message MyShowResp {
+    message Show {
+        int32 show_id = 1;
+        int32 count = 2;
+        bool  weared = 3;
+        string expires = 4;
+        ShowListReq.Category category = 5;
+
+    }
+    repeated Show my_shows = 1;
+}
+
+/* api = /bees/show_ctrl */
+message ShowCtrlReq {
+    enum Cmd {
+        OFF = 0;
+        ON = 1;
+    }
+
+    Cmd cmd = 1;
+    string uid = 2;
+    string token = 3;
+    int32  show_id = 4;
+    int32  seat_idx = 5;
+    string room_id = 6;
+}
+
+message ShowCtrlResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        NOT_HAVE_SHOW = 2;
+    }
+    Status status = 1;
+}
+
+
+/* api = /umbrella/open_box */
+message OpenBoxReq{
+    string uid = 1;
+    string token = 2;
+    PRODUCT_GRADE box_grade = 3;
+    string room_id = 4;
+    int32 count = 5; // open several times
+}
+
+message OpenBoxResp{
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        KEY_NEEDED = 2;
+        BOX_EXHAUSTED = 3;
+        TRANSACTION_FAILURE = 4;
+    }
+
+
+    message Item {
+        string title = 1;
+        string icon = 2;
+    }
+
+    message RewardBox {
+        int32 count = 1;
+        int32 product_id = 3;
+    }
+
+    STATUS status = 1;
+    repeated Item items = 2;
+    RewardBox reward = 3;
+}
+
+/* api = /umbrella/send_gift */
+// 将背包物品赠送给他人
+message SendGiftReq {
+    message Gift {
+        string to_uid = 1;
+        string to_name = 2;
+        int32  gift_id = 3;
+        int32  count = 4;
+        int32  seat_idx = 5;  //value range 1-8
+    }
+
+    enum Context {
+        CHATROOM = 0;
+        IM = 1;
+    }
+
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;
+    Context context = 5;
+    repeated Gift gifts = 4;
+}
+
+message SendGiftResp {
+    enum STATUS {
+        OK = 0;
+        BAG_INSUFFICIENT = 1;
+        ERROR = 2;
+        TOKEN_INVALID = 3;
+    }
+
+    STATUS status = 1;
+}
+
+
+/* api = /umbrella/donate_gift */
+message DonateGiftReq {
+    message User {
+        string uid = 1;
+        string name = 2;
+        int32 seat_idx = 3;
+        int32 count = 4;
+    }
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;      // 0 if not in room
+    int32  product_id = 4;
+    repeated User to_users = 5;
+}
+
+message DonateGiftResp {
+    SendGiftResp.STATUS status = 1;
+}
+
+/* api = /alice/happy_pay */
+message HappyPayReq {
+	message User {
+	        string uid = 1;
+	        string name = 2;
+	        int32 seat_idx = 3;
+	        int32 count = 4;
+	}
+
+	enum Channel {
+	    BALANCE = 0;
+	    ALIPAY_APP = 1;
+	    WEIXIN_APP = 2;
+	    WEIXIN_PUB = 3;
+	    ALIPAY_WAP = 4;
+	    APPLE = 5;
+	}
+
+    enum Usage {
+        Buy = 0;
+        Send = 1;
+    }
+
+    string  uid =   1;
+    string  token = 2;
+    Channel channel = 3;
+    int32   product_id = 4;
+    int32   count = 5;
+    int32   coupon_id = 6;
+    Usage   usage = 7;
+
+    repeated User to_users = 8;  // if send to others
+    string   room_id = 9;        // 0 if not in room when send to others
+    PRODUCT_GRADE grade = 10;    // required if send blind box
+}
+
+message HappyPayResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        TRANSACTION_FAILURE = 2;
+        PARAMETER_ERROR = 3;
+        BALANCE_INSUFFICIENT = 4;
+    }
+    Status status = 1;
+    string json_str = 2;  // used for android and balance pay on ios
+    string order_no = 3;  // not used yet
+}
+
+
+/* api = /umbrella/gift_nums    */
+/* api = /umbrella/diamond_nums */
+/* api - /umbrella/ex_rate      */
+/* api - /umbrella/draw_rate    */
+// 物品常用数量列表
+message BatchNumResp {
+    repeated int32 batch_nums = 1;
+}
+
+
+enum PayChannel {
+    BALANCE = 0;
+    ALIPAY_APP = 1;
+    WEIXIN_APP = 2;
+    APPLE = 3;
+}
+
+enum OS {
+    OS_UNK = 0;
+    OS_IOS = 1;
+    OS_ANDROID = 2;
+}
+
+/* api = /alice/recharge */
+// 用户帐户充值接口
+message AccountRechargeReq {
+    string uid = 1;
+    string token = 2;
+    int32 amount = 3;
+    OS os = 4;
+    PayChannel channel = 5;
+}
+
+message AccountRechargeResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        TRANSACTION_FAILURE = 2;
+        PARAMETER_ERROR = 3;
+    }
+    Status status = 1;
+    string json_str = 2;  // used for android
+    string order_no = 3;
+}
+
+
+/* api = /alice/apple_verify */
+// 用于苹果购买票据验证
+message RechargeVerifyReq {
+    string uid = 1;
+    string token = 2;
+    string receipt = 3;
+    string order_no = 4;
+}
+
+message RechargeVerifyResp {
+    int32 status = 1;
+}
+
+/* api = /alice/apply_withdraw */
+// 用户帐户提现接口
+message AccountWithdrawReq {
+    enum WithDrawChannel {
+        UNK = 0;
+        BANK = 1;
+        ALIPAY = 2;
+        WX = 3;
+    }
+    string uid = 1;
+    string token = 2;
+    int32 amount = 3;  // unit is fen
+    WithDrawChannel channel = 4;
+    int32 apply_id = 5;  // for re-withdraw the last failed request
+}
+
+message AccountWithdrawResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        INSUFFICIENT = 2;
+        PARAMTER_ERROR = 3;
+    }
+    Status status = 1;
+}
+
+/* api = /alice/query_withdraw */
+message WithdrawQueryReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message WithdrawQueryResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+    }
+
+    enum State {
+        STATE_UNK = 0;
+        PENDING = 1;
+        PASS = 2;
+        SUCCESS = 3;
+        FAILED =  4;
+    }
+    Status status = 1;
+    State  state = 2;
+    int32 apply_id = 3;
+    int32 amount = 4;  //amount is fen
+    string date =  5;
+    string comment = 6;
+}
+
+
+//获取当前支持的银行列表
+/* api = /alice/bank_list */
+message BankListResp {
+    message Bank {
+        int32 bank_id = 1;
+        string bank_name = 2;
+        int32 withdraw_fee = 3;  // 提现手续费,单位分
+    }
+
+    repeated Bank banks = 1;
+}
+
+
+// 用户清算帐户设置
+/* api = /alice/user_settle */
+message AccountSettleReq {
+    message Settle {
+        int32 bank_id = 1;
+        string account_id = 2;   // card_no or wx open_id or alipay's account
+        string account_name = 3; // account real name
+        string phone = 4;        // phone registered at the bank
+    }
+
+    enum Cmd {
+        QUERY = 0;
+        UPDATE = 1;
+        REMOVE = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Cmd cmd = 3;
+    Settle settle = 4;
+}
+
+message AccountSettleResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        TRANSACTION_FAILED = 2;
+    }
+
+    message Settle {
+        string bank_name = 1;
+        string account_id = 2;
+        string account_name = 3;
+        string phone = 4;        // phone registered at the bank
+        bool valid = 5;
+    }
+
+    Status status = 1;
+    Settle settle = 2;  // return when query
+
+}
+
+/* api = /alice/charge_v2 */
+// 物品购买商品的订单支付接口
+message OrderChargeReq {
+    string uid = 1;
+    string token = 2;
+    int32 product_id = 3;
+    int32 coupon_id = 4;
+    int32 count = 5;
+    OS os = 6;
+    PayChannel channel = 7;
+}
+
+message OrderChargeResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        INSUFFICIENT = 2;
+        TRANSACTION_FAILURE = 3;
+    }
+
+    Status status = 1;
+    string json_str = 2;  // used for wx or alipay
+    string order_no = 3;
+}
+
+/* api = /alice/order_state */
+message OrderStateReq {
+    enum Category {
+        UNK = 0;
+        RECHARGE = 1;
+        CHARGE = 2;
+        HAPPY_PAY = 3;
+    }
+    string uid = 4;
+    string token = 5;
+    string order_no = 1;
+    Category category = 2;
+    OS os = 3;
+}
+
+message OrderStateResp {
+    enum State {
+        PENDING = 0;
+        SUCCESS = 1;
+    }
+    State state = 1;
+}
+
+
+/* api = /alice/account_history */
+message AccountDetailReq {
+    enum Category {
+        CATEGORY_UNK = 0;
+        DIAMOND = 1;
+        ATTRACTION = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+    int32  page_num = 4;
+}
+
+message AccountDetailResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        ERROR = 2;
+    }
+    message Item {
+        int32 cost = 1;
+        string content = 2;
+        string time = 3;
+        string direction = 4;  // + or -
+    }
+
+    STATUS status = 2;
+    repeated Item items = 1;
+}
+
+
+/* api = /umbrella/shop_ranks */
+message ShopRankReq {
+    enum Category {
+        TRUE_LOVE = 0;
+        OPEN_BOX_LUCK = 1;
+        GUARDIAN = 2;
+        NOBLE = 3;
+        CONSUME = 4;
+        ATTRACTION = 5;
+        CP = 6;
+        CELEBRITY = 7;
+    }
+
+    enum Period {
+        WEEK = 0;
+        DAY = 1;
+        MONTH = 2;
+    }
+
+    Category category = 1;
+    string room_id = 2;  // ranks related to the room
+    Period period = 3;   // ranks of period
+}
+
+
+message ShopRankResp {
+    enum Status {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    message User {
+        string uid = 1;
+        string name = 2;
+        string avatar = 3;
+        string gender = 4;
+        string great_num = 8;
+        int32 age = 5;
+        int32 noble = 6;
+        int32 vip = 7;
+        int32 avatar_box = 9;
+        int32 fans = 10;
+        string declaration = 11;
+
+    }
+
+    message Extension {
+        int32 gift = 1;  // gift or noble
+        int32 gift_count = 2;
+
+        int32 value = 3; // can be used as diamond, days and hot
+        string time = 4;  // time happened
+
+        PRODUCT_GRADE  box = 5;
+        int32  box_count = 6;
+
+        PRODUCT_GRADE relation = 7; // cp or gd grade
+        string celebrity = 8;       // celebrity desc
+    }
+
+    message Item {
+        User user = 1;
+        User to_user = 2;
+        Extension ext = 3;
+    }
+
+
+    Status status = 1;
+    repeated Item items = 2;
+}
+
+
+/* api = /umbrella/mini_ranks */
+message ShopMiniRankResp {
+    enum Status {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    message Item {
+        ShopRankReq.Category category = 1;
+        ShopRankResp.User first = 2;
+        ShopRankResp.User second = 3;
+        int32 gift = 4;
+    }
+
+    Status status = 1;
+    repeated Item items = 2;
+}
+
+/* api=/umbrella/box_top_reward */
+message BoxTopRewardReq {
+    PRODUCT_GRADE grade = 1;
+}
+
+message BoxTopRewardResp {
+    message Round {
+        int32 hour = 1;
+        int32 pid = 2;
+        string title = 3;
+        string icon = 4;
+        int32 price = 5;
+    }
+
+    PRODUCT_GRADE grade = 1;
+    repeated Round rounds = 2;
+}
+
+/* api = /alice/exchange */
+message ExchangeReq {
+    string uid = 1;
+    string token = 2;
+    int32  attraction = 3;
+}
+
+message ExchangeResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        INSUFFICIENT = 2;
+        FAILED = 3;
+    }
+
+    Status status = 1;
+}
+
+

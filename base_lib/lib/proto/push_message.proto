@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package proto_def;
+
+/* api = /push/message/ */
+message PushMessageReq {
+    string user_id = 1;
+    string push_token = 2;
+    string version = 3;
+    string client = 4;
+    string mac = 5;
+    string device_type = 6;
+    string imei = 7;
+    string idfa = 8;
+}

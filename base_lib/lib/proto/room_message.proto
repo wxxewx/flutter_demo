@@ -1,0 +1,580 @@
+syntax = "proto3";
+
+package proto_def;
+
+/* api = /hive/chatroom_list */
+message RoomListReq {
+    string category = 1;
+    int32 page_number = 2;
+    int32 num_per_page = 3;
+    string query = 4;  // used for search
+}
+
+
+message Room {
+    enum LAYOUT {
+        SEATS_4 = 0;
+        SEATS_8 = 1;
+    }
+    string id = 1;
+    string title = 2;
+    string room_img = 6;
+    int32  member_num = 4;
+    string category = 7;
+
+    string owner_name = 5;
+    string owner_avatar = 8;
+    string owner_id = 12;
+
+    LAYOUT layout = 9;
+    bool   need_password = 10;
+    string extern_room_id = 11;
+    bool   enable = 13;
+    int32  index = 14;  //heat index value
+    string greate_num = 15;
+}
+
+message RoomListResp {
+    repeated Room rooms = 1;
+}
+
+/* api = /hive/chatroom_detail */
+message RoomDetailReq {
+    string chatroom_id = 1;
+    string uid = 2;
+    string password = 3;
+}
+
+
+message RoomDetailResp {
+    enum STATUS {
+        OK = 0;
+        PASSWORD_INVALID = 1;
+        ROOM_IS_FULL = 2;
+        USER_IS_BLOCKED = 3;
+    };
+
+    enum SEAT_STATE {
+        DISABLED = 0;
+        OPEN = 1;
+        OCCUPIED = 2;
+    };
+
+    message Seat {
+        int32 idx = 1;
+        SEAT_STATE state = 2;
+        string description = 3;
+
+        string user_id = 4;
+        string user_name = 5;
+        string user_avatar = 6;
+    };
+
+    STATUS code = 1;
+    Room room = 2;
+    bool room_followed = 4;
+    repeated Seat seats = 3;
+}
+
+
+/* api = /hive/room_create */
+message RoomCreateReq {
+    string uid = 1;
+    string token = 2;
+    string title = 3;
+    int32  category_id = 4;
+    string declaration = 5;
+    string password = 6;
+    int32  theme_id = 7;
+}
+
+message RoomCreateResp {
+    enum STATUS {
+        OK = 0;
+        OVER_LIMIT = 1;
+        TOKEN_INVALID = 2;
+        CREATE_FAILED = 3;
+    }
+
+    STATUS status = 1;
+    string room_id = 2;
+}
+
+/* api = /hive/room_follow */
+message RoomSubscribeReq {
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;
+    bool   followed = 4;
+}
+
+message RoomSubscribeResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+    }
+
+    STATUS status = 1;
+    bool followed = 2;
+}
+
+/* api = /hive/user_rooms */
+message UserRoomsReq {
+    enum Category {
+        ALL = 0;
+        CREATED = 1;
+        FOLLOWED = 2;
+    }
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+}
+
+message UserRoomsResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+    }
+    STATUS status = 1;
+    repeated Room rooms = 2;
+}
+
+enum Role {
+    GUEST = 0;
+    OWNER = 1;
+    OPERATOR = 2;
+    BLOCKED = 3;
+    MUTED = 4;
+}
+
+/* api = /hive/member_list  */
+message RoomMembersReq {
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;
+    Role role = 4;
+    int32 noble = 5;
+    int32 vip = 6;
+}
+
+message RoomMembersResp {
+    enum STATUS {
+        OK = 0;
+        USER_INVALID = 1;
+        PERMISSION_DENIED = 2;
+    }
+
+    message Member {
+        string uid = 1;
+        string name = 2;
+        string avatar = 3;
+        string time = 4;
+        int32  noble = 5;
+        int32  vip = 6;
+        Role role = 7;
+        string comment = 8;
+        string gender = 9;
+        int32  age = 10;
+        string great_num = 11;
+    }
+
+    STATUS status = 1;
+    repeated Member members = 2;
+}
+
+/* api = /hive/member_modify */
+message RoomMemberControlReq {
+    string uid = 1;
+    string token = 2;
+
+    string room_id = 3;
+    string tgt_uid = 4;
+    Role role = 5;
+    bool valid = 6;
+
+    string comment = 7;
+}
+
+
+message RoomMemberControlResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PERMISSION_DENIED = 2;
+        OPERATION_FAILED = 3;
+    }
+
+    STATUS status = 1;
+}
+
+// this message is for placehold, Should Not Be used for client
+message RoomMemberControlNotification {
+    string uid = 1;
+    string name = 2;
+    string avatar = 3;
+    Role role = 4;
+    string comment = 5;
+}
+
+// this message is for placehold, Should Not Be used for client
+message RoomEventReq {
+    enum EventType {
+        ENTER = 0;      // MAY COMPLETE BY CLIENT
+        LEAVE = 1;      // AUTOCOMPLETE WHEN CALL EXIT MESSAGE
+        OPEN_BOX = 2;   // AUTOCOMPLETE WHEN CALL SHOP MESSAGE OPEN BOX
+        SEND_GIFT = 3;  // AUTOCOMPLETE WHEN CALL SHOP MESSAGE SEND GIFT
+        COUPLE = 4;
+        NOBLE = 5;
+    }
+
+    EventType type = 1;
+    string uid = 2;
+    string token = 3;
+    string room_id = 4;
+}
+
+message RoomEventResp {
+    enum STATUS {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    STATUS status = 1;
+}
+
+
+/*
+   This Message should be serialize to str , and used as the value of data which in
+   the json object called attach in netease custom-defined message. The JSON object should be
+   defined as bellow:
+   {
+       "from": "server|peer",
+       "data": "protobuf serailized str then b64 encode",     // if received from channel room it is jwt str, see https://jwt.io
+       "type": "Event|RoomControl|SeatControl|MemberControl", // See NotificationType below
+   }
+*/
+
+enum NotificationType {
+    EVENT = 0;
+    ROOM_CONTROL = 1;
+    SEAT_CONTROL = 2;
+    MEMBER_CONTROL = 3;
+}
+
+message RoomEventNotification {
+    message User {
+        string uid = 1;
+        string name = 2;
+        string avatar = 3;
+        int32  noble = 4;
+        int32  vip = 5;
+    }
+    message Room {
+        string room_id = 1;
+        string title = 2;
+    }
+    message Gift { //for send gift
+        string to_uid = 1;
+        string to_name = 2;
+        int32  gift_id = 3;
+        int32  count = 4;
+        GRADE  grade = 5;  // blind box grade;
+        bool  winning = 6; // true if it's a big reward
+    }
+
+    enum GRADE {
+        NONE = 0;
+        BROZEN = 1;
+        SILVER = 2;
+        GOLDEN = 3;
+    }
+    message BoxOpenMsg {
+        string title = 1;
+        string icon = 2;
+        GRADE box_grade = 3;
+        bool  winning = 4; // true if it's a big reward
+    }
+
+    RoomEventReq.EventType type = 1;
+    User user = 2;
+    Room room = 5;  // if user in the room
+    repeated Gift gifts = 3;
+    repeated BoxOpenMsg box_msgs= 4;
+}
+
+enum ControlState {
+    UNK = 0;
+    DISABLE = 1;
+    ENABLE = 2;
+}
+
+/* api = /hive/room_modify */
+message RoomControlReq {
+    enum ControlType {
+        UNK = 0;
+        KICK = 1;
+        INFO_UPDATE = 2;
+        PASSWORD_UPDATE = 3;
+    }
+
+    message Info {
+        string declaration = 1;     //may impliement through client-side message
+        string background = 2;      //may impliement through client-side message
+        string room_avatar = 3;
+        string password = 4;
+        ControlState muted_all = 5; //may impliement through client-side message
+        ControlState enable = 6;
+        string title = 7;
+    }
+
+    ControlType type = 1;
+    string uid = 2;
+    string token = 3;
+    string room_id = 4;
+    Info room_info = 5;
+
+    string tgt_uid = 6;  //for kick user from room, may impliment through client-side message
+}
+
+message RoomControlResp {
+    enum STATUS {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PERMISSION_DENIED = 2;
+        OPERATION_FAILED = 3;
+    }
+
+    STATUS status = 1;
+}
+
+
+//message RoomControlNotification {
+//    RoomControlReq.ControlType type = 1;
+//    string uid = 2;
+//    RoomControlReq.Info info = 3;
+//}
+
+/* api = /hive/seat_modify */
+message SeatControlReq {
+    enum ControlType {
+        UNK = 0;
+
+        APPLY = 1;
+        CANCEL = 2;
+
+        TAKEN = 3;
+        RELEASE = 4;
+
+        OPEN_MIC = 5;
+        CLOSE_MIC = 6;
+
+        LOCK = 7;  // can be used for kick off user from seat
+        UNLOCK = 8;
+    }
+
+    ControlType type = 1;
+    string uid = 2;
+    string token = 3;
+    string room_id = 4;
+    string tgt_uid = 5;
+    int32  seat_idx = 6;
+
+}
+
+message SeatControlResp {
+    enum STATUS {
+        OK = 0;
+        ERROR = 1;
+        SEAT_OCCUPIED = 2;
+        ALREADY_SEATED = 3;
+    }
+
+    STATUS status = 1;
+}
+
+
+message YunxinAddressReq {
+    string room_id = 1;
+}
+
+message YunxinAddressResp {
+    repeated string addr_list = 1;
+}
+
+/* api = /hive/room_title_tips */
+message RoomTitleTipResp {
+    repeated string titles = 1;
+}
+
+message RoomThemeResp {
+    message Theme{
+        int32 tid = 1;
+        string url = 2;
+    }
+
+    repeated Theme themes = 1;
+}
+
+
+message RoomExtInfo {
+    message SeatTimer {
+        int32 seat_idx = 1;      // timer apply to seat 1-8, 不包括主播位
+        uint32 seat_timer = 2;   // timer for seat 1-8, UTC seconds from the epoch.
+    }
+
+    message OrderCounter {
+        int32 count = 1;
+        int32 duration = 2;     // 平均时长(s)
+        uint32 expires_at = 3;  // 失败时间(s)
+    }
+
+    int32 bg_theme_id = 1;
+    uint32 room_timer = 2;   // timer for operator, UTC seconds from the epoch.
+    uint32 seat_timer = 3 [deprecated=true];   // timer for seat 1-8, UTC seconds from the epoch. 过时不再使用，改用seat_timers
+    int32 seat_idx = 4 [deprecated=true];      // timer apply to seat 1-8, 不包括主播位。过时不再使用，改用seat_timers
+    string announcement = 5; // 当前选择的哪个插件
+    string title = 6;        // 插件选择的内容
+    map<uint32, SeatTimer> seat_timers = 7;   // timers for seat 1-8, key is seat_idx
+    OrderCounter counter = 8;
+
+}
+
+// 定义聊天室队列中，座位的数据结构
+message SeatQueueItem {
+    enum SeatState {
+        UNK = 0;
+        LOCKED = 1;
+        OPEN = 2;
+        OCCUPIED = 3;
+    }
+
+    int32 seat_idx = 1;
+    SeatState seat_state = 2;
+    ControlState mic_state = 3;
+
+    string uid = 4;
+    string user_name = 5;
+    string user_avatar = 6;
+    int32 user_noble = 7;
+    int32 user_vip = 8;
+    string avatar_box = 9;
+}
+
+
+// 定义聊天室中整个排麦队列的数据结构
+// Queue key: WAIT_Q
+message WaitQueue {
+    message User {
+        string uid = 1;
+        string name = 2;
+        string gender = 3;
+        string avatar = 4;
+        int32 noble = 5;
+        int32 vip = 6;
+        int32 seat_idx = 7;
+        int32 timestamp = 8;
+    }
+    string placeholder = 1;
+    map<string, User> wait_users = 2;
+}
+
+/* api=/hive/seat_fund */
+message SeatFundControlReq {
+    enum Cmd {
+        UNK = 0;
+        START = 1;
+        PAUSE = 2;
+        RESET = 3;
+        STOP = 4;
+    }
+
+    Cmd cmd = 1;
+    string uid = 2;
+    string token = 3;
+    int32  room_id = 4;
+    int32  seat_idx = 5; // range 0-8 only used for reset one seat's fund data, -1 to reset all
+}
+
+message SeatFundControlResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PERMISSION_DENIED = 2;
+        OPERATION_FAILED = 3;
+    }
+    Status status = 1;
+}
+
+// Queue key = 'FUND_Q'
+message SeatFundQueue {
+    message Item {
+        int32 seat_idx = 1;
+        int32 amount = 2;  //unit is cent
+    }
+
+    string placeholder = 1;
+    bool show_funds = 2;
+    map<int32, Item> seat_funds = 3;
+    int32 week_income = 4;
+}
+
+/* api = /hive/decorator_modify  */
+message SeatDecoratorControlReq {
+    enum Cmd {
+        UNK = 0;
+        HIDE = 1;
+        SHOW = 2;
+    }
+    string uid = 1;
+    string token = 2;
+    Cmd    cmd = 3;
+    int32  room_id  = 4;
+    int32  seat_idx = 5;
+    int32  category = 6;
+}
+
+message SeatDecoratorControlResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PRODUCT_EXPIRE = 2;
+        PARAMETER_ERROR = 3;
+    }
+    Status status = 1;
+}
+
+// 定义用户在座位上或排麦时使用长连接的注册消息
+// 连接服务器地址由server_addr消息返回
+message KeepAliveRegister {
+    string uid = 1;
+    string room_id = 2;
+    int32  seat_idx = 3;
+    bool   in_waitq = 4;
+}
+
+
+/* api = /hive/order_dispatch */
+message OrderDispatchReq {
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;
+    int32 skill_id = 4;
+    string skill_title = 5;
+    string gender = 6;
+    string comment = 7;
+}
+
+message OrderDispatchResp {
+    enum STATUS {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    STATUS status = 1;
+    int32   order_count = 2;  //当前每周派单量
+    uint32  expires_at = 3;   //过期时间
+}
+
+/* api = /hive/search */
+// use RoomListReq and RoomListResp as message body
+

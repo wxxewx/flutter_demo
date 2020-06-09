@@ -1,0 +1,944 @@
+syntax = "proto3";
+
+package proto_def;
+
+
+message UserInfoBrief {
+    string uid = 1;
+    string name = 2;
+    string avatar = 3;
+    string gender = 10;
+    int32 age = 9;
+    int32 noble = 12;
+    int32 vip = 11;
+
+    int32 fans = 7;
+    int32 follows = 8;
+    int32 banban_grade = 13;
+    string location = 6;
+
+    string noble_name = 4;
+    string great_num = 5;
+    string last_login = 14;
+    string celebrity = 15;
+}
+
+/* api = /core/name_check */
+message NameCheckReq {
+    string name = 1;
+}
+
+message NameCheckResp {
+    bool can_use = 1;
+    repeated string names = 2;
+}
+
+/* api = /bees/register */
+message UserRegisterReq {
+    string phone = 1;
+    string name = 2;
+    string gender = 3;
+    string avatar = 4;
+    string birth = 5;
+    string sms_code = 9;
+    string invited_code = 6;
+    repeated int32 hobby_ids = 7;
+    repeated int32 skill_ids = 8;
+    string device_id = 10;
+    string open_id = 11;   // use wx and phone to register
+    int32  country = 12;   // country code for foreign users
+}
+
+message UserRegisterResp {
+    enum STATUS {
+        OK = 0;
+        NAME_OCUPIED = 1;
+        PARAMETER_ERROR = 2;
+        REPEAT_REGISTER = 3;
+        SMS_ERROR = 4;
+    }
+
+    STATUS status = 1;
+    UserInfoBrief user = 2;
+    string token = 3;
+}
+
+/* api = /core/banban_list */
+/* api = /core/banban_by_tags */
+message BanbanListReq {
+    message Filter {
+        string field = 1; // filter field, [gender|location|skill|skill_grade|tag}
+        string value = 2; // filter value, set 'ALL' for all ['F', 'M'] | ['北京'....] |
+                          // [skill_id or skill_grade_id in sys config]
+                          // [tag for tag in '端游, 手游, ...']
+    }
+
+    string user_id = 1;
+    int32 page_number = 2;
+    int32 num_per_page = 3;
+    repeated Filter filters = 4;
+    string order_by = 5;  // 排序字段， ['price', ]
+    bool   desc = 6;      // 默认升序
+}
+
+message BanBanListResp {
+    message VoiceCharacter {
+        string uid = 1;
+        string name = 2;
+        string gender = 12;
+        int32  age = 13;
+        string avatar = 3;
+        string great_num = 24;
+        int32 noble = 11;
+        string noble_name = 16;
+        int32 vip = 17;
+        string vip_str = 18;
+
+        string location = 10;
+
+        string declaration = 5;
+        string audio = 14;
+        int32  audio_duration = 15;
+
+        string skill = 4;
+        string skill_category = 19;  // GAME | VOICE
+
+        int32 fans = 21;
+        int32 follows = 22;
+        int32 banban_grade = 23;
+
+        string last_login = 6;
+        bool online = 7;
+        bool chating = 8;
+        bool fresh_man = 9;
+        string chatroom_id = 20;
+        string room_title = 25;
+    }
+
+    repeated VoiceCharacter banbans = 1;
+}
+
+/* api = /core/search */
+message SearchReq {
+    string keyword = 1;
+    int32 page_number = 2;
+    int32 num_per_page = 3;
+}
+
+message SearchResp {
+    message SkillInfoBrief {
+        string title = 1;
+        string icon_url = 2;
+        string category = 3;
+    }
+
+    STATUS status = 1;
+    repeated SkillInfoBrief skills = 2;
+    repeated UserInfoBrief  users = 3;
+}
+
+/* api = /bees/user_overview */
+message UserOverviewReq {
+    string dst_uid = 1;
+    string src_uid = 2;
+    string token = 3;  //deprecated
+}
+
+message UserOverviewResp {
+    enum STATUS {
+        OK = 0;
+        USER_NOT_EXIST = 1;
+    }
+
+    STATUS status = 1;
+    UserInfoBrief user = 2;
+    bool followed = 3;
+}
+
+/* api = /bees/login */
+message LoginReq {
+    string phone = 1;
+    string sms_code = 2;
+    string user_id = 3;
+    string open_id = 4;  // for first time wx register and bind an exists phone
+    int32  country = 5;
+    string device_id = 6;
+}
+
+message LoginResp {
+    enum STATUS {
+        OK = 0;
+        SMS_TIMEOUT = 1;
+        SMS_ERROR = 2;
+        USER_INVALID = 3;
+        BIND_OPENID_FAILED = 4; // 期间OPEN_ID已被他人占用 或 尝试用新OPEN_ID绑定已经绑定过的手机号
+    }
+
+    STATUS code = 1;
+    string phone = 3;
+    string uid = 2;
+    string nick_name = 4;
+    string avatar = 5;
+    string token = 6;
+    UserInfoBrief user = 7;
+}
+
+/* deprecated */
+message SkillDetailReq {
+    string uid = 1;
+    string skill_id = 2;
+}
+
+message SkillDetailResp {
+    message Comment {
+        string uid = 1;
+        string name = 2;
+        string user_img = 3;
+        string comment = 4;
+        int32  rate = 5;
+        string time_info = 6;
+        //string gift_info = 7;
+    }
+
+    message Skill {
+        string title = 1;
+        string grade = 2;
+        string description = 3;
+        string img_url = 4;
+        string audio_url = 5;
+        int32 audio_duration = 6;
+    }
+
+    string uid = 1;
+    Skill skill = 3;
+    repeated string user_imgs = 2;
+    repeated Comment skill_comments = 4;
+}
+
+
+message HomePageReq {
+    string tgt_uid = 1;
+    string src_uid = 2;
+}
+
+/* api = /core/home_page */
+message HomePageResp {
+    message Personal {
+        string uid = 1;
+        string name = 2;
+        string avatar = 11;
+        string gender = 3;
+        int32  age = 4;
+        int32  noble = 15;
+        int32  vip = 19;
+        string great_num = 23;
+        string birth = 16;
+        string star = 5;
+        string career = 6;
+
+        string declaration = 7;
+        string last_login = 8;
+        string audio = 13;
+        int32 audio_duration = 14;
+
+        repeated string img_urls = 10;
+
+        int32 fans = 9;
+        int32 yesterday_fans = 24;
+        int32 follows = 20;
+
+        string location = 17;
+        int32 banban_grade = 22;
+        string online = 18;
+        string room_id = 21;
+        string room_title = 25;
+    }
+
+    message Gift {
+        string id = 1;
+        string icon = 2;
+        int32 amount = 3;
+        string title = 4;
+    }
+
+    message Interest {
+        string skill_id = 1;
+        string title = 2;
+    }
+
+    message Skill { //deprecated
+        int32 skill_id = 1;
+        string description = 2;
+        int32  priority = 3;
+        string grade = 4;
+        string img_url = 5;
+        string audio_url = 6;
+        int32  audio_duration = 7;
+        int32  sells_count = 8;
+        int32  lowest_price = 9;
+    }
+
+    Personal personal = 1;
+    int32 total_gift = 4;
+    repeated int32 hobby = 12;
+    repeated Gift gifts = 5;
+    repeated Skill skills = 6;
+    repeated Interest interests = 8;
+    int32 total_cp_num = 10;
+    bool  followed = 11;
+    repeated int32 show_ids = 13;
+}
+
+/* api = /bees/user_skills */
+message UserSkillsReq {
+    string uid = 1;
+}
+
+message UserSkillsResp {
+    repeated HomePageResp.Skill skills = 1;
+}
+
+
+/* api = /core/location_update */
+message LocationUpdateReq {
+    string uid = 1;
+    string token = 2;
+    string location = 3;
+    bool   hide_location = 4;
+}
+
+enum STATUS {
+    OK = 0;
+    USER_INVALID = 1;
+    TOKEN_EXPIRE = 2;
+    PARAMTER_ERROR = 3;
+    PERMISSION_DENY = 4;
+    PREREQUISITE_FAILED = 5;
+}
+
+message LocationUpdateResp {
+    STATUS status = 1;
+}
+
+/* api = /bees/update_user_info */
+message UserInfoUpdateReq {
+    string uid = 1;
+    string token = 2;
+    string phone = 3;  // client may not allow user to modify it
+    string name = 4;   // client may not allow user to modify it
+    string gender = 5; // client may not allow user to modify it
+    string birth = 6;
+    int32 career_id = 7;
+}
+
+message UserInfoUpdateResp {
+    STATUS status = 1;
+}
+
+/* api = /bees/update_user_extension */
+message UserExtInfoUpdateReq {
+    enum Cmd {
+        UNK = 0;
+        UPDATE = 1;  //to set value
+        CLEAR = 2;   //to clear value
+    }
+
+    message Media {
+        Cmd cmd = 1;
+        string url = 2;
+        int32  duration = 3; // required if audio/video
+    }
+
+    message Gallery {
+        Cmd cmd = 1;
+        repeated string gallery = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Media  avatar = 3;
+    Media  declaration = 4; //set content to url field
+    Gallery gallery = 5;  // user gallery list
+    Media audio = 6;      // user audio list, only contains one currently
+    Media video = 7;      // user video list, only contains one currently
+}
+
+message UserExtInfoUpdateResp {
+    STATUS status = 1;
+}
+
+/* api = /bees/update_interest_skill  */
+message UserInterestsUpdateReq {
+    enum METHOD {
+        UNK = 0;
+        ADD = 1;
+        REMOVE = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    METHOD method = 3;
+    int32  skill_id = 4;
+}
+
+message UserInterestsUpdateResp {
+    STATUS status = 1;
+}
+
+/* api = /bees/update_hobby  */
+message UserHobbyUpdateReq {
+    enum METHOD {
+        UNK = 0;
+        ADD = 1;
+        REMOVE = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    METHOD method = 3;
+    int32  hobby_id = 4;
+}
+
+message UserHobbyUpdateResp {
+    STATUS status = 1;
+}
+
+/* api = /core/apply_oss_token */
+message TokenOssResp {
+    string access_key_id = 1;
+    string access_key_secret = 2;
+    string security_token = 3;
+    int32  expiration = 4;
+}
+
+/* api = /core/apply_agora_token */
+message TokenAgoraReq {
+    string channel = 1;
+    string uid = 2;
+}
+
+message TokenAgoraResp {
+    string token = 1;
+}
+
+/* api = /bees/user_follow */
+message FollowReq {
+    enum Cmd {
+        FOLLOW = 0;
+        BLOCK = 1;
+    }
+    string src_uid = 1;
+    string tgt_uid = 2;
+    Cmd    cmd = 5;
+    bool   flag = 3;    //true if cmd is enable else false
+    string token = 4;
+}
+
+message FollowResp {
+    STATUS status = 1;
+}
+
+/* api = /core/sms_code */
+message SmsCodeReq {
+    string phone = 1;
+    int32  country = 2;
+}
+
+message SmsCodeResp {
+    enum STATUS {
+        OK = 0;
+        OVER_LIMIT = 1;
+        PHONE_INVALID = 2;
+        USER_BANNED = 3;
+    }
+    STATUS status = 1;
+    bool registered = 2;
+    string code = 3;
+    string uid = 4;
+    string description = 5;
+}
+
+
+/* api = /core/sms_verify */
+message SmsCodeVerifyReq {
+    string phone = 1;
+    string code = 2;
+    int32  country = 3;
+}
+
+message SmsCodeVerifyResp {
+    enum STATUS {
+        OK = 0;
+        CODE_INVALID = 1;
+    }
+    STATUS status = 1;
+}
+
+
+/* api = /bees/user_couples */
+message UserCpRelationsReq {
+    string uid = 1;
+}
+
+message UserCpRelationsResp {
+    enum Couple_Type {
+        UNK = 0;
+        BRONZE = 1;
+        SILVER = 2;
+        GOLDEN = 3;
+    }
+    message CpRelation {
+        UserInfoBrief user = 1;
+        int32 days_left = 2;  // deprecated
+        string expire = 5;
+        Couple_Type cp_type = 3;
+        string cp_title = 4;
+    }
+
+    repeated CpRelation relations = 1;
+}
+
+
+/* api = /bees/user_guardians */
+message UserGuardiansReq {
+    enum Category {
+        ALL = 0;
+        BRONZE = 1;
+        SILVER = 2;
+        GOLDEN = 3;
+    }
+    string uid = 1;
+    string token = 2;
+    string room_id = 3;
+    Category category = 4;
+    string to_user_id = 5;
+}
+
+message UserGuardiansResp {
+    message Guardian {
+        UserGuardiansReq.Category category = 1;
+        string room_id = 2;
+        string to_user_id = 3;
+        string expires_at = 4;
+    }
+
+    STATUS status = 1;
+    repeated Guardian guardians = 2;
+}
+
+
+/* api = /bees/user_friends */
+message UserFriendsReq {
+    enum Category {
+        MY_FANS = 0;
+        MY_LIKES = 1;
+    }
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+    int32    page_num = 4;
+}
+
+message UserFriendsResp {
+    message Relation {
+        UserInfoBrief user = 1;
+        int32 time = 2;
+    }
+    STATUS status = 1;
+    repeated Relation items = 2;
+
+}
+
+/* api = /bees/is_followed */
+message IsFollowedReq {
+    string uid = 1;
+    string token = 2;
+    string tgt_uid = 3;
+    bool   reversed = 4;
+}
+
+message IsFollowedResp {
+    STATUS status = 1;
+    bool flag = 2;
+}
+
+/* api = /bees/user_bag */
+message BagReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message BagResp {
+    enum CATEGORY {
+        ALL = 0;
+        GIFT = 1;
+        AVATAR_BOX = 2;
+        SEAT_GUARDIAN = 3;
+        BOX = 4;
+        KEY = 5;
+        NOBLE = 6;
+        AVATAR_DECORATOR_1 = 7;
+        AVATAR_DECORATOR_2 = 8;
+        AVATAR_DECORATOR_3 = 9;
+
+    }
+
+    enum PRODUCT_GRADE {
+        NONE = 0;
+        BROZEN = 1;
+        SILVER = 2;
+        GOLDEN = 3;
+    }
+
+    enum STATE {
+        UNUSED = 0;
+        TRANSFERED = 1;
+        USED = 2;
+    }
+
+    message Product {
+        int32 pid = 1;
+        string title = 2;
+        string icon = 3;
+        CATEGORY category = 4;
+        PRODUCT_GRADE grade = 5;
+        int32 count = 6;
+        bool permant = 7;
+        string expire = 8;
+        STATE state = 9;
+    }
+
+    message Coupon {
+        int32 cid = 1;
+        int32 pid = 2;
+        string title = 3;
+        string icon = 4;
+        bool permant = 5;
+        int32 count = 6;
+        int32 value = 7;
+    }
+
+    STATUS status = 3;
+    repeated Product products = 1;
+    repeated Coupon coupons = 2;
+}
+
+/* api = /bees/order_list */
+message OrderListReq {
+    enum Category {
+        ALL = 0;
+        AS_PROVIDER = 1;
+        AS_CUSTOMER = 2;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+    int32 page_num = 4;
+    int32 num_per_page = 5;
+}
+
+message OrderListResp {
+    enum GiftState {
+        GS_UNK = 0;
+        GIVEN = 1;
+        REVOKED = 2;
+    }
+    enum OrderState {
+        OS_UNK = 0;
+        PENDING = 1;
+        ACCEPTED = 2;
+        SERVING = 3;
+        DONE = 4;
+        CANCEL_BY_C = 5;
+        CANCEL_BY_P = 6;
+    }
+
+    message Order {
+        int32 order_id = 1;
+        string skill_title = 2;
+        string serve_time = 3;
+
+        string gift_id = 4;
+        string gift_title = 5;
+        string gift_icon = 6;
+        int32 count = 7;
+
+        UserInfoBrief user = 8;
+
+        OrderState order_state = 9;
+        GiftState gift_state = 10;
+
+    }
+    repeated Order orders = 1;
+    STATUS status = 2;
+}
+
+/* api = /bees/place_order */
+message MakeOrderReq {
+    string uid = 1;
+    string token = 2;
+    string provider_id = 3;
+    int32  skill_id = 4;
+    string serve_time = 5;
+    int32 gift_id = 6;
+    int32 gift_count = 7;
+}
+
+message MakeOrderResp {
+    enum STATUS {
+        OK = 0;
+        BAG_INSUFFICIENT = 1;
+        PARAMTER_ERROR = 2;
+    }
+    STATUS status = 1;
+}
+
+/* api = /bees/change_order */
+message ChangeOrderStateReq {
+    enum OrderState {
+        UNK = 0;
+        ACCEPTED = 2;
+        CANCEL_BY_C = 5;
+        CANCEL_BY_P = 6;
+    }
+    enum GiftState {
+        GS_UNK = 0;
+        GIVEN = 1;
+        REVOKED = 2;
+    }
+    string uid = 1;
+    string token = 2;
+    string order_id = 3;
+    OrderState order_state = 4;
+    GiftState gift_state = 5;
+    string serve_time = 6;
+}
+
+message ChangeOrderStateResp {
+    STATUS status = 1;
+}
+
+
+/* api = /alice/balance */
+message AccountBalanceReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message AccountBalanceResp {
+    STATUS status = 1;
+    int32 diamond = 2;
+    int32 attraction = 3;
+}
+
+/* api = /bees/name_verify */
+message IdentityInfo {
+    string id_name = 1;
+    string id_number = 2;
+    string id_front_img = 3;
+    string id_back_img = 4;
+    string phone = 5;
+}
+
+message RealNameVerifyReq {
+    enum Cmd {
+        QUERY = 0;
+        UPDATE = 1;
+        //CANCEL = 2;  // DONT SUPPORT CANCEL
+    }
+
+    string uid = 1;
+    string token = 2;
+    Cmd cmd = 3;
+    IdentityInfo info = 4; // for update
+}
+
+message RealNameVerifyResp {
+    enum State {
+        NOT_VERIFY = 0;
+        REVIEWING = 1;
+        PASS = 2;
+        FAILED = 3;
+    }
+    STATUS status = 1;
+    State state = 2;
+    IdentityInfo info = 3;  // return if query
+    string comment = 4;     // show tip if review failed
+}
+
+
+/* api = /bees/celebrity_verify  */
+message Celebrity {
+    string description = 1;
+}
+
+message CelebrityVerifyReq {
+    enum Cmd {
+        QUERY = 0;
+        UPDATE = 1;
+    }
+
+    Cmd cmd = 1;
+    string uid = 2;
+    string token = 3;
+    Celebrity info = 4;
+}
+
+message CelebrityVerifyResp {
+    enum State {
+        NOT_VERIFY = 0;
+        PENDING = 1;
+        PASS = 2;
+        FAILED = 3;
+    }
+
+    STATUS status = 1;
+    State state = 2;
+    Celebrity info = 3;
+}
+
+
+/* api = /bees/my_noble */
+message UserNobleStateReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message UserNobleStateResp {
+    int32  noble = 1;
+    string noble_name = 2;
+    string expires = 3;
+}
+
+
+/* api = /bees/my_vip */
+message UserVipStateReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message UserVipStateResp {
+    int32 vip = 1;     // level such as 10
+    int32 value = 2;   // current experience value such as 3210
+}
+
+
+/* api = /bees/daily_checkin */
+message DailyCheckInReq {
+    enum Category {
+        UNK = 0;
+        BOX = 1;  // for VIP check in to get some boxes
+        COIN = 2; // ...
+    }
+
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+}
+
+message DailyCheckInResp {
+    enum Grade {
+        NONE = 0;
+        BROZEN = 1;
+        SILVER = 2;
+        GOLDEN = 3;
+    }
+    STATUS status = 1;
+    DailyCheckInReq.Category category = 2;
+    int32 count = 3;  // IF REPEATED, 0 RETURNED
+    Grade grade = 4;  // box belong to a grade
+}
+
+/* api = /bees/wear_product */
+message WearProductReq {
+    enum Cmd {
+        OFF = 0;
+        ON = 1;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Cmd cmd = 3;
+    int32 category = 4;    // value from product category
+    bool  use_new = 5;     // 使用的未使用的物品设为True
+    int32  product_id = 6; // needed if use_new is True
+}
+
+message WearProductResp {
+    STATUS status = 1;
+}
+
+/* api = /bees/user_decorators */
+message UserDecoratorReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message UserDecoratorResp {
+    enum State {
+        OFF = 0;
+        ON = 1;
+    }
+
+    message Item {
+        int32  category = 1;  // value defined by product category
+        string expires = 2;
+        State  state = 3;
+        string title = 4;
+        string icon = 5;
+    }
+
+    STATUS status = 1;
+    repeated Item items = 2;
+}
+
+/* api = /bees/isp_auth */
+message IspPhoneAuthReq {
+    string isp_token = 1;
+    string isp_access_token = 2;
+}
+
+message IspPhoneAuthResp {
+    enum Status {
+        OK = 0;
+        USER_BANNED = 1;
+        QUERY_PHONE_FAILURE = 2;
+    }
+
+    Status status = 1;
+    bool   registered = 2;
+    string phone = 3;
+    string sms_code = 4;   // for user to register or login
+    string description = 5; // for user banned tip
+}
+
+/* api = /bees/wx_auth */
+message WxUserAuthReq {
+    string open_id = 1;
+    string access_token = 2;
+}
+
+message WxUserAuthResp {
+    enum Status {
+        OK = 0;
+        USER_BANNED = 1;
+        ACCESS_TOKEN_INVALID = 2;
+    }
+    Status status = 1;
+    bool   registered = 2;
+    string phone = 3;
+    string sms_code = 4;
+    string description = 5; // for user banned tip
+}
+
+
+/* api = /bees/unregister */
+message UserUnRegisterReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message UserUnRegisterResp {
+    STATUS status = 1;
+}

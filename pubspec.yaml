@@ -1,0 +1,119 @@
+name: cike
+description: cike app
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  baselib:
+    path: base_lib
+  #登录模块
+  login:
+    path: login
+
+  #推特模块
+  tweet:
+    path: tweet
+
+  #联系人模块
+  contact:
+    path: contact
+
+  #房间模块
+  room:
+    path: room
+
+  #个人中心模块
+  center:
+    path: center
+
+  #用户模块
+  user:
+    path: user
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - images/
+
+#   - images/main_square_un_selected.png
+#    - images/main_chat_selected.png
+#    - images/main_square_selected.png
+#    - images/main_message_un_selected.png
+#    - images/main_message_selected.png
+#    - images/main_me_un_selected.png
+#    - images/main_me_selected.png
+#    - images/main_home_un_selected.png
+#    - images/main_home_selected.png
+#    - images/main_chat_un_selected.png
+#    - images/home_filter_icon.png
+#    - images/loading_empty_icon.png
+#    - images/noble_star.png
+#    - images/noble_none.png
+#    - images/noble_king.png
+#    - images/noble_golden.png
+#    - images/noble_diamond.png
+#    - images/noble_platinum.png
+#    - images/noble_tag_star.png
+#    - images/noble_tag_platinum.png
+#    - images/noble_tag_king.png
+#    - images/noble_tag_golden.png
+#    - images/noble_tag_diamond.png
+#    - images/lv_tag_full_21_25.png
+#    - images/lv_tag_full_111.png
+#    - images/lv_tag_full_61_80.png
+#    - images/lv_tag_full_26_30.png
+#    - images/lv_tag_full_36_40.png
+#    - images/lv_tag_full_81_100.png
+#    - images/lv_tag_full_16_20.png
+#    - images/lv_tag_full_31_35.png
+#    - images/lv_tag_full_41_50.png
+#    - images/lv_tag_full_51_60.png
+#    - images/lv_tag_full_6_10.png
+#    - images/lv_tag_full_11_15.png
+#    - images/lv_tag_full_1_5.png
+#    - images/quickly_icon.png
+#    - images/wechat_icon.png
+#    - images/splash_background.png
+#    - images/me_top_bg.png
+#
+#    - images/user_guard_none.png
+#
+#    - images/icon_wallet.png
+#    - images/icon_update.png
+#    - images/icon_store.png
+#    - images/icon_share.png
+#    - images/icon_setting.png
+#    - images/icon_my_purse.png
+#    - images/icon_my_chat_room.png
+#    - images/icon_member_center.png
+#    - images/icon_help.png
+#    - images/icon_customer.png
+#    - images/icon_about_us.png
+#    - images/icon_delete_cookies.png

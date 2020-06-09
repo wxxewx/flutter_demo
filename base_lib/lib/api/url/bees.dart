@@ -1,0 +1,43 @@
+
+class BeesApi {
+  static String moduleBees = "bees";
+  static String moduleCore = "core";
+  static String RECOMMEND_USERS = "${moduleCore}/banban_list";
+  static String RECOMMEND_USERS_TAGS = "${moduleCore}/banban_by_tags";
+  static String SKILL_LIST = "${moduleCore}/skill_list";
+  static String SEARCH = "${moduleCore}/search";
+  static String HOME_PAGE = "${moduleCore}/home_page";
+  static String SMS_CODE = "${moduleCore}/sms_code";
+  static String SMS_CODE_VERIFY = "${moduleCore}/sms_verify";
+  static String LOGIN = "${moduleBees}/login";
+  static String ISP_AUTH = "${moduleBees}/isp_auth";
+  static String WX_AUTH = "${moduleBees}/wx_auth";
+  static String REGISTER = "${moduleBees}/register";
+  static String APPLY_OSS_TOKEN = "${moduleCore}/apply_oss_token";
+  static String APPLY_AGORA_TOKEN = "${moduleCore}/apply_agora_token";
+  static String LOCATION_UPDATE = "${moduleCore}/location_update";
+  static String UNREGISTER = "$moduleBees/unregister";
+  static String UPDATE_USER_INFO = "${moduleBees}/update_user_info";
+  static String UPDATE_USER_EXTENSION = "${moduleBees}/update_user_extension";
+  static String UPDATE_USER_INTEREST = "${moduleBees}/update_interest_skill";
+  static String UPDATE_USER_HOBBY = "${moduleBees}/update_hobby";
+  static String NAME_CHECK = "${moduleCore}/name_check";
+  static String USER_BAG = "${moduleBees}/user_bag";
+  static String USER_SKILL = "${moduleBees}/user_skills";
+  static String USER_OVERVIEW = "${moduleBees}/user_overview";
+  static String USER_FOLLOW = "${moduleBees}/user_follow";
+  static String ORDER_LIST = "${moduleBees}/order_list";
+  static String PLACE_ORDER = "${moduleBees}/place_order";
+  static String CHANGE_ORDER = "${moduleBees}/change_order";
+  static String NAME_VERIFY = "${moduleBees}/name_verify";
+  static String CELEBRITY = "${moduleBees}/celebrity_verify";
+  static String MY_NOBLE_STATE = "$moduleBees/my_noble";
+  static String MY_LV_STATE = "$moduleBees/my_vip";
+  static String MY_COUPLES = "$moduleBees/user_couples";
+  static String MY_RADIO_GUARDIANS = "$moduleBees/user_guardians";
+  static String DAILY_CHECKIN = "$moduleBees/daily_checkin";
+  static String WEAR_PRODUCT = "$moduleBees/wear_product";
+  static String USER_DECORATOS = "$moduleBees/user_decorators";
+  static String MY_SHOWS = "${moduleBees}/my_shows";
+  static String SHOW_CONTROL = "${moduleBees}/show_ctrl";
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package proto_def;
+
+
+/* api = /tyrant/room_plugins*/
+message RoomPluginReq {
+
+}
+
+message RoomPluginResp {
+
+}
+
+
+
+

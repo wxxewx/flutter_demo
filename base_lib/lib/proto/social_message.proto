@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package proto_def;
+
+// 用于获取用户注册时的朗读素材
+/* api = /social/readings?page_number=? */
+message ReadingsResp {
+    message Item {
+        string content = 1;
+        string tag = 2;
+    }
+
+    repeated Item items = 1;
+}
+
+
+/* api = /social/oauth_query */
+message UserOAuthReq {
+    string uid = 1;
+    string token = 2;
+    OAuthUpdateReq.Category category = 3;
+}
+
+message UserOAuthResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PARAMETER_ERROR = 2;
+    }
+
+    Status status = 1;
+    string uid_3rd = 2;
+}
+
+// 用于绑定用户Oauth认证后获取的三方uid
+/* api = /social/oauth_update */
+message OAuthUpdateReq {
+    enum Category {
+        WX = 0;
+        QQ = 1;
+        SINA = 2;
+        ALI = 3;
+    }
+
+    string uid = 1;
+    string token = 2;
+    Category category = 3;
+    string uid_3rd = 4;
+    string name_3rd = 5;
+}
+
+message OAuthUpdateResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PARAMETER_ERROR = 2;
+        OPENID_OCCUPIED = 3;
+    }
+
+    Status status = 1;
+}
+
+/* api = /social/tags */
+message TagListResp {
+    message Item {
+        int32 tid = 1;
+        string tag = 2;
+        string category = 3;
+        int32  priority = 4;
+    }
+    repeated Item items = 1;
+}
+
+/* api = /social/tags_v2 */
+message TagListV2Resp {
+    message Tag {
+        string category = 1;
+        repeated string tags = 2;
+        string color = 3;
+        string icon = 4;
+        string desc = 5;
+    }
+
+    repeated Tag items = 3;
+}
+
+//推文格式定义
+message Location {
+    float lng = 1;
+    float lat = 2;
+}
+
+message Tweet {
+    message User {
+        string uid = 1;
+        string name = 2;
+        string avatar = 3;
+        int32  grade = 4;
+    }
+
+    User user = 1;
+    string text = 2;
+    string audio = 3;
+    Location location = 4;
+    repeated string tags = 5;
+    repeated string photos = 6;
+    int32 pub_time = 7;
+
+    bool  is_liked = 8;   // is this tweet is liked by user
+    int32 like_num = 9;   // the number of liked by other people
+    string tweet_id = 10;
+    bool   chat = 11;     // is the tweet allow chat with owner
+    //repeated LikedUser users = 8;
+}
+
+message GeneralResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PARAMETER_ERROR = 2;
+    }
+
+    Status status = 1;
+}
+
+/* api = /social/tweet */
+message TweetListReq {
+    enum Category {
+        RECENT = 0;
+        RECOMENDED = 1;
+    }
+    string uid = 1;
+    string token = 2;
+    Category category = 10;
+    int32  current_page = 3;
+    int32  num_per_page = 4;
+
+    Location current_loc = 5;
+    string expect_uid = 6;
+    int32  expect_age = 7;
+    int32  expect_gender = 8;
+    int32  expect_distance = 9;
+    int32  self_grade = 11;
+}
+
+message TweetListResp {
+    GeneralResp.Status status = 1;
+    repeated Tweet tweets = 2;
+}
+
+
+/* api=/social/tweet/pub */
+// use GeneralResp as PubTweetResp
+message PubTweetReq {
+    string uid = 1;
+    string token = 2;
+    Tweet tweet = 3;
+}
+
+/* api=/social/tweet/like */
+// use GeneralResp as LikeTweetResp
+message LikeTweetReq {
+    string uid = 1;
+    string token = 2;
+    string tweet_id = 3;
+}
+
+
+/* api=/social/tweet/unpub */
+// use GeneralResp as UnPubTweetResp
+message UnPubTweetReq {
+    string uid = 1;
+    string token = 2;
+    string tweet_id = 3;
+}
+
+
