@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package proto_def;
 
-
 /* api = /share/report_data */
 message PromotionReportReq {
     enum SEX {

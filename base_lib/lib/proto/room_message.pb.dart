@@ -13,6 +13,31 @@ import 'room_message.pbenum.dart';
 
 export 'room_message.pbenum.dart';
 
+class TopRoomsResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TopRoomsResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
+    ..pc<Room>(1, 'rooms', $pb.PbFieldType.PM, subBuilder: Room.create)
+    ..hasRequiredFields = false
+  ;
+
+  TopRoomsResp._() : super();
+  factory TopRoomsResp() => create();
+  factory TopRoomsResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TopRoomsResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  TopRoomsResp clone() => TopRoomsResp()..mergeFromMessage(this);
+  TopRoomsResp copyWith(void Function(TopRoomsResp) updates) => super.copyWith((message) => updates(message as TopRoomsResp));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TopRoomsResp create() => TopRoomsResp._();
+  TopRoomsResp createEmptyInstance() => create();
+  static $pb.PbList<TopRoomsResp> createRepeated() => $pb.PbList<TopRoomsResp>();
+  @$core.pragma('dart2js:noInline')
+  static TopRoomsResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TopRoomsResp>(create);
+  static TopRoomsResp _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Room> get rooms => $_getList(0);
+}
+
 class RoomListReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('RoomListReq', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
     ..aOS(1, 'category')
@@ -90,6 +115,7 @@ class Room extends $pb.GeneratedMessage {
     ..aOB(13, 'enable')
     ..a<$core.int>(14, 'index', $pb.PbFieldType.O3)
     ..aOS(15, 'greateNum')
+    ..a<$core.int>(16, 'cateId', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -233,6 +259,15 @@ class Room extends $pb.GeneratedMessage {
   $core.bool hasGreateNum() => $_has(13);
   @$pb.TagNumber(15)
   void clearGreateNum() => clearField(15);
+
+  @$pb.TagNumber(16)
+  $core.int get cateId => $_getIZ(14);
+  @$pb.TagNumber(16)
+  set cateId($core.int v) { $_setSignedInt32(14, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasCateId() => $_has(14);
+  @$pb.TagNumber(16)
+  void clearCateId() => clearField(16);
 }
 
 class RoomListResp extends $pb.GeneratedMessage {
@@ -1935,62 +1970,6 @@ class SeatControlResp extends $pb.GeneratedMessage {
   void clearStatus() => clearField(1);
 }
 
-class YunxinAddressReq extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('YunxinAddressReq', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
-    ..aOS(1, 'roomId')
-    ..hasRequiredFields = false
-  ;
-
-  YunxinAddressReq._() : super();
-  factory YunxinAddressReq() => create();
-  factory YunxinAddressReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory YunxinAddressReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  YunxinAddressReq clone() => YunxinAddressReq()..mergeFromMessage(this);
-  YunxinAddressReq copyWith(void Function(YunxinAddressReq) updates) => super.copyWith((message) => updates(message as YunxinAddressReq));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static YunxinAddressReq create() => YunxinAddressReq._();
-  YunxinAddressReq createEmptyInstance() => create();
-  static $pb.PbList<YunxinAddressReq> createRepeated() => $pb.PbList<YunxinAddressReq>();
-  @$core.pragma('dart2js:noInline')
-  static YunxinAddressReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<YunxinAddressReq>(create);
-  static YunxinAddressReq _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get roomId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set roomId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
-}
-
-class YunxinAddressResp extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('YunxinAddressResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
-    ..pPS(1, 'addrList')
-    ..hasRequiredFields = false
-  ;
-
-  YunxinAddressResp._() : super();
-  factory YunxinAddressResp() => create();
-  factory YunxinAddressResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory YunxinAddressResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  YunxinAddressResp clone() => YunxinAddressResp()..mergeFromMessage(this);
-  YunxinAddressResp copyWith(void Function(YunxinAddressResp) updates) => super.copyWith((message) => updates(message as YunxinAddressResp));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static YunxinAddressResp create() => YunxinAddressResp._();
-  YunxinAddressResp createEmptyInstance() => create();
-  static $pb.PbList<YunxinAddressResp> createRepeated() => $pb.PbList<YunxinAddressResp>();
-  @$core.pragma('dart2js:noInline')
-  static YunxinAddressResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<YunxinAddressResp>(create);
-  static YunxinAddressResp _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$core.String> get addrList => $_getList(0);
-}
-
 class RoomTitleTipResp extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('RoomTitleTipResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
     ..pPS(1, 'titles')
@@ -2184,6 +2163,7 @@ class RoomExtInfo extends $pb.GeneratedMessage {
     ..aOS(6, 'title')
     ..m<$core.int, RoomExtInfo_SeatTimer>(7, 'seatTimers', entryClassName: 'RoomExtInfo.SeatTimersEntry', keyFieldType: $pb.PbFieldType.OU3, valueFieldType: $pb.PbFieldType.OM, valueCreator: RoomExtInfo_SeatTimer.create, packageName: const $pb.PackageName('proto_def'))
     ..aOM<RoomExtInfo_OrderCounter>(8, 'counter', subBuilder: RoomExtInfo_OrderCounter.create)
+    ..e<RoomExtInfo_CpStage>(9, 'stage', $pb.PbFieldType.OE, defaultOrMaker: RoomExtInfo_CpStage.NOTHING, valueOf: RoomExtInfo_CpStage.valueOf, enumValues: RoomExtInfo_CpStage.values)
     ..hasRequiredFields = false
   ;
 
@@ -2277,6 +2257,15 @@ class RoomExtInfo extends $pb.GeneratedMessage {
   void clearCounter() => clearField(8);
   @$pb.TagNumber(8)
   RoomExtInfo_OrderCounter ensureCounter() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  RoomExtInfo_CpStage get stage => $_getN(8);
+  @$pb.TagNumber(9)
+  set stage(RoomExtInfo_CpStage v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasStage() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearStage() => clearField(9);
 }
 
 class SeatQueueItem extends $pb.GeneratedMessage {

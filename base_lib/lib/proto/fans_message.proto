@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package proto_def;
+
+
+message FansClub {
+    string uid = 1;
+    string name = 2;
+    string avatar = 3;
+    string title = 4;
+    string icon = 5;
+    int32 fans_num = 6;
+}
+
+// 查看指定主播所属的粉丝团信息
+/* api = /tyrant/fans_club/info */
+message FansClubInfoReq {
+    string uid = 1;
+    string token = 2;
+    string to_uid = 3; // 主播ID
+}
+
+message FansClubInfoResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        PARAM_ERROR = 2;
+    }
+    Status status = 1;
+    FansClub info = 2;
+    int32 income = 3; // set if from_uid == to_uid
+    bool is_fans = 4;
+}
+
+// 主播编辑自己粉丝团属性
+/* api = /tyrant/fans_club/info_edit */
+message FansClubInfoEditReq {
+    string uid = 1;
+    string token = 2;
+
+    string title = 3;
+    string icon = 4;
+}
+
+message FansClubInfoEditResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+        OP_LIMITED = 2; //操作受限
+        CONTENT_LIMITED = 3; //内容不合规
+    }
+    Status status = 1;
+}
+
+// 查询某用户粉丝团成长值
+/* api = /tyrant/fans_club/user_level */
+message FansClubUserLevelReq {
+    string uid = 1;
+    string token = 2;
+    string to_uid = 3;
+}
+
+message FansClubUserLevelResp {
+    int32 total_score = 1;
+    int32 today_score = 2;
+    int32 level = 3;
+    int32 next_level_score = 4;
+}
+
+/* api = /tyrant/fans_club/list */
+message FansClubListReq {
+    string uid = 1;
+    string token = 2;
+}
+
+message FansClubListResp {
+    repeated FansClub items = 1;
+}
+
+/* api = /tyrant/fans_club/tasks */
+message FansClubTaskStateReq {
+    string uid = 1;
+    string token = 2;
+}
+
+enum TaskCategory {
+    CONSUME = 0;
+    FREE_GIFT = 1;
+    WATCH_LIVE = 2;
+}
+
+message FansClubTaskStateResp {
+    message TaskState {
+        TaskCategory category = 1;
+        int32 today_score = 2;
+        int32 daily_limit = 3; // 0 means unlimited
+    }
+
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+    }
+    Status status = 1;
+    repeated TaskState items = 2;
+}
+
+/* api = /tyrant/fans_club/user_grows */
+message FansClubTaskAchieveReq {
+    string uid = 1;
+    string to_uid = 2;
+    string token = 3;
+    TaskCategory category = 4;
+    int32 value = 5; // use price of gift if category = 0
+}
+
+message FansClubTaskAchieveResp {
+    enum Status {
+        OK = 0;
+        TOKEN_INVALID = 1;
+    }
+    Status status = 1;
+}
+
+

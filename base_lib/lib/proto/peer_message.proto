@@ -36,6 +36,7 @@ message PeerUserInfo {
     string gender = 6; //'F' for female, 'M' for male, 'U' for Unknown
     bool hideWelcomeNotification = 7; //隐身模式是否打开
     BanBanGrade banbanGrade = 8;
+    int32 vehicleId = 9;
 }
 
 message Ranks {

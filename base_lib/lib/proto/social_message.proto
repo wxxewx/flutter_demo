@@ -13,7 +13,6 @@ message ReadingsResp {
     repeated Item items = 1;
 }
 
-
 /* api = /social/oauth_query */
 message UserOAuthReq {
     string uid = 1;
@@ -66,7 +65,7 @@ message TagListResp {
         int32 tid = 1;
         string tag = 2;
         string category = 3;
-        int32  priority = 4;
+        int32 priority = 4;
     }
     repeated Item items = 1;
 }
@@ -95,7 +94,8 @@ message Tweet {
         string uid = 1;
         string name = 2;
         string avatar = 3;
-        int32  grade = 4;
+        int32 grade = 4;
+        int32 show_id = 5;
     }
 
     User user = 1;
@@ -106,10 +106,11 @@ message Tweet {
     repeated string photos = 6;
     int32 pub_time = 7;
 
-    bool  is_liked = 8;   // is this tweet is liked by user
-    int32 like_num = 9;   // the number of liked by other people
+    bool is_liked = 8; // is this tweet is liked by user
+    int32 like_num = 9; // the number of liked by other people
     string tweet_id = 10;
-    bool   chat = 11;     // is the tweet allow chat with owner
+    bool chat = 11; // is the tweet allow chat with owner
+    bool set_top = 12; // true if first item is set by system at top
     //repeated LikedUser users = 8;
 }
 
@@ -132,22 +133,21 @@ message TweetListReq {
     string uid = 1;
     string token = 2;
     Category category = 10;
-    int32  current_page = 3;
-    int32  num_per_page = 4;
+    int32 current_page = 3;
+    int32 num_per_page = 4;
 
     Location current_loc = 5;
     string expect_uid = 6;
-    int32  expect_age = 7;
-    int32  expect_gender = 8;
-    int32  expect_distance = 9;
-    int32  self_grade = 11;
+    int32 expect_age = 7;
+    int32 expect_gender = 8;
+    int32 expect_distance = 9;
+    int32 self_grade = 11;
 }
 
 message TweetListResp {
     GeneralResp.Status status = 1;
     repeated Tweet tweets = 2;
 }
-
 
 /* api=/social/tweet/pub */
 // use GeneralResp as PubTweetResp
@@ -164,7 +164,6 @@ message LikeTweetReq {
     string token = 2;
     string tweet_id = 3;
 }
-
 
 /* api=/social/tweet/unpub */
 // use GeneralResp as UnPubTweetResp

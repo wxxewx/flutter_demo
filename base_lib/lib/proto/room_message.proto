@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package proto_def;
 
+/* api = /hive/top_rooms */
+message TopRoomsResp {
+    repeated Room rooms = 1;
+}
+
 /* api = /hive/chatroom_list */
 message RoomListReq {
     string category = 1;
@@ -15,12 +20,14 @@ message Room {
     enum LAYOUT {
         SEATS_4 = 0;
         SEATS_8 = 1;
+        SEATS_0 = 2;
     }
     string id = 1;
     string title = 2;
     string room_img = 6;
     int32  member_num = 4;
     string category = 7;
+    int32  cate_id = 16;
 
     string owner_name = 5;
     string owner_avatar = 8;
@@ -225,6 +232,7 @@ message RoomEventReq {
         SEND_GIFT = 3;  // AUTOCOMPLETE WHEN CALL SHOP MESSAGE SEND GIFT
         COUPLE = 4;
         NOBLE = 5;
+        OPEN_MAGICBOX = 6;
     }
 
     EventType type = 1;
@@ -287,6 +295,8 @@ message RoomEventNotification {
         BROZEN = 1;
         SILVER = 2;
         GOLDEN = 3;
+        MAGIC = 4;
+        PANDORA = 5;
     }
     message BoxOpenMsg {
         string title = 1;
@@ -393,14 +403,6 @@ message SeatControlResp {
 }
 
 
-message YunxinAddressReq {
-    string room_id = 1;
-}
-
-message YunxinAddressResp {
-    repeated string addr_list = 1;
-}
-
 /* api = /hive/room_title_tips */
 message RoomTitleTipResp {
     repeated string titles = 1;
@@ -428,6 +430,13 @@ message RoomExtInfo {
         uint32 expires_at = 3;  // 失败时间(s)
     }
 
+    enum CpStage {
+        NOTHING    = 0;
+        PREPARING  = 1;
+        CHOOSING   = 2;
+        ANNOUNCING = 3;
+    }
+
     int32 bg_theme_id = 1;
     uint32 room_timer = 2;   // timer for operator, UTC seconds from the epoch.
     uint32 seat_timer = 3 [deprecated=true];   // timer for seat 1-8, UTC seconds from the epoch. 过时不再使用，改用seat_timers
@@ -436,7 +445,7 @@ message RoomExtInfo {
     string title = 6;        // 插件选择的内容
     map<uint32, SeatTimer> seat_timers = 7;   // timers for seat 1-8, key is seat_idx
     OrderCounter counter = 8;
-
+    CpStage stage = 9;
 }
 
 // 定义聊天室队列中，座位的数据结构

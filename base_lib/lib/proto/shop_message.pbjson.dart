@@ -20,6 +20,10 @@ const CATEGORY$json = const {
     const {'1': 'AVATAR_DECORATOR_3', '2': 9},
     const {'1': 'PROP', '2': 10},
     const {'1': 'BLIND_BOX', '2': 11},
+    const {'1': 'EXP_CARD', '2': 12},
+    const {'1': 'SHOW', '2': 13},
+    const {'1': 'FANS_CARD', '2': 14},
+    const {'1': 'FREE', '2': 15},
   ],
 };
 
@@ -30,6 +34,16 @@ const PRODUCT_GRADE$json = const {
     const {'1': 'BROZEN', '2': 1},
     const {'1': 'SILVER', '2': 2},
     const {'1': 'GOLDEN', '2': 3},
+  ],
+};
+
+const PRODUCT_ORIGIN$json = const {
+  '1': 'PRODUCT_ORIGIN',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+    const {'1': 'ACTIVITY', '2': 1},
+    const {'1': 'LV', '2': 2},
+    const {'1': 'PEERAGE', '2': 3},
   ],
 };
 
@@ -50,10 +64,6 @@ const OS$json = const {
     const {'1': 'OS_IOS', '2': 1},
     const {'1': 'OS_ANDROID', '2': 2},
   ],
-};
-
-const StickersReq$json = const {
-  '1': 'StickersReq',
 };
 
 const Sticker$json = const {
@@ -89,6 +99,8 @@ const Product$json = const {
     const {'1': 'diamonds', '3': 12, '4': 1, '5': 5, '10': 'diamonds'},
     const {'1': 'description', '3': 13, '4': 1, '5': 9, '10': 'description'},
     const {'1': 'for_sale', '3': 14, '4': 1, '5': 8, '10': 'forSale'},
+    const {'1': 'badge', '3': 15, '4': 1, '5': 9, '10': 'badge'},
+    const {'1': 'origin', '3': 16, '4': 1, '5': 14, '6': '.proto_def.PRODUCT_ORIGIN', '10': 'origin'},
   ],
 };
 
@@ -158,6 +170,8 @@ const MyShowResp_Show$json = const {
     const {'1': 'weared', '3': 3, '4': 1, '5': 8, '10': 'weared'},
     const {'1': 'expires', '3': 4, '4': 1, '5': 9, '10': 'expires'},
     const {'1': 'category', '3': 5, '4': 1, '5': 14, '6': '.proto_def.ShowListReq.Category', '10': 'category'},
+    const {'1': 'origin', '3': 6, '4': 1, '5': 14, '6': '.proto_def.PRODUCT_ORIGIN', '10': 'origin'},
+    const {'1': 'permanent', '3': 7, '4': 1, '5': 8, '10': 'permanent'},
   ],
 };
 
@@ -750,6 +764,7 @@ const ShopRankReq_Category$json = const {
     const {'1': 'ATTRACTION', '2': 5},
     const {'1': 'CP', '2': 6},
     const {'1': 'CELEBRITY', '2': 7},
+    const {'1': 'FANS_CLUB', '2': 8},
   ],
 };
 
@@ -759,6 +774,7 @@ const ShopRankReq_Period$json = const {
     const {'1': 'WEEK', '2': 0},
     const {'1': 'DAY', '2': 1},
     const {'1': 'MONTH', '2': 2},
+    const {'1': 'ALL', '2': 3},
   ],
 };
 
@@ -786,6 +802,9 @@ const ShopRankResp_User$json = const {
     const {'1': 'avatar_box', '3': 9, '4': 1, '5': 5, '10': 'avatarBox'},
     const {'1': 'fans', '3': 10, '4': 1, '5': 5, '10': 'fans'},
     const {'1': 'declaration', '3': 11, '4': 1, '5': 9, '10': 'declaration'},
+    const {'1': 'celebrity', '3': 12, '4': 1, '5': 9, '10': 'celebrity'},
+    const {'1': 'live', '3': 13, '4': 1, '5': 8, '10': 'live'},
+    const {'1': 'room_id', '3': 14, '4': 1, '5': 5, '10': 'roomId'},
   ],
 };
 
@@ -795,6 +814,7 @@ const ShopRankResp_Extension$json = const {
     const {'1': 'gift', '3': 1, '4': 1, '5': 5, '10': 'gift'},
     const {'1': 'gift_count', '3': 2, '4': 1, '5': 5, '10': 'giftCount'},
     const {'1': 'value', '3': 3, '4': 1, '5': 5, '10': 'value'},
+    const {'1': 'value_desc', '3': 9, '4': 1, '5': 9, '10': 'valueDesc'},
     const {'1': 'time', '3': 4, '4': 1, '5': 9, '10': 'time'},
     const {'1': 'box', '3': 5, '4': 1, '5': 14, '6': '.proto_def.PRODUCT_GRADE', '10': 'box'},
     const {'1': 'box_count', '3': 6, '4': 1, '5': 5, '10': 'boxCount'},
@@ -813,34 +833,6 @@ const ShopRankResp_Item$json = const {
 };
 
 const ShopRankResp_Status$json = const {
-  '1': 'Status',
-  '2': const [
-    const {'1': 'OK', '2': 0},
-    const {'1': 'ERROR', '2': 1},
-  ],
-};
-
-const ShopMiniRankResp$json = const {
-  '1': 'ShopMiniRankResp',
-  '2': const [
-    const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.proto_def.ShopMiniRankResp.Status', '10': 'status'},
-    const {'1': 'items', '3': 2, '4': 3, '5': 11, '6': '.proto_def.ShopMiniRankResp.Item', '10': 'items'},
-  ],
-  '3': const [ShopMiniRankResp_Item$json],
-  '4': const [ShopMiniRankResp_Status$json],
-};
-
-const ShopMiniRankResp_Item$json = const {
-  '1': 'Item',
-  '2': const [
-    const {'1': 'category', '3': 1, '4': 1, '5': 14, '6': '.proto_def.ShopRankReq.Category', '10': 'category'},
-    const {'1': 'first', '3': 2, '4': 1, '5': 11, '6': '.proto_def.ShopRankResp.User', '10': 'first'},
-    const {'1': 'second', '3': 3, '4': 1, '5': 11, '6': '.proto_def.ShopRankResp.User', '10': 'second'},
-    const {'1': 'gift', '3': 4, '4': 1, '5': 5, '10': 'gift'},
-  ],
-};
-
-const ShopMiniRankResp_Status$json = const {
   '1': 'Status',
   '2': const [
     const {'1': 'OK', '2': 0},

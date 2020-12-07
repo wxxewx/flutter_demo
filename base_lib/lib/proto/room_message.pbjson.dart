@@ -35,6 +35,13 @@ const ControlState$json = const {
   ],
 };
 
+const TopRoomsResp$json = const {
+  '1': 'TopRoomsResp',
+  '2': const [
+    const {'1': 'rooms', '3': 1, '4': 3, '5': 11, '6': '.proto_def.Room', '10': 'rooms'},
+  ],
+};
+
 const RoomListReq$json = const {
   '1': 'RoomListReq',
   '2': const [
@@ -53,6 +60,7 @@ const Room$json = const {
     const {'1': 'room_img', '3': 6, '4': 1, '5': 9, '10': 'roomImg'},
     const {'1': 'member_num', '3': 4, '4': 1, '5': 5, '10': 'memberNum'},
     const {'1': 'category', '3': 7, '4': 1, '5': 9, '10': 'category'},
+    const {'1': 'cate_id', '3': 16, '4': 1, '5': 5, '10': 'cateId'},
     const {'1': 'owner_name', '3': 5, '4': 1, '5': 9, '10': 'ownerName'},
     const {'1': 'owner_avatar', '3': 8, '4': 1, '5': 9, '10': 'ownerAvatar'},
     const {'1': 'owner_id', '3': 12, '4': 1, '5': 9, '10': 'ownerId'},
@@ -71,6 +79,7 @@ const Room_LAYOUT$json = const {
   '2': const [
     const {'1': 'SEATS_4', '2': 0},
     const {'1': 'SEATS_8', '2': 1},
+    const {'1': 'SEATS_0', '2': 2},
   ],
 };
 
@@ -338,6 +347,7 @@ const RoomEventReq_EventType$json = const {
     const {'1': 'SEND_GIFT', '2': 3},
     const {'1': 'COUPLE', '2': 4},
     const {'1': 'NOBLE', '2': 5},
+    const {'1': 'OPEN_MAGICBOX', '2': 6},
   ],
 };
 
@@ -418,6 +428,8 @@ const RoomEventNotification_GRADE$json = const {
     const {'1': 'BROZEN', '2': 1},
     const {'1': 'SILVER', '2': 2},
     const {'1': 'GOLDEN', '2': 3},
+    const {'1': 'MAGIC', '2': 4},
+    const {'1': 'PANDORA', '2': 5},
   ],
 };
 
@@ -522,20 +534,6 @@ const SeatControlResp_STATUS$json = const {
   ],
 };
 
-const YunxinAddressReq$json = const {
-  '1': 'YunxinAddressReq',
-  '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
-  ],
-};
-
-const YunxinAddressResp$json = const {
-  '1': 'YunxinAddressResp',
-  '2': const [
-    const {'1': 'addr_list', '3': 1, '4': 3, '5': 9, '10': 'addrList'},
-  ],
-};
-
 const RoomTitleTipResp$json = const {
   '1': 'RoomTitleTipResp',
   '2': const [
@@ -584,8 +582,10 @@ const RoomExtInfo$json = const {
     const {'1': 'title', '3': 6, '4': 1, '5': 9, '10': 'title'},
     const {'1': 'seat_timers', '3': 7, '4': 3, '5': 11, '6': '.proto_def.RoomExtInfo.SeatTimersEntry', '10': 'seatTimers'},
     const {'1': 'counter', '3': 8, '4': 1, '5': 11, '6': '.proto_def.RoomExtInfo.OrderCounter', '10': 'counter'},
+    const {'1': 'stage', '3': 9, '4': 1, '5': 14, '6': '.proto_def.RoomExtInfo.CpStage', '10': 'stage'},
   ],
   '3': const [RoomExtInfo_SeatTimer$json, RoomExtInfo_OrderCounter$json, RoomExtInfo_SeatTimersEntry$json],
+  '4': const [RoomExtInfo_CpStage$json],
 };
 
 const RoomExtInfo_SeatTimer$json = const {
@@ -612,6 +612,16 @@ const RoomExtInfo_SeatTimersEntry$json = const {
     const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.proto_def.RoomExtInfo.SeatTimer', '10': 'value'},
   ],
   '7': const {'7': true},
+};
+
+const RoomExtInfo_CpStage$json = const {
+  '1': 'CpStage',
+  '2': const [
+    const {'1': 'NOTHING', '2': 0},
+    const {'1': 'PREPARING', '2': 1},
+    const {'1': 'CHOOSING', '2': 2},
+    const {'1': 'ANNOUNCING', '2': 3},
+  ],
 };
 
 const SeatQueueItem$json = const {

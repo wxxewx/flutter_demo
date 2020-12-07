@@ -5,7 +5,8 @@ import 'package:baselib/theme/theme_global.dart';
 import 'package:baselib/widget/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:square/square/squareItem.dart';
+import 'package:square/squareItem.dart';
+
 
 import 'bloc.dart';
 
@@ -29,6 +30,7 @@ class _SquareListState extends BlocState<SquareListBloc>
 
   @override
   void initState() {
+    bloc.setType(parameters.getInt("type"));
     super.initState();
     _scrollController.addListener(() {
       var position = _scrollController.position;

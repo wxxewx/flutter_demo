@@ -64,6 +64,7 @@ class PeerUserInfo extends $pb.GeneratedMessage {
     ..aOS(6, 'gender')
     ..aOB(7, 'hideWelcomeNotification', protoName: 'hideWelcomeNotification')
     ..e<PeerUserInfo_BanBanGrade>(8, 'banbanGrade', $pb.PbFieldType.OE, protoName: 'banbanGrade', defaultOrMaker: PeerUserInfo_BanBanGrade.NONE, valueOf: PeerUserInfo_BanBanGrade.valueOf, enumValues: PeerUserInfo_BanBanGrade.values)
+    ..a<$core.int>(9, 'vehicleId', $pb.PbFieldType.O3, protoName: 'vehicleId')
     ..hasRequiredFields = false
   ;
 
@@ -157,6 +158,15 @@ class PeerUserInfo extends $pb.GeneratedMessage {
   $core.bool hasBanbanGrade() => $_has(7);
   @$pb.TagNumber(8)
   void clearBanbanGrade() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get vehicleId => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set vehicleId($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasVehicleId() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearVehicleId() => clearField(9);
 }
 
 class Ranks_User extends $pb.GeneratedMessage {

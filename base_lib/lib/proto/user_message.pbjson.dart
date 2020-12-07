@@ -143,12 +143,14 @@ const BanBanListResp_VoiceCharacter$json = const {
     const {'1': 'fans', '3': 21, '4': 1, '5': 5, '10': 'fans'},
     const {'1': 'follows', '3': 22, '4': 1, '5': 5, '10': 'follows'},
     const {'1': 'banban_grade', '3': 23, '4': 1, '5': 5, '10': 'banbanGrade'},
+    const {'1': 'celebrity', '3': 26, '4': 1, '5': 9, '10': 'celebrity'},
     const {'1': 'last_login', '3': 6, '4': 1, '5': 9, '10': 'lastLogin'},
     const {'1': 'online', '3': 7, '4': 1, '5': 8, '10': 'online'},
     const {'1': 'chating', '3': 8, '4': 1, '5': 8, '10': 'chating'},
     const {'1': 'fresh_man', '3': 9, '4': 1, '5': 8, '10': 'freshMan'},
     const {'1': 'chatroom_id', '3': 20, '4': 1, '5': 9, '10': 'chatroomId'},
     const {'1': 'room_title', '3': 25, '4': 1, '5': 9, '10': 'roomTitle'},
+    const {'1': 'room_category', '3': 27, '4': 1, '5': 9, '10': 'roomCategory'},
   ],
 };
 
@@ -244,49 +246,6 @@ const LoginResp_STATUS$json = const {
   ],
 };
 
-const SkillDetailReq$json = const {
-  '1': 'SkillDetailReq',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'skill_id', '3': 2, '4': 1, '5': 9, '10': 'skillId'},
-  ],
-};
-
-const SkillDetailResp$json = const {
-  '1': 'SkillDetailResp',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'skill', '3': 3, '4': 1, '5': 11, '6': '.proto_def.SkillDetailResp.Skill', '10': 'skill'},
-    const {'1': 'user_imgs', '3': 2, '4': 3, '5': 9, '10': 'userImgs'},
-    const {'1': 'skill_comments', '3': 4, '4': 3, '5': 11, '6': '.proto_def.SkillDetailResp.Comment', '10': 'skillComments'},
-  ],
-  '3': const [SkillDetailResp_Comment$json, SkillDetailResp_Skill$json],
-};
-
-const SkillDetailResp_Comment$json = const {
-  '1': 'Comment',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'user_img', '3': 3, '4': 1, '5': 9, '10': 'userImg'},
-    const {'1': 'comment', '3': 4, '4': 1, '5': 9, '10': 'comment'},
-    const {'1': 'rate', '3': 5, '4': 1, '5': 5, '10': 'rate'},
-    const {'1': 'time_info', '3': 6, '4': 1, '5': 9, '10': 'timeInfo'},
-  ],
-};
-
-const SkillDetailResp_Skill$json = const {
-  '1': 'Skill',
-  '2': const [
-    const {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
-    const {'1': 'grade', '3': 2, '4': 1, '5': 9, '10': 'grade'},
-    const {'1': 'description', '3': 3, '4': 1, '5': 9, '10': 'description'},
-    const {'1': 'img_url', '3': 4, '4': 1, '5': 9, '10': 'imgUrl'},
-    const {'1': 'audio_url', '3': 5, '4': 1, '5': 9, '10': 'audioUrl'},
-    const {'1': 'audio_duration', '3': 6, '4': 1, '5': 5, '10': 'audioDuration'},
-  ],
-};
-
 const HomePageReq$json = const {
   '1': 'HomePageReq',
   '2': const [
@@ -338,6 +297,7 @@ const HomePageResp_Personal$json = const {
     const {'1': 'online', '3': 18, '4': 1, '5': 9, '10': 'online'},
     const {'1': 'room_id', '3': 21, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'room_title', '3': 25, '4': 1, '5': 9, '10': 'roomTitle'},
+    const {'1': 'celebrity', '3': 26, '4': 1, '5': 9, '10': 'celebrity'},
   ],
 };
 
@@ -348,6 +308,7 @@ const HomePageResp_Gift$json = const {
     const {'1': 'icon', '3': 2, '4': 1, '5': 9, '10': 'icon'},
     const {'1': 'amount', '3': 3, '4': 1, '5': 5, '10': 'amount'},
     const {'1': 'title', '3': 4, '4': 1, '5': 9, '10': 'title'},
+    const {'1': 'badge', '3': 5, '4': 1, '5': 9, '10': 'badge'},
   ],
 };
 
@@ -368,9 +329,8 @@ const HomePageResp_Skill$json = const {
     const {'1': 'grade', '3': 4, '4': 1, '5': 9, '10': 'grade'},
     const {'1': 'img_url', '3': 5, '4': 1, '5': 9, '10': 'imgUrl'},
     const {'1': 'audio_url', '3': 6, '4': 1, '5': 9, '10': 'audioUrl'},
-    const {'1': 'audio_duration', '3': 7, '4': 1, '5': 5, '10': 'audioDuration'},
-    const {'1': 'sells_count', '3': 8, '4': 1, '5': 5, '10': 'sellsCount'},
-    const {'1': 'lowest_price', '3': 9, '4': 1, '5': 5, '10': 'lowestPrice'},
+    const {'1': 'skill_icon', '3': 7, '4': 1, '5': 9, '10': 'skillIcon'},
+    const {'1': 'skill_title', '3': 8, '4': 1, '5': 9, '10': 'skillTitle'},
   ],
 };
 
@@ -378,6 +338,7 @@ const UserSkillsReq$json = const {
   '1': 'UserSkillsReq',
   '2': const [
     const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
   ],
 };
 
@@ -797,6 +758,7 @@ const BagResp_Product$json = const {
     const {'1': 'permant', '3': 7, '4': 1, '5': 8, '10': 'permant'},
     const {'1': 'expire', '3': 8, '4': 1, '5': 9, '10': 'expire'},
     const {'1': 'state', '3': 9, '4': 1, '5': 14, '6': '.proto_def.BagResp.STATE', '10': 'state'},
+    const {'1': 'badge', '3': 10, '4': 1, '5': 9, '10': 'badge'},
   ],
 };
 
@@ -826,6 +788,12 @@ const BagResp_CATEGORY$json = const {
     const {'1': 'AVATAR_DECORATOR_1', '2': 7},
     const {'1': 'AVATAR_DECORATOR_2', '2': 8},
     const {'1': 'AVATAR_DECORATOR_3', '2': 9},
+    const {'1': 'PROP', '2': 10},
+    const {'1': 'BLIND_BOX', '2': 11},
+    const {'1': 'EXP_CARD', '2': 12},
+    const {'1': 'SHOW', '2': 13},
+    const {'1': 'FANS_CARD', '2': 14},
+    const {'1': 'FREE', '2': 15},
   ],
 };
 
@@ -845,144 +813,6 @@ const BagResp_STATE$json = const {
     const {'1': 'UNUSED', '2': 0},
     const {'1': 'TRANSFERED', '2': 1},
     const {'1': 'USED', '2': 2},
-  ],
-};
-
-const OrderListReq$json = const {
-  '1': 'OrderListReq',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
-    const {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.proto_def.OrderListReq.Category', '10': 'category'},
-    const {'1': 'page_num', '3': 4, '4': 1, '5': 5, '10': 'pageNum'},
-    const {'1': 'num_per_page', '3': 5, '4': 1, '5': 5, '10': 'numPerPage'},
-  ],
-  '4': const [OrderListReq_Category$json],
-};
-
-const OrderListReq_Category$json = const {
-  '1': 'Category',
-  '2': const [
-    const {'1': 'ALL', '2': 0},
-    const {'1': 'AS_PROVIDER', '2': 1},
-    const {'1': 'AS_CUSTOMER', '2': 2},
-  ],
-};
-
-const OrderListResp$json = const {
-  '1': 'OrderListResp',
-  '2': const [
-    const {'1': 'orders', '3': 1, '4': 3, '5': 11, '6': '.proto_def.OrderListResp.Order', '10': 'orders'},
-    const {'1': 'status', '3': 2, '4': 1, '5': 14, '6': '.proto_def.STATUS', '10': 'status'},
-  ],
-  '3': const [OrderListResp_Order$json],
-  '4': const [OrderListResp_GiftState$json, OrderListResp_OrderState$json],
-};
-
-const OrderListResp_Order$json = const {
-  '1': 'Order',
-  '2': const [
-    const {'1': 'order_id', '3': 1, '4': 1, '5': 5, '10': 'orderId'},
-    const {'1': 'skill_title', '3': 2, '4': 1, '5': 9, '10': 'skillTitle'},
-    const {'1': 'serve_time', '3': 3, '4': 1, '5': 9, '10': 'serveTime'},
-    const {'1': 'gift_id', '3': 4, '4': 1, '5': 9, '10': 'giftId'},
-    const {'1': 'gift_title', '3': 5, '4': 1, '5': 9, '10': 'giftTitle'},
-    const {'1': 'gift_icon', '3': 6, '4': 1, '5': 9, '10': 'giftIcon'},
-    const {'1': 'count', '3': 7, '4': 1, '5': 5, '10': 'count'},
-    const {'1': 'user', '3': 8, '4': 1, '5': 11, '6': '.proto_def.UserInfoBrief', '10': 'user'},
-    const {'1': 'order_state', '3': 9, '4': 1, '5': 14, '6': '.proto_def.OrderListResp.OrderState', '10': 'orderState'},
-    const {'1': 'gift_state', '3': 10, '4': 1, '5': 14, '6': '.proto_def.OrderListResp.GiftState', '10': 'giftState'},
-  ],
-};
-
-const OrderListResp_GiftState$json = const {
-  '1': 'GiftState',
-  '2': const [
-    const {'1': 'GS_UNK', '2': 0},
-    const {'1': 'GIVEN', '2': 1},
-    const {'1': 'REVOKED', '2': 2},
-  ],
-};
-
-const OrderListResp_OrderState$json = const {
-  '1': 'OrderState',
-  '2': const [
-    const {'1': 'OS_UNK', '2': 0},
-    const {'1': 'PENDING', '2': 1},
-    const {'1': 'ACCEPTED', '2': 2},
-    const {'1': 'SERVING', '2': 3},
-    const {'1': 'DONE', '2': 4},
-    const {'1': 'CANCEL_BY_C', '2': 5},
-    const {'1': 'CANCEL_BY_P', '2': 6},
-  ],
-};
-
-const MakeOrderReq$json = const {
-  '1': 'MakeOrderReq',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
-    const {'1': 'provider_id', '3': 3, '4': 1, '5': 9, '10': 'providerId'},
-    const {'1': 'skill_id', '3': 4, '4': 1, '5': 5, '10': 'skillId'},
-    const {'1': 'serve_time', '3': 5, '4': 1, '5': 9, '10': 'serveTime'},
-    const {'1': 'gift_id', '3': 6, '4': 1, '5': 5, '10': 'giftId'},
-    const {'1': 'gift_count', '3': 7, '4': 1, '5': 5, '10': 'giftCount'},
-  ],
-};
-
-const MakeOrderResp$json = const {
-  '1': 'MakeOrderResp',
-  '2': const [
-    const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.proto_def.MakeOrderResp.STATUS', '10': 'status'},
-  ],
-  '4': const [MakeOrderResp_STATUS$json],
-};
-
-const MakeOrderResp_STATUS$json = const {
-  '1': 'STATUS',
-  '2': const [
-    const {'1': 'OK', '2': 0},
-    const {'1': 'BAG_INSUFFICIENT', '2': 1},
-    const {'1': 'PARAMTER_ERROR', '2': 2},
-  ],
-};
-
-const ChangeOrderStateReq$json = const {
-  '1': 'ChangeOrderStateReq',
-  '2': const [
-    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
-    const {'1': 'order_id', '3': 3, '4': 1, '5': 9, '10': 'orderId'},
-    const {'1': 'order_state', '3': 4, '4': 1, '5': 14, '6': '.proto_def.ChangeOrderStateReq.OrderState', '10': 'orderState'},
-    const {'1': 'gift_state', '3': 5, '4': 1, '5': 14, '6': '.proto_def.ChangeOrderStateReq.GiftState', '10': 'giftState'},
-    const {'1': 'serve_time', '3': 6, '4': 1, '5': 9, '10': 'serveTime'},
-  ],
-  '4': const [ChangeOrderStateReq_OrderState$json, ChangeOrderStateReq_GiftState$json],
-};
-
-const ChangeOrderStateReq_OrderState$json = const {
-  '1': 'OrderState',
-  '2': const [
-    const {'1': 'UNK', '2': 0},
-    const {'1': 'ACCEPTED', '2': 2},
-    const {'1': 'CANCEL_BY_C', '2': 5},
-    const {'1': 'CANCEL_BY_P', '2': 6},
-  ],
-};
-
-const ChangeOrderStateReq_GiftState$json = const {
-  '1': 'GiftState',
-  '2': const [
-    const {'1': 'GS_UNK', '2': 0},
-    const {'1': 'GIVEN', '2': 1},
-    const {'1': 'REVOKED', '2': 2},
-  ],
-};
-
-const ChangeOrderStateResp$json = const {
-  '1': 'ChangeOrderStateResp',
-  '2': const [
-    const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.proto_def.STATUS', '10': 'status'},
   ],
 };
 
@@ -1149,6 +979,7 @@ const DailyCheckInReq_Category$json = const {
     const {'1': 'UNK', '2': 0},
     const {'1': 'BOX', '2': 1},
     const {'1': 'COIN', '2': 2},
+    const {'1': 'ROULETTE', '2': 3},
   ],
 };
 
@@ -1308,6 +1139,106 @@ const UserUnRegisterResp$json = const {
   '1': 'UserUnRegisterResp',
   '2': const [
     const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.proto_def.STATUS', '10': 'status'},
+  ],
+};
+
+const MyInviterReq$json = const {
+  '1': 'MyInviterReq',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+const MyInviterResp$json = const {
+  '1': 'MyInviterResp',
+  '2': const [
+    const {'1': 'invite_code', '3': 1, '4': 1, '5': 9, '10': 'inviteCode'},
+    const {'1': 'inviter_name', '3': 2, '4': 1, '5': 9, '10': 'inviterName'},
+    const {'1': 'flag', '3': 3, '4': 1, '5': 8, '10': 'flag'},
+  ],
+};
+
+const UpdateMyInviterReq$json = const {
+  '1': 'UpdateMyInviterReq',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    const {'1': 'invite_code', '3': 3, '4': 1, '5': 9, '10': 'inviteCode'},
+  ],
+};
+
+const UpdateMyInviterResp$json = const {
+  '1': 'UpdateMyInviterResp',
+  '2': const [
+    const {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.proto_def.STATUS', '10': 'status'},
+  ],
+};
+
+const MyInviteeReq$json = const {
+  '1': 'MyInviteeReq',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    const {'1': 'page_num', '3': 3, '4': 1, '5': 5, '10': 'pageNum'},
+  ],
+};
+
+const MyInviteeResp$json = const {
+  '1': 'MyInviteeResp',
+  '2': const [
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.proto_def.MyInviteeResp.InviteRecord', '10': 'items'},
+  ],
+  '3': const [MyInviteeResp_InviteRecord$json],
+};
+
+const MyInviteeResp_InviteRecord$json = const {
+  '1': 'InviteRecord',
+  '2': const [
+    const {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.proto_def.UserInfoBrief', '10': 'user'},
+    const {'1': 'time', '3': 2, '4': 1, '5': 5, '10': 'time'},
+  ],
+};
+
+const SettlementDailyReq$json = const {
+  '1': 'SettlementDailyReq',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    const {'1': 'page_num', '3': 3, '4': 1, '5': 5, '10': 'pageNum'},
+  ],
+};
+
+const SettlementDailyResp$json = const {
+  '1': 'SettlementDailyResp',
+  '2': const [
+    const {'1': 'items', '3': 2, '4': 3, '5': 11, '6': '.proto_def.SettlementDailyResp.SettlementRecord', '10': 'items'},
+  ],
+  '3': const [SettlementDailyResp_SettlementRecord$json],
+};
+
+const SettlementDailyResp_SettlementRecord$json = const {
+  '1': 'SettlementRecord',
+  '2': const [
+    const {'1': 'time', '3': 1, '4': 1, '5': 5, '10': 'time'},
+    const {'1': 'origin', '3': 2, '4': 1, '5': 9, '10': 'origin'},
+    const {'1': 'amount', '3': 3, '4': 1, '5': 5, '10': 'amount'},
+  ],
+};
+
+const InviteIncomeReq$json = const {
+  '1': 'InviteIncomeReq',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+const InviteIncomeResp$json = const {
+  '1': 'InviteIncomeResp',
+  '2': const [
+    const {'1': 'settled_income', '3': 1, '4': 1, '5': 5, '10': 'settledIncome'},
+    const {'1': 'unsettle_income', '3': 2, '4': 1, '5': 5, '10': 'unsettleIncome'},
   ],
 };
 

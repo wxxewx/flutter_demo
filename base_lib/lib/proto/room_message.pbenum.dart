@@ -69,10 +69,12 @@ class ControlState extends $pb.ProtobufEnum {
 class Room_LAYOUT extends $pb.ProtobufEnum {
   static const Room_LAYOUT SEATS_4 = Room_LAYOUT._(0, 'SEATS_4');
   static const Room_LAYOUT SEATS_8 = Room_LAYOUT._(1, 'SEATS_8');
+  static const Room_LAYOUT SEATS_0 = Room_LAYOUT._(2, 'SEATS_0');
 
   static const $core.List<Room_LAYOUT> values = <Room_LAYOUT> [
     SEATS_4,
     SEATS_8,
+    SEATS_0,
   ];
 
   static final $core.Map<$core.int, Room_LAYOUT> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -226,6 +228,7 @@ class RoomEventReq_EventType extends $pb.ProtobufEnum {
   static const RoomEventReq_EventType SEND_GIFT = RoomEventReq_EventType._(3, 'SEND_GIFT');
   static const RoomEventReq_EventType COUPLE = RoomEventReq_EventType._(4, 'COUPLE');
   static const RoomEventReq_EventType NOBLE = RoomEventReq_EventType._(5, 'NOBLE');
+  static const RoomEventReq_EventType OPEN_MAGICBOX = RoomEventReq_EventType._(6, 'OPEN_MAGICBOX');
 
   static const $core.List<RoomEventReq_EventType> values = <RoomEventReq_EventType> [
     ENTER,
@@ -234,6 +237,7 @@ class RoomEventReq_EventType extends $pb.ProtobufEnum {
     SEND_GIFT,
     COUPLE,
     NOBLE,
+    OPEN_MAGICBOX,
   ];
 
   static final $core.Map<$core.int, RoomEventReq_EventType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -262,12 +266,16 @@ class RoomEventNotification_GRADE extends $pb.ProtobufEnum {
   static const RoomEventNotification_GRADE BROZEN = RoomEventNotification_GRADE._(1, 'BROZEN');
   static const RoomEventNotification_GRADE SILVER = RoomEventNotification_GRADE._(2, 'SILVER');
   static const RoomEventNotification_GRADE GOLDEN = RoomEventNotification_GRADE._(3, 'GOLDEN');
+  static const RoomEventNotification_GRADE MAGIC = RoomEventNotification_GRADE._(4, 'MAGIC');
+  static const RoomEventNotification_GRADE PANDORA = RoomEventNotification_GRADE._(5, 'PANDORA');
 
   static const $core.List<RoomEventNotification_GRADE> values = <RoomEventNotification_GRADE> [
     NONE,
     BROZEN,
     SILVER,
     GOLDEN,
+    MAGIC,
+    PANDORA,
   ];
 
   static final $core.Map<$core.int, RoomEventNotification_GRADE> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -360,6 +368,25 @@ class SeatControlResp_STATUS extends $pb.ProtobufEnum {
   static SeatControlResp_STATUS valueOf($core.int value) => _byValue[value];
 
   const SeatControlResp_STATUS._($core.int v, $core.String n) : super(v, n);
+}
+
+class RoomExtInfo_CpStage extends $pb.ProtobufEnum {
+  static const RoomExtInfo_CpStage NOTHING = RoomExtInfo_CpStage._(0, 'NOTHING');
+  static const RoomExtInfo_CpStage PREPARING = RoomExtInfo_CpStage._(1, 'PREPARING');
+  static const RoomExtInfo_CpStage CHOOSING = RoomExtInfo_CpStage._(2, 'CHOOSING');
+  static const RoomExtInfo_CpStage ANNOUNCING = RoomExtInfo_CpStage._(3, 'ANNOUNCING');
+
+  static const $core.List<RoomExtInfo_CpStage> values = <RoomExtInfo_CpStage> [
+    NOTHING,
+    PREPARING,
+    CHOOSING,
+    ANNOUNCING,
+  ];
+
+  static final $core.Map<$core.int, RoomExtInfo_CpStage> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static RoomExtInfo_CpStage valueOf($core.int value) => _byValue[value];
+
+  const RoomExtInfo_CpStage._($core.int v, $core.String n) : super(v, n);
 }
 
 class SeatQueueItem_SeatState extends $pb.ProtobufEnum {

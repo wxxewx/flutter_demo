@@ -22,6 +22,10 @@ class CATEGORY extends $pb.ProtobufEnum {
   static const CATEGORY AVATAR_DECORATOR_3 = CATEGORY._(9, 'AVATAR_DECORATOR_3');
   static const CATEGORY PROP = CATEGORY._(10, 'PROP');
   static const CATEGORY BLIND_BOX = CATEGORY._(11, 'BLIND_BOX');
+  static const CATEGORY EXP_CARD = CATEGORY._(12, 'EXP_CARD');
+  static const CATEGORY SHOW = CATEGORY._(13, 'SHOW');
+  static const CATEGORY FANS_CARD = CATEGORY._(14, 'FANS_CARD');
+  static const CATEGORY FREE = CATEGORY._(15, 'FREE');
 
   static const $core.List<CATEGORY> values = <CATEGORY> [
     ALL,
@@ -36,6 +40,10 @@ class CATEGORY extends $pb.ProtobufEnum {
     AVATAR_DECORATOR_3,
     PROP,
     BLIND_BOX,
+    EXP_CARD,
+    SHOW,
+    FANS_CARD,
+    FREE,
   ];
 
   static final $core.Map<$core.int, CATEGORY> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -61,6 +69,25 @@ class PRODUCT_GRADE extends $pb.ProtobufEnum {
   static PRODUCT_GRADE valueOf($core.int value) => _byValue[value];
 
   const PRODUCT_GRADE._($core.int v, $core.String n) : super(v, n);
+}
+
+class PRODUCT_ORIGIN extends $pb.ProtobufEnum {
+  static const PRODUCT_ORIGIN UNKNOWN = PRODUCT_ORIGIN._(0, 'UNKNOWN');
+  static const PRODUCT_ORIGIN ACTIVITY = PRODUCT_ORIGIN._(1, 'ACTIVITY');
+  static const PRODUCT_ORIGIN LV = PRODUCT_ORIGIN._(2, 'LV');
+  static const PRODUCT_ORIGIN PEERAGE = PRODUCT_ORIGIN._(3, 'PEERAGE');
+
+  static const $core.List<PRODUCT_ORIGIN> values = <PRODUCT_ORIGIN> [
+    UNKNOWN,
+    ACTIVITY,
+    LV,
+    PEERAGE,
+  ];
+
+  static final $core.Map<$core.int, PRODUCT_ORIGIN> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PRODUCT_ORIGIN valueOf($core.int value) => _byValue[value];
+
+  const PRODUCT_ORIGIN._($core.int v, $core.String n) : super(v, n);
 }
 
 class PayChannel extends $pb.ProtobufEnum {
@@ -491,6 +518,7 @@ class ShopRankReq_Category extends $pb.ProtobufEnum {
   static const ShopRankReq_Category ATTRACTION = ShopRankReq_Category._(5, 'ATTRACTION');
   static const ShopRankReq_Category CP = ShopRankReq_Category._(6, 'CP');
   static const ShopRankReq_Category CELEBRITY = ShopRankReq_Category._(7, 'CELEBRITY');
+  static const ShopRankReq_Category FANS_CLUB = ShopRankReq_Category._(8, 'FANS_CLUB');
 
   static const $core.List<ShopRankReq_Category> values = <ShopRankReq_Category> [
     TRUE_LOVE,
@@ -501,6 +529,7 @@ class ShopRankReq_Category extends $pb.ProtobufEnum {
     ATTRACTION,
     CP,
     CELEBRITY,
+    FANS_CLUB,
   ];
 
   static final $core.Map<$core.int, ShopRankReq_Category> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -513,11 +542,13 @@ class ShopRankReq_Period extends $pb.ProtobufEnum {
   static const ShopRankReq_Period WEEK = ShopRankReq_Period._(0, 'WEEK');
   static const ShopRankReq_Period DAY = ShopRankReq_Period._(1, 'DAY');
   static const ShopRankReq_Period MONTH = ShopRankReq_Period._(2, 'MONTH');
+  static const ShopRankReq_Period ALL = ShopRankReq_Period._(3, 'ALL');
 
   static const $core.List<ShopRankReq_Period> values = <ShopRankReq_Period> [
     WEEK,
     DAY,
     MONTH,
+    ALL,
   ];
 
   static final $core.Map<$core.int, ShopRankReq_Period> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -539,21 +570,6 @@ class ShopRankResp_Status extends $pb.ProtobufEnum {
   static ShopRankResp_Status valueOf($core.int value) => _byValue[value];
 
   const ShopRankResp_Status._($core.int v, $core.String n) : super(v, n);
-}
-
-class ShopMiniRankResp_Status extends $pb.ProtobufEnum {
-  static const ShopMiniRankResp_Status OK = ShopMiniRankResp_Status._(0, 'OK');
-  static const ShopMiniRankResp_Status ERROR = ShopMiniRankResp_Status._(1, 'ERROR');
-
-  static const $core.List<ShopMiniRankResp_Status> values = <ShopMiniRankResp_Status> [
-    OK,
-    ERROR,
-  ];
-
-  static final $core.Map<$core.int, ShopMiniRankResp_Status> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ShopMiniRankResp_Status valueOf($core.int value) => _byValue[value];
-
-  const ShopMiniRankResp_Status._($core.int v, $core.String n) : super(v, n);
 }
 
 class ExchangeResp_Status extends $pb.ProtobufEnum {

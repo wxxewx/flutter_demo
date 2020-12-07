@@ -496,6 +496,7 @@ class Tweet_User extends $pb.GeneratedMessage {
     ..aOS(2, 'name')
     ..aOS(3, 'avatar')
     ..a<$core.int>(4, 'grade', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, 'showId', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -549,6 +550,15 @@ class Tweet_User extends $pb.GeneratedMessage {
   $core.bool hasGrade() => $_has(3);
   @$pb.TagNumber(4)
   void clearGrade() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get showId => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set showId($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasShowId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearShowId() => clearField(5);
 }
 
 class Tweet extends $pb.GeneratedMessage {
@@ -564,6 +574,7 @@ class Tweet extends $pb.GeneratedMessage {
     ..a<$core.int>(9, 'likeNum', $pb.PbFieldType.O3)
     ..aOS(10, 'tweetId')
     ..aOB(11, 'chat')
+    ..aOB(12, 'setTop')
     ..hasRequiredFields = false
   ;
 
@@ -672,6 +683,15 @@ class Tweet extends $pb.GeneratedMessage {
   $core.bool hasChat() => $_has(10);
   @$pb.TagNumber(11)
   void clearChat() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.bool get setTop => $_getBF(11);
+  @$pb.TagNumber(12)
+  set setTop($core.bool v) { $_setBool(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasSetTop() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearSetTop() => clearField(12);
 }
 
 class GeneralResp extends $pb.GeneratedMessage {

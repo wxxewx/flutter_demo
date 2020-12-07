@@ -106,13 +106,14 @@ message BanBanListResp {
         int32 fans = 21;
         int32 follows = 22;
         int32 banban_grade = 23;
-
+        string celebrity = 26;
         string last_login = 6;
         bool online = 7;
         bool chating = 8;
         bool fresh_man = 9;
         string chatroom_id = 20;
         string room_title = 25;
+        string room_category = 27;
     }
 
     repeated VoiceCharacter banbans = 1;
@@ -183,38 +184,6 @@ message LoginResp {
     UserInfoBrief user = 7;
 }
 
-/* deprecated */
-message SkillDetailReq {
-    string uid = 1;
-    string skill_id = 2;
-}
-
-message SkillDetailResp {
-    message Comment {
-        string uid = 1;
-        string name = 2;
-        string user_img = 3;
-        string comment = 4;
-        int32  rate = 5;
-        string time_info = 6;
-        //string gift_info = 7;
-    }
-
-    message Skill {
-        string title = 1;
-        string grade = 2;
-        string description = 3;
-        string img_url = 4;
-        string audio_url = 5;
-        int32 audio_duration = 6;
-    }
-
-    string uid = 1;
-    Skill skill = 3;
-    repeated string user_imgs = 2;
-    repeated Comment skill_comments = 4;
-}
-
 
 message HomePageReq {
     string tgt_uid = 1;
@@ -252,6 +221,7 @@ message HomePageResp {
         string online = 18;
         string room_id = 21;
         string room_title = 25;
+        string celebrity = 26;
     }
 
     message Gift {
@@ -259,6 +229,7 @@ message HomePageResp {
         string icon = 2;
         int32 amount = 3;
         string title = 4;
+        string badge = 5;   //角标
     }
 
     message Interest {
@@ -273,9 +244,8 @@ message HomePageResp {
         string grade = 4;
         string img_url = 5;
         string audio_url = 6;
-        int32  audio_duration = 7;
-        int32  sells_count = 8;
-        int32  lowest_price = 9;
+        string skill_icon = 7;
+        string skill_title = 8;
     }
 
     Personal personal = 1;
@@ -289,10 +259,13 @@ message HomePageResp {
     repeated int32 show_ids = 13;
 }
 
+
 /* api = /bees/user_skills */
 message UserSkillsReq {
     string uid = 1;
+    string token = 2;
 }
+
 
 message UserSkillsResp {
     repeated HomePageResp.Skill skills = 1;
@@ -580,6 +553,12 @@ message BagResp {
         AVATAR_DECORATOR_1 = 7;
         AVATAR_DECORATOR_2 = 8;
         AVATAR_DECORATOR_3 = 9;
+        PROP = 10;
+        BLIND_BOX = 11;
+        EXP_CARD = 12;
+        SHOW = 13;
+        FANS_CARD = 14;
+        FREE = 15;
 
     }
 
@@ -606,6 +585,7 @@ message BagResp {
         bool permant = 7;
         string expire = 8;
         STATE state = 9;
+        string badge = 10;   //角标
     }
 
     message Coupon {
@@ -621,102 +601,6 @@ message BagResp {
     STATUS status = 3;
     repeated Product products = 1;
     repeated Coupon coupons = 2;
-}
-
-/* api = /bees/order_list */
-message OrderListReq {
-    enum Category {
-        ALL = 0;
-        AS_PROVIDER = 1;
-        AS_CUSTOMER = 2;
-    }
-
-    string uid = 1;
-    string token = 2;
-    Category category = 3;
-    int32 page_num = 4;
-    int32 num_per_page = 5;
-}
-
-message OrderListResp {
-    enum GiftState {
-        GS_UNK = 0;
-        GIVEN = 1;
-        REVOKED = 2;
-    }
-    enum OrderState {
-        OS_UNK = 0;
-        PENDING = 1;
-        ACCEPTED = 2;
-        SERVING = 3;
-        DONE = 4;
-        CANCEL_BY_C = 5;
-        CANCEL_BY_P = 6;
-    }
-
-    message Order {
-        int32 order_id = 1;
-        string skill_title = 2;
-        string serve_time = 3;
-
-        string gift_id = 4;
-        string gift_title = 5;
-        string gift_icon = 6;
-        int32 count = 7;
-
-        UserInfoBrief user = 8;
-
-        OrderState order_state = 9;
-        GiftState gift_state = 10;
-
-    }
-    repeated Order orders = 1;
-    STATUS status = 2;
-}
-
-/* api = /bees/place_order */
-message MakeOrderReq {
-    string uid = 1;
-    string token = 2;
-    string provider_id = 3;
-    int32  skill_id = 4;
-    string serve_time = 5;
-    int32 gift_id = 6;
-    int32 gift_count = 7;
-}
-
-message MakeOrderResp {
-    enum STATUS {
-        OK = 0;
-        BAG_INSUFFICIENT = 1;
-        PARAMTER_ERROR = 2;
-    }
-    STATUS status = 1;
-}
-
-/* api = /bees/change_order */
-message ChangeOrderStateReq {
-    enum OrderState {
-        UNK = 0;
-        ACCEPTED = 2;
-        CANCEL_BY_C = 5;
-        CANCEL_BY_P = 6;
-    }
-    enum GiftState {
-        GS_UNK = 0;
-        GIVEN = 1;
-        REVOKED = 2;
-    }
-    string uid = 1;
-    string token = 2;
-    string order_id = 3;
-    OrderState order_state = 4;
-    GiftState gift_state = 5;
-    string serve_time = 6;
-}
-
-message ChangeOrderStateResp {
-    STATUS status = 1;
 }
 
 
@@ -829,7 +713,8 @@ message DailyCheckInReq {
     enum Category {
         UNK = 0;
         BOX = 1;  // for VIP check in to get some boxes
-        COIN = 2; // ...
+        COIN = 2; // 金币
+        ROULETTE = 3; //轮盘抽奖
     }
 
     string uid = 1;
@@ -941,4 +826,81 @@ message UserUnRegisterReq {
 
 message UserUnRegisterResp {
     STATUS status = 1;
+}
+
+
+/* api = /bees/my_inviter */
+message MyInviterReq {
+    string uid = 1;
+    string token = 2;
+}
+
+
+message MyInviterResp {
+    string invite_code = 1;
+    string inviter_name = 2;
+    bool flag = 3;   //是否被邀请过
+}
+
+
+/* api = /bees/update_inviter */
+message UpdateMyInviterReq {
+    string uid = 1;
+    string token = 2;
+    string invite_code = 3;
+}
+
+
+message UpdateMyInviterResp {
+    STATUS status = 1;
+}
+
+
+/* api = /bees/my_invitee */
+message MyInviteeReq {
+    string uid = 1;
+    string token = 2;
+    int32 page_num = 3;
+}
+
+
+message MyInviteeResp {
+    message InviteRecord {
+        UserInfoBrief user = 1;
+        int32 time  = 2;
+    }
+
+    repeated InviteRecord items = 1;
+}
+
+
+/* api = /bees/settlement_daily */
+message SettlementDailyReq {
+    string uid = 1;
+    string token = 2;
+    int32 page_num = 3;
+}
+
+
+message SettlementDailyResp {
+    message SettlementRecord {
+        int32 time = 1;
+        string origin = 2;   //来源
+        int32 amount = 3;
+    }
+
+    repeated SettlementRecord items = 2;
+}
+
+
+/* api = /bees/invite_income */
+message InviteIncomeReq {
+    string uid = 1;
+    string token = 2;
+}
+
+
+message InviteIncomeResp {
+    int32 settled_income = 1;   //已结算收益
+    int32 unsettle_income = 2;   //当月未结算收益
 }

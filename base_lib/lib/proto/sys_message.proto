@@ -190,6 +190,7 @@ message ApplyInfo {
     string game_uid = 7;
 }
 
+
 // system tip
 message ApplyTip {
     string description = 1;
@@ -263,7 +264,6 @@ message UserSkillCtrlResp {
 
     Status status = 1;
 }
-
 
 /* api = umbrella/avatar_list  */
 message SysAvatarResp {
@@ -359,12 +359,47 @@ message PolicyResp {
 }
 
 
-/* api = /umbrella/app_conf */
+/* api = /umbrella/app_config */
 message AppConfigResp {
     enum Key {
         UND = 0 ;
         RoomDisplayNum = 1;
+        TopicDisplayNum = 2;   //兼容客户端老版本
+        OAuth = 3;
     }
 
     map<int32, string> configs = 1;
+}
+
+
+/* api = /umbrella/banrule_config */
+message BanRuleConfigResp {
+    message Config {
+        int32 sender_under_level = 1;
+        int32 receiver_under_level = 2;
+        int32 limit = 3;   //不设限取值为-1 
+    }
+
+    repeated Config configs = 1;
+}
+
+
+/* api = /umbrella/banner_list?device=xxx&vn=xxx */
+message BannerListResp {
+    enum Category {
+        UNk = 0;
+        ROOMS_TOP = 1;
+        ROOM_INSIDE = 2;
+        TWEETS_TOP = 3;
+        HOME_TOP = 4;
+    }
+
+    message Banner {
+        string title = 1;
+        Category category = 2;
+        string img = 3;
+        string portal = 4;
+    }
+
+    repeated Banner banners = 1;
 }

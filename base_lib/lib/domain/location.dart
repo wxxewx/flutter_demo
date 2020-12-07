@@ -17,6 +17,8 @@ class Location {
 
   Location.Unknown() : this("未知", "未知", "未知", 0, 0);
 
+  Location.Coordinate(longitude, latitude) : this("未知", "未知", "未知", longitude, latitude);
+
 
   @override
   String toString() {

@@ -147,6 +147,7 @@ const Tweet$json = const {
     const {'1': 'like_num', '3': 9, '4': 1, '5': 5, '10': 'likeNum'},
     const {'1': 'tweet_id', '3': 10, '4': 1, '5': 9, '10': 'tweetId'},
     const {'1': 'chat', '3': 11, '4': 1, '5': 8, '10': 'chat'},
+    const {'1': 'set_top', '3': 12, '4': 1, '5': 8, '10': 'setTop'},
   ],
   '3': const [Tweet_User$json],
 };
@@ -158,6 +159,7 @@ const Tweet_User$json = const {
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'avatar', '3': 3, '4': 1, '5': 9, '10': 'avatar'},
     const {'1': 'grade', '3': 4, '4': 1, '5': 5, '10': 'grade'},
+    const {'1': 'show_id', '3': 5, '4': 1, '5': 5, '10': 'showId'},
   ],
 };
 

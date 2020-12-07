@@ -13,27 +13,6 @@ import 'shop_message.pbenum.dart';
 
 export 'shop_message.pbenum.dart';
 
-class StickersReq extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('StickersReq', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  StickersReq._() : super();
-  factory StickersReq() => create();
-  factory StickersReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StickersReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  StickersReq clone() => StickersReq()..mergeFromMessage(this);
-  StickersReq copyWith(void Function(StickersReq) updates) => super.copyWith((message) => updates(message as StickersReq));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static StickersReq create() => StickersReq._();
-  StickersReq createEmptyInstance() => create();
-  static $pb.PbList<StickersReq> createRepeated() => $pb.PbList<StickersReq>();
-  @$core.pragma('dart2js:noInline')
-  static StickersReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StickersReq>(create);
-  static StickersReq _defaultInstance;
-}
-
 class Sticker extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Sticker', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
     ..aOS(1, 'id')
@@ -126,6 +105,8 @@ class Product extends $pb.GeneratedMessage {
     ..a<$core.int>(12, 'diamonds', $pb.PbFieldType.O3)
     ..aOS(13, 'description')
     ..aOB(14, 'forSale')
+    ..aOS(15, 'badge')
+    ..e<PRODUCT_ORIGIN>(16, 'origin', $pb.PbFieldType.OE, defaultOrMaker: PRODUCT_ORIGIN.UNKNOWN, valueOf: PRODUCT_ORIGIN.valueOf, enumValues: PRODUCT_ORIGIN.values)
     ..hasRequiredFields = false
   ;
 
@@ -269,6 +250,24 @@ class Product extends $pb.GeneratedMessage {
   $core.bool hasForSale() => $_has(13);
   @$pb.TagNumber(14)
   void clearForSale() => clearField(14);
+
+  @$pb.TagNumber(15)
+  $core.String get badge => $_getSZ(14);
+  @$pb.TagNumber(15)
+  set badge($core.String v) { $_setString(14, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasBadge() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearBadge() => clearField(15);
+
+  @$pb.TagNumber(16)
+  PRODUCT_ORIGIN get origin => $_getN(15);
+  @$pb.TagNumber(16)
+  set origin(PRODUCT_ORIGIN v) { setField(16, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasOrigin() => $_has(15);
+  @$pb.TagNumber(16)
+  void clearOrigin() => clearField(16);
 }
 
 class ShopProductsReq extends $pb.GeneratedMessage {
@@ -441,6 +440,8 @@ class MyShowResp_Show extends $pb.GeneratedMessage {
     ..aOB(3, 'weared')
     ..aOS(4, 'expires')
     ..e<ShowListReq_Category>(5, 'category', $pb.PbFieldType.OE, defaultOrMaker: ShowListReq_Category.ALL, valueOf: ShowListReq_Category.valueOf, enumValues: ShowListReq_Category.values)
+    ..e<PRODUCT_ORIGIN>(6, 'origin', $pb.PbFieldType.OE, defaultOrMaker: PRODUCT_ORIGIN.UNKNOWN, valueOf: PRODUCT_ORIGIN.valueOf, enumValues: PRODUCT_ORIGIN.values)
+    ..aOB(7, 'permanent')
     ..hasRequiredFields = false
   ;
 
@@ -503,6 +504,24 @@ class MyShowResp_Show extends $pb.GeneratedMessage {
   $core.bool hasCategory() => $_has(4);
   @$pb.TagNumber(5)
   void clearCategory() => clearField(5);
+
+  @$pb.TagNumber(6)
+  PRODUCT_ORIGIN get origin => $_getN(5);
+  @$pb.TagNumber(6)
+  set origin(PRODUCT_ORIGIN v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasOrigin() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearOrigin() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.bool get permanent => $_getBF(6);
+  @$pb.TagNumber(7)
+  set permanent($core.bool v) { $_setBool(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasPermanent() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPermanent() => clearField(7);
 }
 
 class MyShowResp extends $pb.GeneratedMessage {
@@ -2635,6 +2654,9 @@ class ShopRankResp_User extends $pb.GeneratedMessage {
     ..a<$core.int>(9, 'avatarBox', $pb.PbFieldType.O3)
     ..a<$core.int>(10, 'fans', $pb.PbFieldType.O3)
     ..aOS(11, 'declaration')
+    ..aOS(12, 'celebrity')
+    ..aOB(13, 'live')
+    ..a<$core.int>(14, 'roomId', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -2751,6 +2773,33 @@ class ShopRankResp_User extends $pb.GeneratedMessage {
   $core.bool hasDeclaration() => $_has(10);
   @$pb.TagNumber(11)
   void clearDeclaration() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.String get celebrity => $_getSZ(11);
+  @$pb.TagNumber(12)
+  set celebrity($core.String v) { $_setString(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasCelebrity() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearCelebrity() => clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.bool get live => $_getBF(12);
+  @$pb.TagNumber(13)
+  set live($core.bool v) { $_setBool(12, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasLive() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearLive() => clearField(13);
+
+  @$pb.TagNumber(14)
+  $core.int get roomId => $_getIZ(13);
+  @$pb.TagNumber(14)
+  set roomId($core.int v) { $_setSignedInt32(13, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasRoomId() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearRoomId() => clearField(14);
 }
 
 class ShopRankResp_Extension extends $pb.GeneratedMessage {
@@ -2763,6 +2812,7 @@ class ShopRankResp_Extension extends $pb.GeneratedMessage {
     ..a<$core.int>(6, 'boxCount', $pb.PbFieldType.O3)
     ..e<PRODUCT_GRADE>(7, 'relation', $pb.PbFieldType.OE, defaultOrMaker: PRODUCT_GRADE.NONE, valueOf: PRODUCT_GRADE.valueOf, enumValues: PRODUCT_GRADE.values)
     ..aOS(8, 'celebrity')
+    ..aOS(9, 'valueDesc')
     ..hasRequiredFields = false
   ;
 
@@ -2852,6 +2902,15 @@ class ShopRankResp_Extension extends $pb.GeneratedMessage {
   $core.bool hasCelebrity() => $_has(7);
   @$pb.TagNumber(8)
   void clearCelebrity() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.String get valueDesc => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set valueDesc($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasValueDesc() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearValueDesc() => clearField(9);
 }
 
 class ShopRankResp_Item extends $pb.GeneratedMessage {
@@ -2944,106 +3003,6 @@ class ShopRankResp extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<ShopRankResp_Item> get items => $_getList(1);
-}
-
-class ShopMiniRankResp_Item extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ShopMiniRankResp.Item', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
-    ..e<ShopRankReq_Category>(1, 'category', $pb.PbFieldType.OE, defaultOrMaker: ShopRankReq_Category.TRUE_LOVE, valueOf: ShopRankReq_Category.valueOf, enumValues: ShopRankReq_Category.values)
-    ..aOM<ShopRankResp_User>(2, 'first', subBuilder: ShopRankResp_User.create)
-    ..aOM<ShopRankResp_User>(3, 'second', subBuilder: ShopRankResp_User.create)
-    ..a<$core.int>(4, 'gift', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
-
-  ShopMiniRankResp_Item._() : super();
-  factory ShopMiniRankResp_Item() => create();
-  factory ShopMiniRankResp_Item.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShopMiniRankResp_Item.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ShopMiniRankResp_Item clone() => ShopMiniRankResp_Item()..mergeFromMessage(this);
-  ShopMiniRankResp_Item copyWith(void Function(ShopMiniRankResp_Item) updates) => super.copyWith((message) => updates(message as ShopMiniRankResp_Item));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ShopMiniRankResp_Item create() => ShopMiniRankResp_Item._();
-  ShopMiniRankResp_Item createEmptyInstance() => create();
-  static $pb.PbList<ShopMiniRankResp_Item> createRepeated() => $pb.PbList<ShopMiniRankResp_Item>();
-  @$core.pragma('dart2js:noInline')
-  static ShopMiniRankResp_Item getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShopMiniRankResp_Item>(create);
-  static ShopMiniRankResp_Item _defaultInstance;
-
-  @$pb.TagNumber(1)
-  ShopRankReq_Category get category => $_getN(0);
-  @$pb.TagNumber(1)
-  set category(ShopRankReq_Category v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasCategory() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearCategory() => clearField(1);
-
-  @$pb.TagNumber(2)
-  ShopRankResp_User get first => $_getN(1);
-  @$pb.TagNumber(2)
-  set first(ShopRankResp_User v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasFirst() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearFirst() => clearField(2);
-  @$pb.TagNumber(2)
-  ShopRankResp_User ensureFirst() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  ShopRankResp_User get second => $_getN(2);
-  @$pb.TagNumber(3)
-  set second(ShopRankResp_User v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSecond() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSecond() => clearField(3);
-  @$pb.TagNumber(3)
-  ShopRankResp_User ensureSecond() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  $core.int get gift => $_getIZ(3);
-  @$pb.TagNumber(4)
-  set gift($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasGift() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearGift() => clearField(4);
-}
-
-class ShopMiniRankResp extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ShopMiniRankResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
-    ..e<ShopMiniRankResp_Status>(1, 'status', $pb.PbFieldType.OE, defaultOrMaker: ShopMiniRankResp_Status.OK, valueOf: ShopMiniRankResp_Status.valueOf, enumValues: ShopMiniRankResp_Status.values)
-    ..pc<ShopMiniRankResp_Item>(2, 'items', $pb.PbFieldType.PM, subBuilder: ShopMiniRankResp_Item.create)
-    ..hasRequiredFields = false
-  ;
-
-  ShopMiniRankResp._() : super();
-  factory ShopMiniRankResp() => create();
-  factory ShopMiniRankResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShopMiniRankResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ShopMiniRankResp clone() => ShopMiniRankResp()..mergeFromMessage(this);
-  ShopMiniRankResp copyWith(void Function(ShopMiniRankResp) updates) => super.copyWith((message) => updates(message as ShopMiniRankResp));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ShopMiniRankResp create() => ShopMiniRankResp._();
-  ShopMiniRankResp createEmptyInstance() => create();
-  static $pb.PbList<ShopMiniRankResp> createRepeated() => $pb.PbList<ShopMiniRankResp>();
-  @$core.pragma('dart2js:noInline')
-  static ShopMiniRankResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShopMiniRankResp>(create);
-  static ShopMiniRankResp _defaultInstance;
-
-  @$pb.TagNumber(1)
-  ShopMiniRankResp_Status get status => $_getN(0);
-  @$pb.TagNumber(1)
-  set status(ShopMiniRankResp_Status v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasStatus() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearStatus() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<ShopMiniRankResp_Item> get items => $_getList(1);
 }
 
 class BoxTopRewardReq extends $pb.GeneratedMessage {

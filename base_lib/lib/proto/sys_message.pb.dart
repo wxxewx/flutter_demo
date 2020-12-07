@@ -2084,3 +2084,165 @@ class AppConfigResp extends $pb.GeneratedMessage {
   $core.Map<$core.int, $core.String> get configs => $_getMap(0);
 }
 
+class BanRuleConfigResp_Config extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BanRuleConfigResp.Config', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'senderUnderLevel', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, 'receiverUnderLevel', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, 'limit', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  BanRuleConfigResp_Config._() : super();
+  factory BanRuleConfigResp_Config() => create();
+  factory BanRuleConfigResp_Config.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BanRuleConfigResp_Config.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BanRuleConfigResp_Config clone() => BanRuleConfigResp_Config()..mergeFromMessage(this);
+  BanRuleConfigResp_Config copyWith(void Function(BanRuleConfigResp_Config) updates) => super.copyWith((message) => updates(message as BanRuleConfigResp_Config));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BanRuleConfigResp_Config create() => BanRuleConfigResp_Config._();
+  BanRuleConfigResp_Config createEmptyInstance() => create();
+  static $pb.PbList<BanRuleConfigResp_Config> createRepeated() => $pb.PbList<BanRuleConfigResp_Config>();
+  @$core.pragma('dart2js:noInline')
+  static BanRuleConfigResp_Config getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BanRuleConfigResp_Config>(create);
+  static BanRuleConfigResp_Config _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get senderUnderLevel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set senderUnderLevel($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSenderUnderLevel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSenderUnderLevel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get receiverUnderLevel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set receiverUnderLevel($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasReceiverUnderLevel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearReceiverUnderLevel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get limit => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set limit($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLimit() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLimit() => clearField(3);
+}
+
+class BanRuleConfigResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BanRuleConfigResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
+    ..pc<BanRuleConfigResp_Config>(1, 'configs', $pb.PbFieldType.PM, subBuilder: BanRuleConfigResp_Config.create)
+    ..hasRequiredFields = false
+  ;
+
+  BanRuleConfigResp._() : super();
+  factory BanRuleConfigResp() => create();
+  factory BanRuleConfigResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BanRuleConfigResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BanRuleConfigResp clone() => BanRuleConfigResp()..mergeFromMessage(this);
+  BanRuleConfigResp copyWith(void Function(BanRuleConfigResp) updates) => super.copyWith((message) => updates(message as BanRuleConfigResp));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BanRuleConfigResp create() => BanRuleConfigResp._();
+  BanRuleConfigResp createEmptyInstance() => create();
+  static $pb.PbList<BanRuleConfigResp> createRepeated() => $pb.PbList<BanRuleConfigResp>();
+  @$core.pragma('dart2js:noInline')
+  static BanRuleConfigResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BanRuleConfigResp>(create);
+  static BanRuleConfigResp _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<BanRuleConfigResp_Config> get configs => $_getList(0);
+}
+
+class BannerListResp_Banner extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BannerListResp.Banner', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
+    ..aOS(1, 'title')
+    ..e<BannerListResp_Category>(2, 'category', $pb.PbFieldType.OE, defaultOrMaker: BannerListResp_Category.UNk, valueOf: BannerListResp_Category.valueOf, enumValues: BannerListResp_Category.values)
+    ..aOS(3, 'img')
+    ..aOS(4, 'portal')
+    ..hasRequiredFields = false
+  ;
+
+  BannerListResp_Banner._() : super();
+  factory BannerListResp_Banner() => create();
+  factory BannerListResp_Banner.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BannerListResp_Banner.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BannerListResp_Banner clone() => BannerListResp_Banner()..mergeFromMessage(this);
+  BannerListResp_Banner copyWith(void Function(BannerListResp_Banner) updates) => super.copyWith((message) => updates(message as BannerListResp_Banner));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BannerListResp_Banner create() => BannerListResp_Banner._();
+  BannerListResp_Banner createEmptyInstance() => create();
+  static $pb.PbList<BannerListResp_Banner> createRepeated() => $pb.PbList<BannerListResp_Banner>();
+  @$core.pragma('dart2js:noInline')
+  static BannerListResp_Banner getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BannerListResp_Banner>(create);
+  static BannerListResp_Banner _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get title => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set title($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTitle() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTitle() => clearField(1);
+
+  @$pb.TagNumber(2)
+  BannerListResp_Category get category => $_getN(1);
+  @$pb.TagNumber(2)
+  set category(BannerListResp_Category v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCategory() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCategory() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get img => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set img($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasImg() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearImg() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get portal => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set portal($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPortal() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPortal() => clearField(4);
+}
+
+class BannerListResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BannerListResp', package: const $pb.PackageName('proto_def'), createEmptyInstance: create)
+    ..pc<BannerListResp_Banner>(1, 'banners', $pb.PbFieldType.PM, subBuilder: BannerListResp_Banner.create)
+    ..hasRequiredFields = false
+  ;
+
+  BannerListResp._() : super();
+  factory BannerListResp() => create();
+  factory BannerListResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BannerListResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BannerListResp clone() => BannerListResp()..mergeFromMessage(this);
+  BannerListResp copyWith(void Function(BannerListResp) updates) => super.copyWith((message) => updates(message as BannerListResp));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BannerListResp create() => BannerListResp._();
+  BannerListResp createEmptyInstance() => create();
+  static $pb.PbList<BannerListResp> createRepeated() => $pb.PbList<BannerListResp>();
+  @$core.pragma('dart2js:noInline')
+  static BannerListResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BannerListResp>(create);
+  static BannerListResp _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<BannerListResp_Banner> get banners => $_getList(0);
+}
+

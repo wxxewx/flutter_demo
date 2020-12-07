@@ -568,6 +568,55 @@ const AppConfigResp_Key$json = const {
   '2': const [
     const {'1': 'UND', '2': 0},
     const {'1': 'RoomDisplayNum', '2': 1},
+    const {'1': 'TopicDisplayNum', '2': 2},
+    const {'1': 'OAuth', '2': 3},
+  ],
+};
+
+const BanRuleConfigResp$json = const {
+  '1': 'BanRuleConfigResp',
+  '2': const [
+    const {'1': 'configs', '3': 1, '4': 3, '5': 11, '6': '.proto_def.BanRuleConfigResp.Config', '10': 'configs'},
+  ],
+  '3': const [BanRuleConfigResp_Config$json],
+};
+
+const BanRuleConfigResp_Config$json = const {
+  '1': 'Config',
+  '2': const [
+    const {'1': 'sender_under_level', '3': 1, '4': 1, '5': 5, '10': 'senderUnderLevel'},
+    const {'1': 'receiver_under_level', '3': 2, '4': 1, '5': 5, '10': 'receiverUnderLevel'},
+    const {'1': 'limit', '3': 3, '4': 1, '5': 5, '10': 'limit'},
+  ],
+};
+
+const BannerListResp$json = const {
+  '1': 'BannerListResp',
+  '2': const [
+    const {'1': 'banners', '3': 1, '4': 3, '5': 11, '6': '.proto_def.BannerListResp.Banner', '10': 'banners'},
+  ],
+  '3': const [BannerListResp_Banner$json],
+  '4': const [BannerListResp_Category$json],
+};
+
+const BannerListResp_Banner$json = const {
+  '1': 'Banner',
+  '2': const [
+    const {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
+    const {'1': 'category', '3': 2, '4': 1, '5': 14, '6': '.proto_def.BannerListResp.Category', '10': 'category'},
+    const {'1': 'img', '3': 3, '4': 1, '5': 9, '10': 'img'},
+    const {'1': 'portal', '3': 4, '4': 1, '5': 9, '10': 'portal'},
+  ],
+};
+
+const BannerListResp_Category$json = const {
+  '1': 'Category',
+  '2': const [
+    const {'1': 'UNk', '2': 0},
+    const {'1': 'ROOMS_TOP', '2': 1},
+    const {'1': 'ROOM_INSIDE', '2': 2},
+    const {'1': 'TWEETS_TOP', '2': 3},
+    const {'1': 'HOME_TOP', '2': 4},
   ],
 };
 

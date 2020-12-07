@@ -1,6 +1,7 @@
 import 'package:baselib/app.dart';
 import 'package:baselib/common/bus/ibus.dart';
 import 'package:baselib/fluro/page_builder.dart';
+import 'package:square/square.dart';
 import 'package:square/square/page.dart';
 
 
@@ -13,7 +14,8 @@ class SquareModule implements IModule {
   @override
   List<PageBuilder> getPages() {
     return [
-      PageBuilder("/square", (parameters) => SquareListPage(parameters)),
+      PageBuilder("/square", (parameters) => SquarePage(parameters)),
+      PageBuilder("/squareList", (parameters) => SquareListPage(parameters)),
     ];
   }
 }

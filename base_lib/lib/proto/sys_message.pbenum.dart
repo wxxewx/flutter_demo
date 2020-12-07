@@ -216,15 +216,40 @@ class PolicyResp_Category extends $pb.ProtobufEnum {
 class AppConfigResp_Key extends $pb.ProtobufEnum {
   static const AppConfigResp_Key UND = AppConfigResp_Key._(0, 'UND');
   static const AppConfigResp_Key RoomDisplayNum = AppConfigResp_Key._(1, 'RoomDisplayNum');
+  static const AppConfigResp_Key TopicDisplayNum = AppConfigResp_Key._(2, 'TopicDisplayNum');
+  static const AppConfigResp_Key OAuth = AppConfigResp_Key._(3, 'OAuth');
 
   static const $core.List<AppConfigResp_Key> values = <AppConfigResp_Key> [
     UND,
     RoomDisplayNum,
+    TopicDisplayNum,
+    OAuth,
   ];
 
   static final $core.Map<$core.int, AppConfigResp_Key> _byValue = $pb.ProtobufEnum.initByValue(values);
   static AppConfigResp_Key valueOf($core.int value) => _byValue[value];
 
   const AppConfigResp_Key._($core.int v, $core.String n) : super(v, n);
+}
+
+class BannerListResp_Category extends $pb.ProtobufEnum {
+  static const BannerListResp_Category UNk = BannerListResp_Category._(0, 'UNk');
+  static const BannerListResp_Category ROOMS_TOP = BannerListResp_Category._(1, 'ROOMS_TOP');
+  static const BannerListResp_Category ROOM_INSIDE = BannerListResp_Category._(2, 'ROOM_INSIDE');
+  static const BannerListResp_Category TWEETS_TOP = BannerListResp_Category._(3, 'TWEETS_TOP');
+  static const BannerListResp_Category HOME_TOP = BannerListResp_Category._(4, 'HOME_TOP');
+
+  static const $core.List<BannerListResp_Category> values = <BannerListResp_Category> [
+    UNk,
+    ROOMS_TOP,
+    ROOM_INSIDE,
+    TWEETS_TOP,
+    HOME_TOP,
+  ];
+
+  static final $core.Map<$core.int, BannerListResp_Category> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static BannerListResp_Category valueOf($core.int value) => _byValue[value];
+
+  const BannerListResp_Category._($core.int v, $core.String n) : super(v, n);
 }
 

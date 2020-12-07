@@ -24,6 +24,7 @@ const PeerUserInfo$json = const {
     const {'1': 'gender', '3': 6, '4': 1, '5': 9, '10': 'gender'},
     const {'1': 'hideWelcomeNotification', '3': 7, '4': 1, '5': 8, '10': 'hideWelcomeNotification'},
     const {'1': 'banbanGrade', '3': 8, '4': 1, '5': 14, '6': '.proto_def.PeerUserInfo.BanBanGrade', '10': 'banbanGrade'},
+    const {'1': 'vehicleId', '3': 9, '4': 1, '5': 5, '10': 'vehicleId'},
   ],
   '4': const [PeerUserInfo_BanBanGrade$json],
 };

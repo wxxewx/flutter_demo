@@ -3,10 +3,6 @@ syntax = "proto3";
 package proto_def;
 
 /* api = /umbrella/stick_list */
-message StickersReq {
-
-}
-
 message Sticker {
     string id = 1;
     string title = 2;
@@ -30,6 +26,10 @@ enum CATEGORY {
     AVATAR_DECORATOR_3 = 9;
     PROP = 10;
     BLIND_BOX = 11;
+    EXP_CARD = 12;
+    SHOW = 13;
+    FANS_CARD = 14;
+    FREE = 15;
 }
 
 enum PRODUCT_GRADE {
@@ -37,6 +37,13 @@ enum PRODUCT_GRADE {
     BROZEN = 1;
     SILVER = 2;
     GOLDEN = 3;
+}
+
+enum PRODUCT_ORIGIN {
+    UNKNOWN = 0;
+    ACTIVITY = 1;   // 限定活动
+    LV = 2;   // LV等级
+    PEERAGE = 3;   // 爵位专属
 }
 
 message Product {
@@ -51,12 +58,15 @@ message Product {
     int32 priority = 9;
     string svga_url = 10;
     int32 svga_duration = 11;
-    int32 diamonds = 12;
+    int32 diamonds = 12;   // v1: yuan, v2: cent
     string description = 13;
     bool  for_sale = 14;   //是否在售
+    string badge = 15;   //角标
+    PRODUCT_ORIGIN origin = 16;   // 来源分类
 }
 
 /* api = /umbrella/product_list */
+/* api = /umbrella/product_list_v2 */
 message ShopProductsReq {
     CATEGORY category = 1;
 }
@@ -96,6 +106,8 @@ message MyShowResp {
         bool  weared = 3;
         string expires = 4;
         ShowListReq.Category category = 5;
+        PRODUCT_ORIGIN origin = 6;
+        bool permanent = 7;
 
     }
     repeated Show my_shows = 1;
@@ -216,21 +228,21 @@ message DonateGiftResp {
 
 /* api = /alice/happy_pay */
 message HappyPayReq {
-	message User {
-	        string uid = 1;
-	        string name = 2;
-	        int32 seat_idx = 3;
-	        int32 count = 4;
-	}
+    message User {
+            string uid = 1;
+            string name = 2;
+            int32 seat_idx = 3;
+            int32 count = 4;
+    }
 
-	enum Channel {
-	    BALANCE = 0;
-	    ALIPAY_APP = 1;
-	    WEIXIN_APP = 2;
-	    WEIXIN_PUB = 3;
-	    ALIPAY_WAP = 4;
-	    APPLE = 5;
-	}
+    enum Channel {
+        BALANCE = 0;
+        ALIPAY_APP = 1;
+        WEIXIN_APP = 2;
+        WEIXIN_PUB = 3;
+        ALIPAY_WAP = 4;
+        APPLE = 5;
+    }
 
     enum Usage {
         Buy = 0;
@@ -266,8 +278,9 @@ message HappyPayResp {
 
 /* api = /umbrella/gift_nums    */
 /* api = /umbrella/diamond_nums */
-/* api - /umbrella/ex_rate      */
-/* api - /umbrella/draw_rate    */
+/* api = /umbrella/ex_rate      */
+/* api = /umbrella/draw_rate    */
+/* api = /umbrella/box_nums     */
 // 物品常用数量列表
 message BatchNumResp {
     repeated int32 batch_nums = 1;
@@ -524,17 +537,20 @@ message ShopRankReq {
         ATTRACTION = 5;
         CP = 6;
         CELEBRITY = 7;
+        FANS_CLUB = 8;
     }
 
     enum Period {
         WEEK = 0;
         DAY = 1;
         MONTH = 2;
+        ALL = 3;
     }
 
     Category category = 1;
     string room_id = 2;  // ranks related to the room
-    Period period = 3;   // ranks of period
+                         // if request fans rank use user_id's value as this field
+    Period period = 3;   // ranks of period, ALL only for fans rank
 }
 
 
@@ -556,7 +572,9 @@ message ShopRankResp {
         int32 avatar_box = 9;
         int32 fans = 10;
         string declaration = 11;
-
+        string celebrity = 12;
+        bool   live = 13;
+        int32  room_id = 14;
     }
 
     message Extension {
@@ -564,6 +582,7 @@ message ShopRankResp {
         int32 gift_count = 2;
 
         int32 value = 3; // can be used as diamond, days and hot
+        string value_desc = 9;  // used to describe the value
         string time = 4;  // time happened
 
         PRODUCT_GRADE  box = 5;
@@ -584,24 +603,6 @@ message ShopRankResp {
     repeated Item items = 2;
 }
 
-
-/* api = /umbrella/mini_ranks */
-message ShopMiniRankResp {
-    enum Status {
-        OK = 0;
-        ERROR = 1;
-    }
-
-    message Item {
-        ShopRankReq.Category category = 1;
-        ShopRankResp.User first = 2;
-        ShopRankResp.User second = 3;
-        int32 gift = 4;
-    }
-
-    Status status = 1;
-    repeated Item items = 2;
-}
 
 /* api=/umbrella/box_top_reward */
 message BoxTopRewardReq {
@@ -625,7 +626,7 @@ message BoxTopRewardResp {
 message ExchangeReq {
     string uid = 1;
     string token = 2;
-    int32  attraction = 3;
+    int32  attraction = 3;  // unit is cent
 }
 
 message ExchangeResp {

@@ -253,6 +253,12 @@ class BagResp_CATEGORY extends $pb.ProtobufEnum {
   static const BagResp_CATEGORY AVATAR_DECORATOR_1 = BagResp_CATEGORY._(7, 'AVATAR_DECORATOR_1');
   static const BagResp_CATEGORY AVATAR_DECORATOR_2 = BagResp_CATEGORY._(8, 'AVATAR_DECORATOR_2');
   static const BagResp_CATEGORY AVATAR_DECORATOR_3 = BagResp_CATEGORY._(9, 'AVATAR_DECORATOR_3');
+  static const BagResp_CATEGORY PROP = BagResp_CATEGORY._(10, 'PROP');
+  static const BagResp_CATEGORY BLIND_BOX = BagResp_CATEGORY._(11, 'BLIND_BOX');
+  static const BagResp_CATEGORY EXP_CARD = BagResp_CATEGORY._(12, 'EXP_CARD');
+  static const BagResp_CATEGORY SHOW = BagResp_CATEGORY._(13, 'SHOW');
+  static const BagResp_CATEGORY FANS_CARD = BagResp_CATEGORY._(14, 'FANS_CARD');
+  static const BagResp_CATEGORY FREE = BagResp_CATEGORY._(15, 'FREE');
 
   static const $core.List<BagResp_CATEGORY> values = <BagResp_CATEGORY> [
     ALL,
@@ -265,6 +271,12 @@ class BagResp_CATEGORY extends $pb.ProtobufEnum {
     AVATAR_DECORATOR_1,
     AVATAR_DECORATOR_2,
     AVATAR_DECORATOR_3,
+    PROP,
+    BLIND_BOX,
+    EXP_CARD,
+    SHOW,
+    FANS_CARD,
+    FREE,
   ];
 
   static final $core.Map<$core.int, BagResp_CATEGORY> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -307,118 +319,6 @@ class BagResp_STATE extends $pb.ProtobufEnum {
   static BagResp_STATE valueOf($core.int value) => _byValue[value];
 
   const BagResp_STATE._($core.int v, $core.String n) : super(v, n);
-}
-
-class OrderListReq_Category extends $pb.ProtobufEnum {
-  static const OrderListReq_Category ALL = OrderListReq_Category._(0, 'ALL');
-  static const OrderListReq_Category AS_PROVIDER = OrderListReq_Category._(1, 'AS_PROVIDER');
-  static const OrderListReq_Category AS_CUSTOMER = OrderListReq_Category._(2, 'AS_CUSTOMER');
-
-  static const $core.List<OrderListReq_Category> values = <OrderListReq_Category> [
-    ALL,
-    AS_PROVIDER,
-    AS_CUSTOMER,
-  ];
-
-  static final $core.Map<$core.int, OrderListReq_Category> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static OrderListReq_Category valueOf($core.int value) => _byValue[value];
-
-  const OrderListReq_Category._($core.int v, $core.String n) : super(v, n);
-}
-
-class OrderListResp_GiftState extends $pb.ProtobufEnum {
-  static const OrderListResp_GiftState GS_UNK = OrderListResp_GiftState._(0, 'GS_UNK');
-  static const OrderListResp_GiftState GIVEN = OrderListResp_GiftState._(1, 'GIVEN');
-  static const OrderListResp_GiftState REVOKED = OrderListResp_GiftState._(2, 'REVOKED');
-
-  static const $core.List<OrderListResp_GiftState> values = <OrderListResp_GiftState> [
-    GS_UNK,
-    GIVEN,
-    REVOKED,
-  ];
-
-  static final $core.Map<$core.int, OrderListResp_GiftState> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static OrderListResp_GiftState valueOf($core.int value) => _byValue[value];
-
-  const OrderListResp_GiftState._($core.int v, $core.String n) : super(v, n);
-}
-
-class OrderListResp_OrderState extends $pb.ProtobufEnum {
-  static const OrderListResp_OrderState OS_UNK = OrderListResp_OrderState._(0, 'OS_UNK');
-  static const OrderListResp_OrderState PENDING = OrderListResp_OrderState._(1, 'PENDING');
-  static const OrderListResp_OrderState ACCEPTED = OrderListResp_OrderState._(2, 'ACCEPTED');
-  static const OrderListResp_OrderState SERVING = OrderListResp_OrderState._(3, 'SERVING');
-  static const OrderListResp_OrderState DONE = OrderListResp_OrderState._(4, 'DONE');
-  static const OrderListResp_OrderState CANCEL_BY_C = OrderListResp_OrderState._(5, 'CANCEL_BY_C');
-  static const OrderListResp_OrderState CANCEL_BY_P = OrderListResp_OrderState._(6, 'CANCEL_BY_P');
-
-  static const $core.List<OrderListResp_OrderState> values = <OrderListResp_OrderState> [
-    OS_UNK,
-    PENDING,
-    ACCEPTED,
-    SERVING,
-    DONE,
-    CANCEL_BY_C,
-    CANCEL_BY_P,
-  ];
-
-  static final $core.Map<$core.int, OrderListResp_OrderState> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static OrderListResp_OrderState valueOf($core.int value) => _byValue[value];
-
-  const OrderListResp_OrderState._($core.int v, $core.String n) : super(v, n);
-}
-
-class MakeOrderResp_STATUS extends $pb.ProtobufEnum {
-  static const MakeOrderResp_STATUS OK = MakeOrderResp_STATUS._(0, 'OK');
-  static const MakeOrderResp_STATUS BAG_INSUFFICIENT = MakeOrderResp_STATUS._(1, 'BAG_INSUFFICIENT');
-  static const MakeOrderResp_STATUS PARAMTER_ERROR = MakeOrderResp_STATUS._(2, 'PARAMTER_ERROR');
-
-  static const $core.List<MakeOrderResp_STATUS> values = <MakeOrderResp_STATUS> [
-    OK,
-    BAG_INSUFFICIENT,
-    PARAMTER_ERROR,
-  ];
-
-  static final $core.Map<$core.int, MakeOrderResp_STATUS> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static MakeOrderResp_STATUS valueOf($core.int value) => _byValue[value];
-
-  const MakeOrderResp_STATUS._($core.int v, $core.String n) : super(v, n);
-}
-
-class ChangeOrderStateReq_OrderState extends $pb.ProtobufEnum {
-  static const ChangeOrderStateReq_OrderState UNK = ChangeOrderStateReq_OrderState._(0, 'UNK');
-  static const ChangeOrderStateReq_OrderState ACCEPTED = ChangeOrderStateReq_OrderState._(2, 'ACCEPTED');
-  static const ChangeOrderStateReq_OrderState CANCEL_BY_C = ChangeOrderStateReq_OrderState._(5, 'CANCEL_BY_C');
-  static const ChangeOrderStateReq_OrderState CANCEL_BY_P = ChangeOrderStateReq_OrderState._(6, 'CANCEL_BY_P');
-
-  static const $core.List<ChangeOrderStateReq_OrderState> values = <ChangeOrderStateReq_OrderState> [
-    UNK,
-    ACCEPTED,
-    CANCEL_BY_C,
-    CANCEL_BY_P,
-  ];
-
-  static final $core.Map<$core.int, ChangeOrderStateReq_OrderState> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ChangeOrderStateReq_OrderState valueOf($core.int value) => _byValue[value];
-
-  const ChangeOrderStateReq_OrderState._($core.int v, $core.String n) : super(v, n);
-}
-
-class ChangeOrderStateReq_GiftState extends $pb.ProtobufEnum {
-  static const ChangeOrderStateReq_GiftState GS_UNK = ChangeOrderStateReq_GiftState._(0, 'GS_UNK');
-  static const ChangeOrderStateReq_GiftState GIVEN = ChangeOrderStateReq_GiftState._(1, 'GIVEN');
-  static const ChangeOrderStateReq_GiftState REVOKED = ChangeOrderStateReq_GiftState._(2, 'REVOKED');
-
-  static const $core.List<ChangeOrderStateReq_GiftState> values = <ChangeOrderStateReq_GiftState> [
-    GS_UNK,
-    GIVEN,
-    REVOKED,
-  ];
-
-  static final $core.Map<$core.int, ChangeOrderStateReq_GiftState> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ChangeOrderStateReq_GiftState valueOf($core.int value) => _byValue[value];
-
-  const ChangeOrderStateReq_GiftState._($core.int v, $core.String n) : super(v, n);
 }
 
 class RealNameVerifyReq_Cmd extends $pb.ProtobufEnum {
@@ -493,11 +393,13 @@ class DailyCheckInReq_Category extends $pb.ProtobufEnum {
   static const DailyCheckInReq_Category UNK = DailyCheckInReq_Category._(0, 'UNK');
   static const DailyCheckInReq_Category BOX = DailyCheckInReq_Category._(1, 'BOX');
   static const DailyCheckInReq_Category COIN = DailyCheckInReq_Category._(2, 'COIN');
+  static const DailyCheckInReq_Category ROULETTE = DailyCheckInReq_Category._(3, 'ROULETTE');
 
   static const $core.List<DailyCheckInReq_Category> values = <DailyCheckInReq_Category> [
     UNK,
     BOX,
     COIN,
+    ROULETTE,
   ];
 
   static final $core.Map<$core.int, DailyCheckInReq_Category> _byValue = $pb.ProtobufEnum.initByValue(values);
