@@ -71,7 +71,7 @@ class _Main extends BlocState<MainPageBloc>
                         .map((e) => BottomNavigationBarItem(
                             icon: _buildDotIcon(e.unSelectIcon, e.dots),
                             activeIcon: _buildDotIcon(e.selectIcon, e.dots),
-                            title: Text(e.title)))
+                            title: _buildTitle(e, tabList)))
                         .toList(),
                     onTap: (index) {
                       _controller.jumpToPage(index);
@@ -89,9 +89,19 @@ class _Main extends BlocState<MainPageBloc>
         });
   }
 
-  ///
+  /// 构建导航选中的状态
+  _buildTitle(BottomTab e, List<BottomTab> tabList) {
+    if (tabList.indexOf(e) == index) {
+      return Text(e.title,
+          style: TextStyle(
+              color: e.selectTitleColor, fontSize: e.selectTitleSize));
+    }
+    return Text(e.title,
+        style: TextStyle(
+            color: e.unSelectTitleColor, fontSize: e.unSelectTitleSize));
+  }
+
   /// 带红点的icon
-  ///
   _buildDotIcon(String icon, int dots) {
     return FSuper(
       width: 25,

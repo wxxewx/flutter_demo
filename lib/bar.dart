@@ -22,7 +22,7 @@ class BottomTab {
       : assert(selectIcon != null),
         assert(unSelectIcon != null),
         this.title = title ?? "",
-        this.selectTitleColor = selectTitleColor ?? Colors.green,
+        this.selectTitleColor = selectTitleColor ?? Colors.black,
         this.unSelectTitleColor = unSelectTitleColor ?? Colors.grey,
         this.unSelectTitleSize = unSelectTitleSize ?? 10,
         this.selectTitleSize = selectTitleSize ?? 10,
@@ -36,7 +36,12 @@ class BottomTab {
   BottomTab.square()
       : this('images/main_square_selected.png',
             'images/main_square_un_selected.png', "/square",
-            title: "说说");
+            title: "社区");
+
+  BottomTab.room()
+      : this('images/main_chat_selected.png',
+            'images/main_chat_un_selected.png', "/live",
+            title: "直播");
 
   BottomTab.message()
       : this('images/main_message_selected.png',

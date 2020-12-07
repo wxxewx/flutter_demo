@@ -12,6 +12,7 @@ class MainTabController extends BaseBloc {
 
   static final BottomTab home = BottomTab.home();
   static final BottomTab square = BottomTab.square();
+  static final BottomTab room = BottomTab.room();
   static final BottomTab message = BottomTab.message();
   static final BottomTab me = BottomTab.me();
 
@@ -39,13 +40,16 @@ class MainTabController extends BaseBloc {
     if (policy.tweetPolicy && policy.chatRoomPolicy) {
       _tabs.add(home);
       _tabs.add(square);
+      _tabs.add(room);
       _tabs.add(message);
       _tabs.add(me);
     } else if (policy.tweetPolicy && !policy.chatRoomPolicy) {
+      _tabs.add(home);
       _tabs.add(square);
       _tabs.add(message);
       _tabs.add(me);
     } else {
+      _tabs.add(home);
       _tabs.add(message);
       _tabs.add(me);
     }

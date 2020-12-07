@@ -42,7 +42,7 @@ class PolicyMeta extends BaseMeta<Policy, PolicyResp> {
     bool chatRoomPolicy = policyList[1] ?? false;
     bool tweetPolicy = policyList[2] ?? false;
     bool pubTweetPolicy = policyList[3] ?? false;
-    return Policy(chatRoomPolicy, tweetPolicy, pubTweetPolicy);
+    return Policy(true, tweetPolicy, pubTweetPolicy);
   }
 }
 
