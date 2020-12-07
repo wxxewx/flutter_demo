@@ -27,8 +27,8 @@ dependencies:
     path: login
 
   #推特模块
-  tweet:
-    path: tweet
+  square:
+    path: square
 
   #联系人模块
   contact:

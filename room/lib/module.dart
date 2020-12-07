@@ -4,7 +4,6 @@ import 'package:baselib/fluro/page_builder.dart';
 import 'package:room/home/page.dart';
 import 'package:room/room/page.dart';
 
-import 'edit/page.dart';
 import 'events.dart';
 
 class RoomModule implements IModule {

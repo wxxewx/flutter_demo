@@ -67,7 +67,7 @@ class _ChatRoom extends BlocState<ChatRoomBloc> {
                   //消息面板
                   Expanded(child: buildMessage(theme)),
                   //底部菜单
-                  buildBottomMenu(context, theme,bloc)
+                  buildBottomMenu(context, theme, bloc)
                 ],
               ),
             ),
@@ -108,17 +108,18 @@ class _ChatRoom extends BlocState<ChatRoomBloc> {
   ///房间背景
   Widget _buildBackground(BuildContext context, MTheme theme) {
     return StreamBuilder<String>(
-      stream:  RoomGlobal.instance.roomImgStream,
-      builder: (context, snapshot) {
-        return Container(
-          decoration: BoxDecoration(
-              gradient:
-                  LinearGradient(colors: [color("#017491"), color("#01586E")]),
-              image:snapshot.data==null?null: DecorationImage(
-                  image: NetworkImage(snapshot?.data),
-                  fit: BoxFit.cover)),
-        );
-      }
-    );
+        stream: RoomGlobal.instance.roomImgStream,
+        builder: (context, snapshot) {
+          return Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [color("#017491"), color("#01586E")]),
+                image: snapshot.data == null
+                    ? null
+                    : DecorationImage(
+                        image: NetworkImage(snapshot?.data),
+                        fit: BoxFit.cover)),
+          );
+        });
   }
 }

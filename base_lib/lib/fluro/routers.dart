@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'empty/page.dart';
 
 class Routers {
-  static Router router = Router();
+  static FluroRouter router = FluroRouter();
 
   static String login_page = "";
 

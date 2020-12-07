@@ -41,7 +41,9 @@ class _MicRippleWidgetState extends State<MicRippleWidget>
     super.initState();
     for (int i = 1; i <= widget.circleNumber; i++) {
       AnimationController animationController = AnimationController(
-          vsync: this, duration: Duration(milliseconds: widget.milliseconds));
+        duration: Duration(milliseconds: widget.milliseconds),
+        vsync: this,
+      );
       Animation<double> _animation =
           CurvedAnimation(parent: animationController, curve: Curves.linear);
 
