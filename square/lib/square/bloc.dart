@@ -10,6 +10,13 @@ class SquareListBloc extends BaseBloc {
 
   BehaviorSubject<List<SquareItem>> squareItems = BehaviorSubject();
 
+
+
+  int page = 0;
+  bool isLoadMore = false;
+  bool isLoading = false;
+
+
   @override
   void initState() {
     loadState.add(LoadingState.loading);
