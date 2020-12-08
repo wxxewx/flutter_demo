@@ -16,9 +16,9 @@ Future<ResultBody<List<SquareItem>>> getSquareList(Account account, int page,
     int age,
     int distance,
     int gender,
-    String targetId}) async{
+    String targetId}) async {
   var listReq = proto.TweetListReq.create()
-    ..category =( category == 2
+    ..category = (category == 2
         ? proto.TweetListReq_Category.RECENT
         : proto.TweetListReq_Category.RECOMENDED)
     ..currentPage = page
@@ -64,6 +64,6 @@ Future<ResultBody<List<SquareItem>>> getSquareList(Account account, int page,
           e.pubTime,
           e.setTop,
           e.user.showId);
-    }));
+    }).toList());
   });
 }

@@ -19,11 +19,13 @@ class DioProtoRequest {
     _dio.options.baseUrl = _baseUrl;
   }
 
-  Future<ResultBody<T>> get<T>(String path, ResultProtoBodyTransform<T> transform,
+  Future<ResultBody<T>> get<T>(
+      String path, ResultProtoBodyTransform<T> transform,
       {Map parameters}) async {
     try {
       var request = _GetRequest(_dio, path, parameters);
-      var byte = await compute(_get, request, debugLabel: "get-compute");
+      // var byte = await compute(_get, request, debugLabel: "get-compute");
+      var byte = await _get(request);
       var result = await transform(byte);
       LogUtil.e("DioRequest-get-url：${_dio.options.baseUrl + path}");
       LogUtil.e("DioRequest-get-result：$result");
@@ -39,7 +41,9 @@ class DioProtoRequest {
       String path, P create, ResultProtoBodyTransform<T> transform) async {
     try {
       var request = _PostRequest(_dio, path, create);
-      var byte = await compute(_post, request, debugLabel: "post-compute");
+      // var byte = await compute(_post, request, debugLabel: "post-compute");
+      var byte = await _post(request);
+
       var result = await transform(byte);
       LogUtil.e("DioProtoRequest-post-url：${_dio.options.baseUrl + path}");
       LogUtil.e("DioProtoRequest-post-result：$result");

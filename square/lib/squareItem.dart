@@ -38,4 +38,9 @@ class SquareItem {
       this.systemTime,
       this.isSetTop,
       this.pubUserShowId);
+
+  @override
+  String toString() {
+    return 'SquareItem{id: $id, content: $content, audioUrl: $audioUrl, location: $location, tags: $tags, photos: $photos, isLiked: $isLiked, likeNumber: $likeNumber, pubUserName: $pubUserName, pubUserAvatar: $pubUserAvatar, pubUserId: $pubUserId, systemTime: $systemTime, isSetTop: $isSetTop, pubUserShowId: $pubUserShowId}';
+  }
 }
