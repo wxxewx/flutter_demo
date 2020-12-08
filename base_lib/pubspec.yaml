@@ -73,6 +73,9 @@ dependencies:
   #声网
   agora_rtc_engine: ^1.0.12
 
+  #占位符
+  transparent_image: ^1.0.0
+
   nim:
     path: ../nim
 

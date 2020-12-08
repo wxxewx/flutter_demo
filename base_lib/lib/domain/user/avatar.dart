@@ -5,7 +5,7 @@ class Avatar {
   final String asset;
   String decorate;
 
-  Avatar(this.url, {decorate,Gender gender})
+  Avatar(this.url, {decorate,Gender gender=Male})
       : this.decorate = decorate,
         this.asset = gender.isMale
             ? "images/avatar_default_male.png"

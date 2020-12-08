@@ -48,6 +48,7 @@ class ThemeColor {
   Color themeGreyColor = Colors.grey;
   Color themeLightGreyColor = color("#9B9B9B");
   Color themeWhiteColor = Colors.white;
+  Color themeDividerColor = Colors.grey[200];
 
   Color themeTextColor = Colors.black;
   Color themeTextLightColor = Colors.grey;

@@ -73,7 +73,7 @@ class _Square extends BlocState<SquareBloc>
               controller: _controller, //配置控制器
               children: _tabs.map((Tab tab) {
                 var parameters = Parameters();
-                tab.text == "消息"
+                tab.text == "推荐"
                     ? parameters.putInt("type", 1)
                     : parameters.putInt("type", 2);
                 return Routers.generatePage(context, "/squareList",parameters: parameters);
