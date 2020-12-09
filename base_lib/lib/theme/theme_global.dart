@@ -17,7 +17,7 @@ class ThemeGlobal {
   }
 
   BehaviorSubject<MTheme> theme = BehaviorSubject();
-  MTheme themeData=MTheme.normal();
+  MTheme themeData = MTheme.normal();
 
   ThemeGlobal() {
     initTheme();
@@ -40,14 +40,14 @@ class MTheme {
 
 class ThemeColor {
   Color themeLightColor = Colors.greenAccent;
-  Color themeColor = Colors.green;
-  Color themeDartColor = Colors.green;
+  Color themeColor = Colors.yellow;
+  Color themeDartColor = Colors.yellow[700];
   Color themeAccentColor = Colors.orange;
 
   Color themeBlackColor = Colors.black;
   Color themeGreyColor = Colors.grey;
   Color themeLightGreyColor = color("#9B9B9B");
-  Color themeAccentGreyColor =Colors.grey[100];
+  Color themeAccentGreyColor = Colors.grey[100];
   Color themeWhiteColor = Colors.white;
   Color themeDividerColor = Colors.grey[200];
 
@@ -56,7 +56,6 @@ class ThemeColor {
   Color themeTextShallowColor = Colors.grey[350];
   Color themeTextWhiteColor = Colors.white;
   Color themeTextBlueColor = Colors.lightBlue;
-
 
   ThemeColor(
       this.themeLightColor,

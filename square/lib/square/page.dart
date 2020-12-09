@@ -2,6 +2,7 @@ import 'package:baselib/common/base/base_page.dart';
 import 'package:baselib/common/base/base_theme_state.dart';
 import 'package:baselib/common/parameters.dart';
 import 'package:baselib/domain/user/avatar.dart';
+import 'package:baselib/fluro/routers.dart';
 import 'package:baselib/theme/theme_global.dart';
 import 'package:baselib/widget/avatar.dart';
 import 'package:baselib/widget/loading.dart';
@@ -78,111 +79,153 @@ class _SquareListState extends BlocState<SquareListBloc>
           );
         });
   }
-}
 
-///
-/// 构建说说列表item
-_buildItem(BuildContext context, SquareItem item, MTheme theme) {
-  return Container(
-    margin: EdgeInsets.only(top: 20),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            AvatarWidget(Avatar(item.pubUserAvatar), 60),
-            Container(
-              margin: EdgeInsets.only(left: 8),
-              child: Text(
-                item.pubUserName,
-                style: TextStyle(
-                    color: theme.themeColor.themeTextColor,
-                    fontSize: theme.themeFontSize.fontSizeBig,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            Spacer(),
-            IconButton(icon: Icon(Icons.more_horiz), onPressed: () {})
-          ],
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(top: 8),
-          child: Text(
-            item.content,
-            style: TextStyle(
-              color: theme.themeColor.themeTextColor,
-              fontSize: theme.themeFontSize.fontSizeNormal,
-            ),
-          ),
-        ),
-        if (item.photos.isNotEmpty)
-          Container(
-            child: NineGridImage(
-                item.photos, MediaQuery.of(context).size.width - 32),
-            width: double.infinity,
-          ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          child: Row(
-            children: item.tags
-                .asMap()
-                .map((key, value) {
-                  return MapEntry(
-                      key,
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: theme.themeColor.themeDividerColor),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            color: theme.themeColor.themeAccentGreyColor),
-                        child: Row(
-                          children: [
-                            if (key == 0)
-                              Container(
-                                child: Image.asset(
-                                  "images/tweet_tag_icon.png",
-                                  package: "square",
-                                  width: 18,
-                                  height: 18,
-                                ),
-                                margin: EdgeInsets.only(right: 3),
-                              ),
-                            Text(
-                              value,
-                              style: TextStyle(
-                                fontSize: theme.themeFontSize.fontSizeLittle,
-                                color: theme.themeColor.themeTextLightColor,
-                              ),
-                            )
-                          ],
-                        ),
-                      ));
-                })
-                .values
-                .toList(),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          child: Row(
+  ///
+  /// 构建说说列表item
+  _buildItem(BuildContext context, SquareItem item, MTheme theme) {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Text(
-                formatDate(DateTime.fromMillisecondsSinceEpoch(item.systemTime * 1000), [yyyy, '/', mm, '/', dd]),
-                style: TextStyle(
-                    color: theme.themeColor.themeTextLightColor,
-                    fontSize: theme.themeFontSize.fontSizeSmall),
-              )
+              GestureDetector(
+                child: AvatarWidget(Avatar(item.pubUserAvatar), 60),
+                onTap: () {
+                  var parameters = Parameters();
+                  parameters.putString("userId", item.pubUserId);
+                  Routers.navigateTo(context, "/profile",
+                      parameters: parameters);
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 8),
+                child: Text(
+                  item.pubUserName,
+                  style: TextStyle(
+                      color: theme.themeColor.themeTextColor,
+                      fontSize: theme.themeFontSize.fontSizeBig,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              Spacer(),
+              IconButton(icon: Icon(Icons.more_horiz), onPressed: () {})
             ],
           ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 12),
-          child: Divider(height: 1, color: theme.themeColor.themeDividerColor),
-        ),
-      ],
-    ),
-  );
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 8),
+            child: Text(
+              item.content,
+              style: TextStyle(
+                color: theme.themeColor.themeTextColor,
+                fontSize: theme.themeFontSize.fontSizeNormal,
+              ),
+            ),
+          ),
+          if (item.photos.isNotEmpty)
+            Container(
+              child: NineGridImage(
+                  item.photos, MediaQuery.of(context).size.width - 32),
+              width: double.infinity,
+            ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Row(
+              children: item.tags
+                  .asMap()
+                  .map((key, value) {
+                    return MapEntry(
+                        key,
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                          margin: EdgeInsets.only(right: 8),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: theme.themeColor.themeDividerColor),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              color: theme.themeColor.themeAccentGreyColor),
+                          child: Row(
+                            children: [
+                              if (key == 0)
+                                Container(
+                                  child: Image.asset(
+                                    "images/tweet_tag_icon.png",
+                                    package: "square",
+                                    width: 18,
+                                    height: 18,
+                                  ),
+                                  margin: EdgeInsets.only(right: 3),
+                                ),
+                              Text(
+                                value,
+                                style: TextStyle(
+                                  fontSize: theme.themeFontSize.fontSizeLittle,
+                                  color: theme.themeColor.themeTextLightColor,
+                                ),
+                              )
+                            ],
+                          ),
+                        ));
+                  })
+                  .values
+                  .toList(),
+            ),
+          ),
+          Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  Text(
+                    formatDate(
+                        DateTime.fromMillisecondsSinceEpoch(
+                            item.systemTime * 1000),
+                        [yyyy, '/', mm, '/', dd]),
+                    style: TextStyle(
+                        color: theme.themeColor.themeTextLightColor,
+                        fontSize: theme.themeFontSize.fontSizeSmall),
+                  ),
+                  Spacer(),
+                  IconButton(
+                      icon: Image.asset(
+                        item.isLiked
+                            ? "images/tweet_liked_icon.png"
+                            : "images/tweet_un_like_icon.png",
+                        package: "square",
+                        width: 24,
+                        height: 24,
+                      ),
+                      onPressed: () {
+                        bloc.like(item);
+                      }),
+                  Text(
+                    item.likeNumber.toString(),
+                    style: TextStyle(
+                        fontSize: theme.themeFontSize.fontSizeLittle,
+                        color: theme.themeColor.themeTextLightColor),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 8),
+                    child: IconButton(
+                        icon: Image.asset(
+                          "images/tweet_to_chat_icon.png",
+                          package: "square",
+                          width: 24,
+                          height: 24,
+                        ),
+                        onPressed: () {}),
+                  ),
+                ],
+              )),
+          Container(
+            margin: EdgeInsets.only(top: 12),
+            child:
+                Divider(height: 1, color: theme.themeColor.themeDividerColor),
+          ),
+        ],
+      ),
+    );
+  }
 }

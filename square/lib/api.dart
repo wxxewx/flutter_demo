@@ -48,22 +48,40 @@ Future<ResultBody<List<SquareItem>>> getSquareList(Account account, int page,
   return App.mainRequest.post<List<SquareItem>, proto.TweetListReq>(
       Social.TWEETS, listReq, (byte) async {
     var tweetListResp = proto.TweetListResp.fromBuffer(byte);
-    return ResultBody(true, data: tweetListResp.tweets.map((e) {
-      return SquareItem(
-          e.tweetId,
-          e.text,
-          e.audio,
-          Location.Coordinate(e.location.lng, e.location.lat),
-          e.tags,
-          e.photos,
-          e.isLiked,
-          e.likeNum,
-          e.user.name,
-          e.user.avatar,
-          e.user.uid,
-          e.pubTime,
-          e.setTop,
-          e.user.showId);
-    }).toList());
+    return ResultBody(true,
+        data: tweetListResp.tweets.map((e) {
+          return SquareItem(
+              e.tweetId,
+              e.text,
+              e.audio,
+              Location.Coordinate(e.location.lng, e.location.lat),
+              e.tags,
+              e.photos,
+              e.isLiked,
+              e.likeNum,
+              e.user.name,
+              e.user.avatar,
+              e.user.uid,
+              e.pubTime,
+              e.setTop,
+              e.user.showId);
+        }).toList());
+  });
+}
+
+///
+/// 为说说点赞
+Future<ResultBody<bool>> likeTweet(Account account, SquareItem tweet) async {
+  var req = proto.LikeTweetReq.create()
+    ..uid = account.userId
+    ..tweetId = tweet.id
+    ..token = account.token;
+  return App.mainRequest.post<bool, proto.LikeTweetReq>(Social.TWEETS_LIKE, req,
+      (byte) async {
+    var generalResp = proto.GeneralResp.fromBuffer(byte);
+    if (generalResp.status == proto.GeneralResp_Status.OK) {
+      return ResultBody(true, data: true);
+    }
+    return ResultBody(true, data: false, error: ResultError("请求失败！"));
   });
 }

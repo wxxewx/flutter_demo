@@ -55,16 +55,24 @@ class LoadingView extends BaseThemeWidget {
         SliverFillViewport(
             viewportFraction: 1.0,
             delegate: SliverChildBuilderDelegate(
-                (_, index) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset('images/loading_empty_icon.png',
-                              package: 'baselib', width: 100, height: 100),
-                        ),
-                        Text("空空如也")
-                      ],
+                (_, index) => Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.center,
+                            child: Image.asset('images/loading_empty_icon.png',
+                                package: 'baselib', width: 100, height: 100),
+                          ),
+                          Text(
+                            "空空如也",
+                            style: TextStyle(
+                                fontSize: theme.themeFontSize.fontSizeNormal,
+                                color: theme.themeColor.themeLightGreyColor),
+                          )
+                        ],
+                      ),
                     ),
                 childCount: 1)),
       ],
@@ -77,16 +85,24 @@ class LoadingView extends BaseThemeWidget {
         SliverFillViewport(
             viewportFraction: 1.0,
             delegate: SliverChildBuilderDelegate(
-                (_, index) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset('images/loading_empty_icon.png',
-                              package: 'baselib', width: 100, height: 100),
-                        ),
-                        Text("网络异常")
-                      ],
+                (_, index) => Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.center,
+                            child: Image.asset('images/loading_empty_icon.png',
+                                package: 'baselib', width: 100, height: 100),
+                          ),
+                          Text(
+                            "网络异常",
+                            style: TextStyle(
+                                fontSize: theme.themeFontSize.fontSizeNormal,
+                                color: theme.themeColor.themeLightGreyColor),
+                          )
+                        ],
+                      ),
                     ),
                 childCount: 1)),
       ],

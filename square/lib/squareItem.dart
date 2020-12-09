@@ -12,9 +12,9 @@ class SquareItem {
   final List<String> tags;
   final List<String> photos;
 
-  final bool isLiked;
+  bool isLiked;
 
-  final int likeNumber;
+  int likeNumber;
   final String pubUserName;
   final String pubUserAvatar;
   final String pubUserId;

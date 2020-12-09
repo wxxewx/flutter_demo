@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:baselib/account/account_global.dart';
 import 'package:baselib/common/bloc/base_bloc.dart';
+import 'package:baselib/utils/toast.dart';
 import 'package:baselib/widget/loading.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:square/api.dart';
@@ -64,5 +65,18 @@ class SquareListBloc extends BaseBloc {
 
   void setType(int type) {
     this.type = type;
+  }
+
+  void like(SquareItem item) async {
+    if (item.isLiked) return;
+    var account = AccountGlobal.instance.getAccount();
+    var body = await likeTweet(account, item);
+    if (body.isSuccess) {
+      item.isLiked = true;
+      item.likeNumber = item.likeNumber + 1;
+      squareItems.add(squareItems.value);
+    } else {
+      ToastUtil.show(body.error.msg);
+    }
   }
 }

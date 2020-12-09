@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:login/module.dart';
 import 'package:room/module.dart';
 import 'package:square/module.dart';
+import 'package:user/module.dart';
 import 'module.dart';
 import 'package:nim/nim.dart';
 
@@ -18,6 +19,7 @@ var modules = [
   CenterModule(),
   ContactsModule(),
   SquareModule(),
+  ProfileModule(),
   RoomModule()
 ];
 
