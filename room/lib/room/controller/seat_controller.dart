@@ -1,4 +1,3 @@
-import 'package:agora_rtc_engine/src/base.dart';
 import 'package:baselib/agora/agora.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:nim/nim.dart';
@@ -117,8 +116,8 @@ class SeatController with RoomController {
     }
   }
 
-  //挡墙正在讲话的玩家
-  void audioVolumeIndication(List<AudioVolumeInfo> speakers) {
+  //正在讲话的玩家
+  void audioVolumeIndication(List<AudioVolume> speakers) {
     bool isHosSpeaker = false;
     seats.forEach((key, seat) {
       bool isSpeaker = false;

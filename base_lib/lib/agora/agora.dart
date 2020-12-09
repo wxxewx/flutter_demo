@@ -1,4 +1,4 @@
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:baselib/api/url/bees.dart';
 import 'package:baselib/app.dart';
 import 'package:baselib/common/http/result_body.dart';
@@ -18,36 +18,42 @@ class AgoraGlobal {
     return _instance;
   }
 
+  RtcEngine rtcEngine;
+
   //频道状态
   State state = State.idle;
 
   List<AudioVolumeIndication> audioVolumeIndications = [];
 
+  List<JoinRoomSuccess> joinRoomSuccesss = [];
+
   //初始化声网
-  void init() {
-    AgoraRtcEngine.create(App.agoraAppKey);
+  init() async {
+    rtcEngine = await RtcEngine.create(App.agoraAppKey);
+
     //暂时禁用视频模块
-    AgoraRtcEngine.disableVideo();
+    rtcEngine.disableVideo();
     //启用音频模块
-    AgoraRtcEngine.enableAudio();
+    rtcEngine.enableAudio();
     //设置频道类型
-    AgoraRtcEngine.setChannelProfile(ChannelProfile.Communication);
+    rtcEngine.setChannelProfile(ChannelProfile.Communication);
     //设置音频模式
-    AgoraRtcEngine.setAudioProfile(
+    rtcEngine.setAudioProfile(
         AudioProfile.MusicHighQualityStereo, AudioScenario.ShowRoom);
 
-    AgoraRtcEngine.enableAudioVolumeIndication(200,3,true);
-    _addAgoraEventHandlers();
+    rtcEngine.enableAudioVolumeIndication(200, 3, true);
+    var rtcEngineEventHandler = RtcEngineEventHandler(
+        joinChannelSuccess: _joinChannelSuccess,
+        leaveChannel: _laveChannel,
+        userJoined: _userJoined,
+        userOffline: _userOffline,
+        audioVolumeIndication: _audioVolumeIndication);
+    rtcEngine.setEventHandler(rtcEngineEventHandler);
   }
 
   ///加入频道
-  Future<bool> joinChannel(Account account, String roomId) async {
-    if (state != State.idle) {
-      var bool = await leaveChannel();
-      if (!bool) {
-        return false;
-      }
-    }
+  Future<void> joinChannel(Account account, String roomId) async {
+    if (state == State.inChannel) return;
     state = State.joiningChannel;
     var req = TokenAgoraReq.create()
       ..uid = account.userId
@@ -60,35 +66,29 @@ class AgoraGlobal {
     //从红后获取token成功
     if (tokenResult.isSuccess) {
       var token = tokenResult.data;
-      var bool = await AgoraRtcEngine.joinChannel(
-          token, roomId, "", int.parse(account.userId));
-      //加入成功
-      if (bool) {
-        state = State.inChannel;
-        return true;
-      } else {
-        state = State.idle;
-        return false;
-      }
+      await rtcEngine.joinChannel(token, roomId, "", int.parse(account.userId));
     }
   }
 
   ///离开频道
-  Future<bool> leaveChannel() async => await AgoraRtcEngine.leaveChannel();
+  Future<void> leaveChannel() async {
+    if (state == State.idle) return;
+    rtcEngine.leaveChannel();
+  }
 
   //静音/开卖操作
   void enableLocalAudio(enabled) async {
-    AgoraRtcEngine.enableLocalAudio(enabled);
+    rtcEngine.enableLocalAudio(enabled);
   }
 
   //扬声器/听筒操作
   void enableSpeakerphone(enabled) async {
-    AgoraRtcEngine.setEnableSpeakerphone(enabled);
+    rtcEngine.setEnableSpeakerphone(enabled);
   }
 
   //接受/停止接收远程流
   void muteAllRemoteAudioStreams(enabled) async {
-    AgoraRtcEngine.muteAllRemoteAudioStreams(enabled);
+    rtcEngine.muteAllRemoteAudioStreams(enabled);
   }
 
   void addAudioVolumeIndication(AudioVolumeIndication audioVolumeIndication) {
@@ -100,31 +100,56 @@ class AgoraGlobal {
     audioVolumeIndications.remove(audioVolumeIndication);
   }
 
-  ///监听事件
-  void _addAgoraEventHandlers() {
-    //加入房间
-    AgoraRtcEngine.onJoinChannelSuccess =
-        (String channel, int uid, int elapsed) {};
+  void addJoinRoomSuccess(JoinRoomSuccess joinRoomSuccess) {
+    joinRoomSuccesss.add(joinRoomSuccess);
+  }
 
-    //离开房间
-    AgoraRtcEngine.onLeaveChannel = () {};
+  void removeJoinRoomSuccess(JoinRoomSuccess joinRoomSuccess) {
+    joinRoomSuccesss.remove(joinRoomSuccess);
+  }
 
-    //用户加入频道
-    AgoraRtcEngine.onUserJoined = (int uid, int elapsed) {};
+//加入房间
+  _joinChannelSuccess(String channel, int uid, int elapsed) {
+    state = State.inChannel;
+    joinRoomSuccesss.forEach((element) {
+      element?.call(channel, uid, elapsed);
+    });
+  }
 
-    ///用户离线
-    AgoraRtcEngine.onUserOffline = (int uid, int reason) {};
+//离开房间
+  _laveChannel(RtcStats rtcStats) {
+    state = State.idle;
+  }
 
-    ///用户讲话
-    AgoraRtcEngine.onAudioVolumeIndication =
-        (int totalVolume, List<AudioVolumeInfo> speakers) {
-      audioVolumeIndications.forEach((element) {
-        element?.call(speakers);
-      });
-    };
+//用户加入频道
+  _userJoined(int uid, int elapsed) {}
+
+  ///用户离线
+  _userOffline(int uid, UserOfflineReason userOfflineReason) {}
+
+  ///用户讲话
+  _audioVolumeIndication(List<AudioVolumeInfo> speakers, int totalVolume) {
+    audioVolumeIndications.forEach((element) {
+      element?.call(speakers
+          .map((e) => AudioVolume(e.uid, e.volume, e.vad, e.channelId))
+          .toList());
+    });
   }
 }
 
-typedef AudioVolumeIndication(List<AudioVolumeInfo> speakers);
+typedef AudioVolumeIndication(List<AudioVolume> speakers);
+typedef JoinRoomSuccess(String channel, int uid, int elapsed);
 
 enum State { inChannel, joiningChannel, idle }
+
+class AudioVolume {
+  final int uid;
+
+  final int volume;
+
+  final int vad;
+
+  final String channelId;
+
+  AudioVolume(this.uid, this.volume, this.vad, this.channelId);
+}

@@ -21,7 +21,7 @@ dependencies:
   protobuf: ^1.0.1
 
   # banner
-  flutter_swiper : ^1.1.6
+  flutter_swiper: ^1.1.6
 
   #  # NIM
   #  flutter_nim: ^0.1.7
@@ -71,11 +71,12 @@ dependencies:
   build_runner: ^1.7.4
 
   #声网
-  agora_rtc_engine: ^1.0.12
+  agora_rtc_engine: ^3.1.4
 
   #占位符
   transparent_image: ^1.0.0
 
+  date_format: ^1.0.8
   nim:
     path: ../nim
 

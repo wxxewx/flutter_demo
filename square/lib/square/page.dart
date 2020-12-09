@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:square/squareItem.dart';
 import 'package:square/widget/NineGridImage.dart';
+import 'package:date_format/date_format.dart';
 
 import 'bloc.dart';
 
@@ -116,9 +117,67 @@ _buildItem(BuildContext context, SquareItem item, MTheme theme) {
         ),
         if (item.photos.isNotEmpty)
           Container(
-            child: NineGridImage(item.photos),
+            child: NineGridImage(
+                item.photos, MediaQuery.of(context).size.width - 32),
             width: double.infinity,
           ),
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Row(
+            children: item.tags
+                .asMap()
+                .map((key, value) {
+                  return MapEntry(
+                      key,
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                        margin: EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: theme.themeColor.themeDividerColor),
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            color: theme.themeColor.themeAccentGreyColor),
+                        child: Row(
+                          children: [
+                            if (key == 0)
+                              Container(
+                                child: Image.asset(
+                                  "images/tweet_tag_icon.png",
+                                  package: "square",
+                                  width: 18,
+                                  height: 18,
+                                ),
+                                margin: EdgeInsets.only(right: 3),
+                              ),
+                            Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: theme.themeFontSize.fontSizeLittle,
+                                color: theme.themeColor.themeTextLightColor,
+                              ),
+                            )
+                          ],
+                        ),
+                      ));
+                })
+                .values
+                .toList(),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Row(
+            children: [
+              Text(
+                formatDate(DateTime.fromMillisecondsSinceEpoch(item.systemTime * 1000), [yyyy, '/', mm, '/', dd]),
+                style: TextStyle(
+                    color: theme.themeColor.themeTextLightColor,
+                    fontSize: theme.themeFontSize.fontSizeSmall),
+              )
+            ],
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(top: 12),
           child: Divider(height: 1, color: theme.themeColor.themeDividerColor),

@@ -108,13 +108,15 @@ class RoomGlobal {
   ///加入声网频道
   void joinAgora() async {
     var account = AccountGlobal.instance.getAccount();
-    var bool =
-        await AgoraGlobal.instance.joinChannel(account, currentChatRoomId);
-    if (bool) {
+    var call;
+    call = (channel, uid, elapsed) {
       AgoraGlobal.instance.enableLocalAudio(false);
       AgoraGlobal.instance.enableSpeakerphone(true);
       openAllRemote();
-    }
+      AgoraGlobal.instance.removeJoinRoomSuccess(call);
+    };
+    AgoraGlobal.instance.addJoinRoomSuccess(call);
+    await AgoraGlobal.instance.joinChannel(account, currentChatRoomId);
   }
 
   ///加入网易频道
@@ -191,18 +193,17 @@ class RoomGlobal {
 
   ///
   /// 离开房间
-  Future<bool> leaveRoom() async {
+  Future<void> leaveRoom() async {
     seatController.unBind();
     messageController.unBind();
     userController.unBind();
-    _leaveNimRoom();
-    _leaveAgora();
+    await _leaveNimRoom();
+    await _leaveAgora();
     inRoomStateStream.add(InRoomState.connecting);
     chatRoomStream.add(null);
     ownerIdStream.add(null);
     roomImgStream.add(ChatRoomTheme.normal().url);
     currentChatRoomUserInfo = null;
-    return true;
   }
 
   ///离开网易频道

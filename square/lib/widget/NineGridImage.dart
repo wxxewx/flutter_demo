@@ -6,13 +6,14 @@ const placeholder = "images/placeholder_wh.png";
 class NineGridImage extends StatelessWidget {
   final List<String> photos;
 
-  NineGridImage(this.photos)
+  final double width;
+
+  NineGridImage(this.photos, this.width)
       : assert(photos.isNotEmpty),
         assert(photos.length <= 9);
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     if (photos.length == 1) {
       return _build_1(context, width, photos);
     } else if (1 < photos.length && photos.length <= 3) {
@@ -45,9 +46,11 @@ class NineGridImage extends StatelessWidget {
   /// 构建一个图片
   /// 当一张图片的时候，图片宽高为当前控件的1/2
   _build_1(BuildContext context, double width, List<String> photos) {
-    var dw = width / 2;
+    var dw = width / 2 - 20;
     return Container(
-      child: _buildCover(photos[0], dw),
+      child: Row(
+        children: [_buildCover(photos[0], dw)],
+      ),
       margin: EdgeInsets.only(top: 10),
     );
   }
@@ -55,7 +58,7 @@ class NineGridImage extends StatelessWidget {
   /// 构建2-3张图片
   /// 当一张图片的时候，图片宽高为当前控件的1/2
   _build_2_3(BuildContext context, double width, List<String> photos) {
-    var imageWidth = width / 3 - 30;
+    var imageWidth = width / 3 - 10;
     return Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: 10),
@@ -69,7 +72,7 @@ class NineGridImage extends StatelessWidget {
   /// 构建4张图片
   /// 当一张图片的时候，图片宽高为当前控件的1/2
   _build_4(BuildContext context, double width, List<String> photos) {
-    var imageWidth = width / 3 - 30;
+    var imageWidth = width / 3 - 10;
     return Container(
         width: double.infinity,
         child: Column(
@@ -99,7 +102,7 @@ class NineGridImage extends StatelessWidget {
   /// 构建5-9张图片
   /// 当一张图片的时候，图片宽高为当前控件的1/2
   _build_5_9(BuildContext context, double width, List<String> photos) {
-    var imageWidth = width / 3 - 30;
+    var imageWidth = width / 3 - 10;
     var rows = photos.length ~/ 3;
 
     if (photos.length % 3 > 0) {

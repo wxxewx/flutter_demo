@@ -91,11 +91,8 @@ class WindowChatRoom extends BaseThemeWidget {
                               height: 18,
                             ),
                             onPressed: () {
-                              roomGlobal.leaveRoom().then((value) {
-                                if (value) {
-                                  hideWindowWidget();
-                                }
-                              });
+                              roomGlobal.leaveRoom();
+                              hideWindowWidget();
                             }),
                       )
                     ],
