@@ -16,6 +16,7 @@ import 'bloc.dart';
 
 ///
 ///[type] 1推荐，2最新
+///[targetId] 目标用户id，没有默认为所有的说说
 ///[pageType] 加载类型，1为独立界面，2为模块加载
 ///[scrollController] 用于外界嵌套来控制列表滑动到底部自动加载
 class SquareListPage extends BlocPage<SquareListBloc, _SquareListState> {
@@ -40,7 +41,6 @@ class _SquareListState extends BlocState<SquareListBloc>
 
   @override
   void initState() {
-    bloc.setType(parameters.getInt("type"));
     super.initState();
     pageType = parameters.getInt("pageType") ?? 1;
     pageType == 1
@@ -107,10 +107,9 @@ class _SquareListState extends BlocState<SquareListBloc>
           return SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-
               var item = snapshot.data[index];
               return buildItem(context, item, theme);
-            },childCount: snapshot.data.length),
+            }, childCount: snapshot.data.length),
           );
         });
   }

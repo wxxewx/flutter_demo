@@ -358,6 +358,7 @@ class _Profile extends BlocState<ProfileBloc> {
     var parameters = Parameters();
     parameters.putInt("type", 2);
     parameters.putInt("pageType", 2);
+    parameters.putString("targetId", profile.info.uid);
     parameters.putObj("scrollController", _scrollController);
     return Routers.generatePage(context, "/squareList", parameters: parameters);
   }

@@ -10,7 +10,7 @@ import 'package:square/squareItem.dart';
 
 class SquareListBloc extends BaseBloc {
   int type = 2;
-
+  String targetId;
   BehaviorSubject<LoadingState> loadState = BehaviorSubject();
   BehaviorSubject<List<SquareItem>> squareItems = BehaviorSubject();
 
@@ -20,6 +20,8 @@ class SquareListBloc extends BaseBloc {
 
   @override
   void initState() {
+    type=parameters.getInt("type");
+    targetId=parameters.getString("targetId");
     loadState.add(LoadingState.loading);
     refreshTweets();
   }
@@ -34,7 +36,7 @@ class SquareListBloc extends BaseBloc {
     page = 0;
     isLoading = true;
     var account = AccountGlobal.instance.getAccount();
-    var body = await getSquareList(account, page, category: type);
+    var body = await getSquareList(account, page, category: type,targetId: targetId);
     if (body.isSuccess) {
       loadState.add(LoadingState.success);
       squareItems.add(body.data);
@@ -51,7 +53,7 @@ class SquareListBloc extends BaseBloc {
     if (isLoading || !isLoadMore) return;
     isLoading = true;
     var account = AccountGlobal.instance.getAccount();
-    var body = await getSquareList(account, page, category: type);
+    var body = await getSquareList(account, page, category: type,targetId: targetId);
     if (body.isSuccess) {
       squareItems.value.addAll(body.data);
       squareItems.add(squareItems.value);
@@ -63,9 +65,7 @@ class SquareListBloc extends BaseBloc {
     }
   }
 
-  void setType(int type) {
-    this.type = type;
-  }
+
 
   void like(SquareItem item) async {
     if (item.isLiked) return;
