@@ -1,7 +1,7 @@
 import 'package:baselib/common/bus/ibus.dart';
 import 'package:baselib/fluro/routers.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:fluro/fluro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:nim/nim.dart';
 
 import 'common/bus/bus.dart';
@@ -37,7 +37,8 @@ class App {
       //注册各个模块的页面
       var pages = module.getPages();
       var publicEvents = module.gePublicEvents();
-      Routers.init(pages);
+      var publicWidgets = module.getWidgets();
+      Routers.init(pages,publicWidgets);
       //注册各个模块的公共服务
       publicEvents.forEach((publicEvent) {
         EventBus.instance.register(
@@ -58,4 +59,7 @@ abstract class IModule {
   List<PageBuilder> getPages();
 
   List<EventBuilder> gePublicEvents();
+
+  List<ViewBuilder> getWidgets();
+
 }

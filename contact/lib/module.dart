@@ -7,6 +7,10 @@ import 'contacts/page.dart';
 import 'conversation/page.dart';
 
 class ContactsModule extends IModule {
+
+  @override
+  List<ViewBuilder> getWidgets() =>[];
+
   @override
   List<EventBuilder> gePublicEvents() {
     return [];

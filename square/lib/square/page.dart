@@ -14,6 +14,10 @@ import 'package:date_format/date_format.dart';
 
 import 'bloc.dart';
 
+///
+///[type] 1推荐，2最新
+///[pageType] 加载类型，1为独立界面，2为模块加载
+///[scrollController] 用于外界嵌套来控制列表滑动到底部自动加载
 class SquareListPage extends BlocPage<SquareListBloc, _SquareListState> {
   SquareListPage(Parameters parameters) : super(parameters);
 
@@ -30,12 +34,18 @@ class SquareListPage extends BlocPage<SquareListBloc, _SquareListState> {
 
 class _SquareListState extends BlocState<SquareListBloc>
     with KeepPageStateMixin {
-  ScrollController _scrollController = new ScrollController();
+  ScrollController _scrollController;
+
+  var pageType;
 
   @override
   void initState() {
     bloc.setType(parameters.getInt("type"));
     super.initState();
+    pageType = parameters.getInt("pageType") ?? 1;
+    pageType == 1
+        ? _scrollController = ScrollController()
+        : _scrollController = parameters.getObj("scrollController");
     _scrollController.addListener(() {
       var position = _scrollController.position;
       // 小于50px时，触发上拉加载；
@@ -50,39 +60,64 @@ class _SquareListState extends BlocState<SquareListBloc>
 
   @override
   Widget buildChild(BuildContext context, MTheme theme) {
+    return pageType == 1 ? _buildPageType_1(theme) : _buildPageType_2(theme);
+  }
+
+  _buildPageType_1(MTheme theme) {
     return StreamBuilder<List<SquareItem>>(
         initialData: List(),
         stream: bloc.squareItems,
         builder:
             (BuildContext context, AsyncSnapshot<List<SquareItem>> snapshot) {
-          var contacts = snapshot.data;
+          var squares = snapshot.data;
           return RefreshIndicator(
             onRefresh: () async {
               await bloc.refreshTweets();
               return;
             },
-            child: LoadingView(
-                bloc.loadState,
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      var item = snapshot.data[index];
-                      return _buildItem(context, item, theme);
-                    },
-                    itemCount: contacts.length,
-                  ),
-                )),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: LoadingView(
+                  bloc.loadState,
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      controller: _scrollController,
+                      itemBuilder: (BuildContext context, int index) {
+                        var item = snapshot.data[index];
+                        return buildItem(context, item, theme);
+                      },
+                      itemCount: squares.length,
+                    ),
+                  )),
+            ),
+          );
+        });
+  }
+
+  _buildPageType_2(MTheme theme) {
+    return StreamBuilder<List<SquareItem>>(
+        initialData: List(),
+        stream: bloc.squareItems,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<SquareItem>> snapshot) {
+          return SliverList(
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+
+              var item = snapshot.data[index];
+              return buildItem(context, item, theme);
+            },childCount: snapshot.data.length),
           );
         });
   }
 
   ///
   /// 构建说说列表item
-  _buildItem(BuildContext context, SquareItem item, MTheme theme) {
+  buildItem(BuildContext context, SquareItem item, MTheme theme) {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: Column(

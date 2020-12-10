@@ -2,10 +2,11 @@ import 'package:baselib/domain/audio.dart';
 import 'package:baselib/domain/location.dart';
 import 'package:baselib/domain/user/status.dart';
 import 'package:baselib/domain/user/user_domain.dart';
+import 'package:baselib/meta/hobby.dart';
 
 class Profile {
   final int totalGift;
-  final List<int> hobbys;
+  final List<Hobby> hobbys;
 
   final List<int> showIds;
   final List<Gift> gifts;
@@ -16,6 +17,11 @@ class Profile {
 
   Profile(this.totalGift, this.hobbys, this.showIds, this.gifts, this.followed,
       this.info);
+
+  @override
+  String toString() {
+    return 'Profile{totalGift: $totalGift, hobbys: $hobbys, showIds: $showIds, gifts: $gifts, followed: $followed, info: $info}';
+  }
 }
 
 class Gift {
@@ -30,6 +36,11 @@ class Gift {
   final String badge;
 
   Gift(this.id, this.icon, this.amount, this.title, this.badge);
+
+  @override
+  String toString() {
+    return 'Gift{id: $id, icon: $icon, amount: $amount, title: $title, badge: $badge}';
+  }
 }
 
 class ProfileInfo {
@@ -79,4 +90,9 @@ class ProfileInfo {
       this.online,
       this.roomId,
       this.roomTitle});
+
+  @override
+  String toString() {
+    return 'ProfileInfo{uid: $uid, name: $name, gender: $gender, age: $age, avatar: $avatar, greatNum: $greatNum, noble: $noble, lv: $lv, location: $location, declaration: $declaration, birth: $birth, star: $star, career: $career, imgUrls: $imgUrls, audio: $audio, fans: $fans, yesterdayFans: $yesterdayFans, follows: $follows, userGrade: $userGrade, lastLogin: $lastLogin, online: $online, roomId: $roomId, roomTitle: $roomTitle}';
+  }
 }

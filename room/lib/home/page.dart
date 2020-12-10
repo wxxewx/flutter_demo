@@ -50,30 +50,34 @@ class _RoomHomePage extends BlocState<RoomHomeBloc> with KeepPageStateMixin {
       child: Scaffold(
           appBar: _buildAppBarSection(theme),
           body: RefreshIndicator(
-              child: LoadingView(
-                  bloc.loadState,
-                  StreamBuilder<List<Item>>(
-                      stream: bloc.homeItems,
-                      initialData: [],
-                      builder: (context, snapshot) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          controller: _scrollController,
-                          itemBuilder: (context, index) {
-                            var item = snapshot.data[index];
-                            if (item is BannerItem) {
-                              return _buildBannerSection(theme, item);
-                            } else if (item is BasicRoomItem) {
-                              return _buildBasicRoomSection(theme, item);
-                            } else if (item is QuickMenuItem) {
-                              return _buildQuickMenuSection(theme, item);
-                            } else {
-                              return _buildRadioRoomSection(theme, item);
-                            }
-                          },
-                          itemCount: snapshot.data.length,
-                        );
-                      })),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: LoadingView(
+                    bloc.loadState,
+                    StreamBuilder<List<Item>>(
+                        stream: bloc.homeItems,
+                        initialData: [],
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            itemBuilder: (context, index) {
+                              var item = snapshot.data[index];
+                              if (item is BannerItem) {
+                                return _buildBannerSection(theme, item);
+                              } else if (item is BasicRoomItem) {
+                                return _buildBasicRoomSection(theme, item);
+                              } else if (item is QuickMenuItem) {
+                                return _buildQuickMenuSection(theme, item);
+                              } else {
+                                return _buildRadioRoomSection(theme, item);
+                              }
+                            },
+                            itemCount: snapshot.data.length,
+                          );
+                        })),
+              ),
               onRefresh: () async {
                 await bloc.loadData();
                 return true;

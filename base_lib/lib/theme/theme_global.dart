@@ -42,7 +42,7 @@ class ThemeColor {
   Color themeLightColor = Colors.greenAccent;
   Color themeColor = Colors.yellow;
   Color themeDartColor = Colors.yellow[700];
-  Color themeAccentColor = Colors.orange;
+  Color themeAccentColor = Colors.yellow[100];
 
   Color themeBlackColor = Colors.black;
   Color themeGreyColor = Colors.grey;

@@ -16,4 +16,8 @@ class ProfileModule extends IModule {
 
   @override
   List<EventBuilder> gePublicEvents() => [];
+
+
+  @override
+  List<ViewBuilder> getWidgets() =>[];
 }

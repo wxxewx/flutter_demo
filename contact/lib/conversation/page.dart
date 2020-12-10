@@ -45,19 +45,23 @@ class _ConversationState extends BlocState<ConversationBloc>
               await bloc.reLoad();
               return;
             },
-            child: LoadingView(
-                bloc.loadState,
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildConversationItem(
-                          context, theme, conversations[index]);
-                    },
-                    itemCount: conversations.length,
-                  ),
-                )),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: LoadingView(
+                  bloc.loadState,
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildConversationItem(
+                            context, theme, conversations[index]);
+                      },
+                      itemCount: conversations.length,
+                    ),
+                  )),
+            ),
           );
         });
   }

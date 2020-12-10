@@ -1,9 +1,11 @@
 import 'package:baselib/account/account_global.dart';
 import 'package:baselib/common/parameters.dart';
 import 'package:baselib/fluro/page_builder.dart';
+import 'package:baselib/theme/theme_global.dart';
 
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'empty/page.dart';
 
@@ -14,7 +16,9 @@ class Routers {
 
   static Map<String, PageBuilder> _routers = {};
 
-  static void init(List<PageBuilder> pages) {
+  static List<ViewBuilder> _publicWidgets = [];
+
+  static void init(List<PageBuilder> pages, List<ViewBuilder> publicWidgets) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
       return EmptyPage();
@@ -24,10 +28,26 @@ class Routers {
       router.define(page.path, handler: handler);
       _routers[page.path] = page;
     });
+
+    _publicWidgets.addAll(publicWidgets);
   }
 
   static void initLoginPage(String loginPage) {
     Routers.login_page = login_page;
+  }
+
+  /**
+   * 生成对应的View
+   */
+  static Widget generateView(BuildContext context, String name,
+      {Parameters parameters, Theme theme}) {
+    var viewBuilder =
+        _publicWidgets.firstWhere((element) => element.name == name);
+    assert(viewBuilder != null, "没有发现名字为：${name}的组件");
+    viewBuilder.parameters = parameters ?? Parameters();
+    viewBuilder.theme = theme ?? ThemeGlobal.instance.themeData;
+    var widget = viewBuilder.handler().handlerFunc(context, {});
+    return widget;
   }
 
   /**

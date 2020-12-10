@@ -44,18 +44,22 @@ class _ContactsState extends BlocState<ContactsBloc> with KeepPageStateMixin {
               await bloc.reLoad();
               return;
             },
-            child: LoadingView(
-                bloc.loadState,
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildContactItem(context, theme, contacts[index]);
-                    },
-                    itemCount: contacts.length,
-                  ),
-                )),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: LoadingView(
+                  bloc.loadState,
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildContactItem(context, theme, contacts[index]);
+                      },
+                      itemCount: contacts.length,
+                    ),
+                  )),
+            ),
           );
         });
   }

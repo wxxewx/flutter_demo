@@ -8,7 +8,7 @@ class Parameters {
     if (_map.containsKey(k)) {
       return _map[k];
     }
-    throw Exception("parameter:（$k）不存在，请检查");
+    //throw Exception("parameter:（$k）不存在，请检查");
   }
 
   putInt(String k, int v) => _setValue(k, v);

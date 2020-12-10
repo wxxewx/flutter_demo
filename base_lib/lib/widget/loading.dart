@@ -27,11 +27,7 @@ class LoadingView extends BaseThemeWidget {
           } else {
             child = _child;
           }
-          return Container(
-            child: child,
-            width: double.infinity,
-            height: double.infinity,
-          );
+          return child;
         });
   }
 

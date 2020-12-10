@@ -7,6 +7,10 @@ import 'package:room/room/page.dart';
 import 'events.dart';
 
 class RoomModule implements IModule {
+
+  @override
+  List<ViewBuilder> getWidgets() =>[];
+
   @override
   List<EventBuilder> gePublicEvents() {
     return [EventBuilder("room", "join_room", joinRoom)];

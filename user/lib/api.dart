@@ -8,6 +8,7 @@ import 'package:baselib/domain/user/lv.dart';
 import 'package:baselib/domain/user/noble.dart';
 import 'package:baselib/domain/user/status.dart';
 import 'package:baselib/domain/user/user_domain.dart';
+import 'package:baselib/meta/hobby.dart';
 import 'package:baselib/meta/noble.dart';
 import 'package:baselib/proto/user_message.pb.dart';
 import 'package:user/model.dart';
@@ -23,7 +24,8 @@ Future<ResultBody<Profile>> getUserProfile(
       (byte) async {
     var pageResp = HomePageResp.fromBuffer(byte);
     var gifts = pageResp.gifts
-        .map((e) => Gift(e.id, e.icon, e.amount, e.title, e.badge)).toList();
+        .map((e) => Gift(e.id, e.icon, e.amount, e.title, e.badge))
+        .toList();
     var personal = pageResp.personal;
     var nobles = await NobleMeta.instance.get();
     var location = Location.City(personal.location);
@@ -34,6 +36,12 @@ Future<ResultBody<Profile>> getUserProfile(
     var audio = Audio(personal.audio, duration: personal.audioDuration);
     var userGrade = UserGrade(personal.banbanGrade);
     var userStatus = decodeUserStatusfromString(personal.online);
+
+    var metahobbys = await HobbyMeta.instance.get();
+    var hobbys = pageResp.hobby.map((e){
+      var hobby = metahobbys.firstWhere((element) => element.hobbyId==e);
+      return hobby;
+    }).toList();
     var profileInfo = ProfileInfo(personal.uid, personal.name,
         gender: gender,
         age: personal.age,
@@ -41,7 +49,10 @@ Future<ResultBody<Profile>> getUserProfile(
         avatar: avatar,
         birth: personal.birth,
         career: personal.career,
-        declaration: personal.declaration,
+        declaration:
+            (personal.declaration == null || personal.declaration.isEmpty)
+                ? "该用户尚未编辑个人简介"
+                : personal.declaration,
         fans: personal.fans,
         follows: personal.follows,
         greatNum: personal.greatNum,
@@ -56,7 +67,7 @@ Future<ResultBody<Profile>> getUserProfile(
         star: personal.star,
         userGrade: userGrade,
         yesterdayFans: personal.yesterdayFans);
-    var profile = Profile(pageResp.totalGift, pageResp.hobby, pageResp.showIds,
+    var profile = Profile(pageResp.totalGift, hobbys, pageResp.showIds,
         gifts, pageResp.followed, profileInfo);
 
     return ResultBody(true, data: profile);
