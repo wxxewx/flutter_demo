@@ -102,18 +102,24 @@ class _Square extends BlocState<SquareBloc>
               Positioned(
                   bottom: 40,
                   right: 40,
-                  child: ScaleTransition(
-                    scale: _animationController,
-                    alignment: Alignment.center,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: theme.themeColor.themeColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50))),
-                      padding: EdgeInsets.all(15),
-                      child: Icon(
-                        Icons.add,
-                        size: 35,
-                        color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      Routers.navigateTo(context, "/tagSelect");
+                    },
+                    child: ScaleTransition(
+                      scale: _animationController,
+                      alignment: Alignment.center,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: theme.themeColor.themeColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50))),
+                        padding: EdgeInsets.all(15),
+                        child: Icon(
+                          Icons.add,
+                          size: 35,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ))

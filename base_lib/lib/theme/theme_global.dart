@@ -44,6 +44,8 @@ class ThemeColor {
   Color themeDartColor = Colors.yellow[700];
   Color themeAccentColor = Colors.yellow[100];
 
+  Color themeBackGroundColor = Colors.white;
+
   Color themeBlackColor = Colors.black;
   Color themeGreyColor = Colors.grey;
   Color themeLightGreyColor = color("#9B9B9B");

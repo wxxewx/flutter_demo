@@ -5,6 +5,7 @@ import 'package:baselib/domain/account.dart';
 import 'package:baselib/domain/location.dart';
 import 'package:baselib/proto/social_message.pb.dart' as proto;
 import 'package:square/squareItem.dart';
+import 'package:square/tag/model.dart';
 
 ///
 /// [category]类型 (1:推荐，2：最新)
@@ -83,5 +84,17 @@ Future<ResultBody<bool>> likeTweet(Account account, SquareItem tweet) async {
       return ResultBody(true, data: true);
     }
     return ResultBody(true, data: false, error: ResultError("请求失败！"));
+  });
+}
+
+///
+/// 获取说说主题
+Future<ResultBody<List<TweetTheme>>> tags() async {
+  return App.mainRequest.get<List<TweetTheme>>(Social.TWEETS_TAGS2,
+      (byte) async {
+    var listV2Resp = proto.TagListV2Resp.fromBuffer(byte);
+    var tags = listV2Resp.items
+        .map((e) => TweetTheme(e.category, e.icon, e.desc, e.color, e.tags)).toList();
+    return ResultBody(true, data: tags);
   });
 }

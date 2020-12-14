@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-Color color(String s) {
+Color color(String hexColor) {
   // 如果传入的十六进制颜色值不符合要求，返回默认值
-  if (s == null ||
-      s.length != 7 ||
-      int.tryParse(s.substring(1, 7), radix: 16) == null) {
-    s = '#999999';
+  hexColor = hexColor.toUpperCase().replaceAll("#", "");
+  if (hexColor.length == 6) {
+    hexColor = "FF" + hexColor;
   }
-
-  return new Color(int.parse(s.substring(1, 7), radix: 16) + 0xFF000000);
+  return new Color(
+      int.parse(hexColor, radix: 16) + 0xFF000000);
 }
