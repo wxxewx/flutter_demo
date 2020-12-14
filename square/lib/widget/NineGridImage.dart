@@ -1,5 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 const placeholder = "images/placeholder_wh.png";
 
@@ -32,10 +34,11 @@ class NineGridImage extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 5),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: FadeInImage(
-              placeholder: AssetImage(placeholder, package: "baselib"),
+          child: CachedNetworkImage(
+              placeholder: (context, imageProvider) =>
+                  Image.asset(placeholder, package: "baselib"),
               fit: BoxFit.cover,
-              image: NetworkImage(photo),
+              imageUrl: photo,
               fadeOutDuration: Duration(milliseconds: 100),
               fadeInDuration: Duration(milliseconds: 100),
               width: width,

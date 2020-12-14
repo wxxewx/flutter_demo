@@ -42,10 +42,10 @@ dependencies:
   collection: any
 
   #rxdart
-  rxdart: ^0.25.0
+  rxdart: ^0.23.1
 
   # https://github.com/Baseflow/flutter_cached_network_image
-  # cached_network_image: ^2.0.0
+  cached_network_image: ^2.4.1
 
   # https://pub.dev/packages/permission_handler
   permission_handler: ^5.0.0+hotfix.6

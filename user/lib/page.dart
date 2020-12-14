@@ -11,6 +11,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fsuper/fsuper.dart';
 import 'package:user/model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'bloc.dart';
 
@@ -108,18 +109,15 @@ class _Profile extends BlocState<ProfileBloc> {
         itemCount: imgUrls.isEmpty ? 1 : imgUrls.length,
         //item数量
         itemBuilder: (BuildContext context, int index) {
-          return FadeInImage(
-              fit: BoxFit.cover,
-              fadeInDuration: Duration(milliseconds: 10),
-              fadeOutDuration: Duration(milliseconds: 10),
-              placeholder:
-                  AssetImage("images/placeholder_w.png", package: "baselib"),
-              image: imgUrls.isNotEmpty
-                  ? NetworkImage(
-                      imgUrls[index],
-                    )
-                  : AssetImage("images/photo_banner_ploher.png",
-                      package: 'user'));
+          return CachedNetworkImage(
+            placeholder: (context, imageProvider) =>
+                Image.asset("images/placeholder_w.png", package: "baselib", width: double.infinity,fit:  BoxFit.cover,),
+            fit: BoxFit.cover,
+            imageUrl: imgUrls[index],
+            fadeOutDuration: Duration(milliseconds: 100),
+            fadeInDuration: Duration(milliseconds: 100),
+              width: double.infinity
+          );
         },
         onTap: (index) {},
       ),
@@ -317,18 +315,13 @@ class _Profile extends BlocState<ProfileBloc> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ClipOval(
-                              child: FadeInImage(
-                                  fit: BoxFit.fill,
-                                  fadeInDuration: Duration(milliseconds: 10),
-                                  fadeOutDuration: Duration(milliseconds: 10),
-                                  placeholder: AssetImage(
-                                      "images/placeholder_w.png",
-                                      package: 'baselib'),
-                                  image: NetworkImage(e.icon),
-                                  width: 60,
-                                  height: 60),
-                            ),
+                            CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: e.icon,
+                                fadeOutDuration: Duration(milliseconds: 10),
+                                fadeInDuration: Duration(milliseconds: 10),
+                                width: 60,
+                                height: 60),
                             Container(
                               child: Text(
                                 e.amount.toString(),
