@@ -2,7 +2,8 @@
 import 'package:baselib/app.dart';
 import 'package:baselib/common/bus/ibus.dart';
 import 'package:baselib/fluro/page_builder.dart';
-import 'package:user/page.dart';
+import 'package:user/profile/page.dart';
+
 
 class ProfileModule extends IModule {
   @override

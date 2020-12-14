@@ -3,8 +3,9 @@ import 'package:baselib/common/bloc/base_bloc.dart';
 import 'package:baselib/widget/loading.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:user/api.dart';
+import 'package:user/model.dart';
 
-import 'model.dart';
+
 
 class ProfileBloc extends BaseBloc {
   String userId = "";
