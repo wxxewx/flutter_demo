@@ -109,15 +109,29 @@ class _Profile extends BlocState<ProfileBloc> {
         itemCount: imgUrls.isEmpty ? 1 : imgUrls.length,
         //item数量
         itemBuilder: (BuildContext context, int index) {
-          return CachedNetworkImage(
-            placeholder: (context, imageProvider) =>
-                Image.asset("images/placeholder_w.png", package: "baselib", width: double.infinity,fit:  BoxFit.cover,),
-            fit: BoxFit.cover,
-            imageUrl: imgUrls[index],
-            fadeOutDuration: Duration(milliseconds: 100),
-            fadeInDuration: Duration(milliseconds: 100),
-              width: double.infinity
-          );
+          if (imgUrls.isEmpty) {
+            return FadeInImage(
+                fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 10),
+                fadeOutDuration: Duration(milliseconds: 10),
+                placeholder:
+                    AssetImage("images/placeholder_w.png", package: "baselib"),
+                image: AssetImage("images/photo_banner_ploher.png",
+                    package: 'user'));
+          } else {
+            return CachedNetworkImage(
+                placeholder: (context, imageProvider) => Image.asset(
+                      "images/placeholder_w.png",
+                      package: "baselib",
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                fit: BoxFit.cover,
+                imageUrl: imgUrls[index],
+                fadeOutDuration: Duration(milliseconds: 10),
+                fadeInDuration: Duration(milliseconds: 10),
+                width: double.infinity);
+          }
         },
         onTap: (index) {},
       ),

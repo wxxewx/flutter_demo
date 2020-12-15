@@ -39,10 +39,10 @@ class MTheme {
 }
 
 class ThemeColor {
-  Color themeLightColor = Colors.greenAccent;
+  Color themeLightColor =Colors.yellow[100];
   Color themeColor = Colors.yellow;
   Color themeDartColor = Colors.yellow[700];
-  Color themeAccentColor = Colors.yellow[100];
+  Color themeAccentColor = Colors.orange;
 
   Color themeBackGroundColor = Colors.white;
 
