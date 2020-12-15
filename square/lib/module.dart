@@ -4,7 +4,7 @@ import 'package:baselib/fluro/page_builder.dart';
 import 'package:square/pub/page.dart';
 import 'package:square/square.dart';
 import 'package:square/square/page.dart';
-import 'package:square/tag/page.dart';
+import 'package:square/theme/page.dart';
 
 class SquareModule implements IModule {
   @override

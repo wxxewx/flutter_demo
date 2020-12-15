@@ -5,7 +5,7 @@ import 'package:baselib/domain/account.dart';
 import 'package:baselib/domain/location.dart';
 import 'package:baselib/proto/social_message.pb.dart' as proto;
 import 'package:square/squareItem.dart';
-import 'package:square/tag/model.dart';
+import 'package:square/theme/model.dart';
 
 ///
 /// [category]类型 (1:推荐，2：最新)
